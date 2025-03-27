@@ -130,48 +130,44 @@ function Tel() {
         </button>
       </form>
       <div className="bg-blue-50 rounded-2xl  justify-center p-4">
-        <div ref={qrSvgRef}>
+        <div ref={qrSvg}>
           {qrValue && (
-            <div>
-              <QRCodeSVG
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={170}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoHeight,
-                        width: logoWidth,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
-            </div>
+            <QRCodeSVG
+              value={qrValue}
+              fgColor={color}
+              bgColor={bgColor}
+              size={170}
+              imageSettings={
+                imageInt
+                  ? {
+                      src: imageInt,
+                      height: logoHeight,
+                      width: logoWidth,
+                      excavate: true,
+                    }
+                  : undefined
+              }
+            />
           )}
         </div>
         <div ref={qrRef} className=" hidden">
           {qrValue && (
-            <div>
-              <QRCodeCanvas
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={170}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoHeight,
-                        width: logoWidth,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
-            </div>
+            <QRCodeCanvas
+              value={qrValue}
+              fgColor={color}
+              bgColor={bgColor}
+              size={170}
+              imageSettings={
+                imageInt
+                  ? {
+                      src: imageInt,
+                      height: logoHeight,
+                      width: logoWidth,
+                      excavate: true,
+                    }
+                  : undefined
+              }
+            />
           )}
         </div>
       {qrValue && (

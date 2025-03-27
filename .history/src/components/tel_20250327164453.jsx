@@ -25,7 +25,6 @@ function Tel() {
   const [showLogoMenu, setShowLogoMenu] = useState(false);
     
       const qrRef = useRef(null); // Référence pour le QR Code PNG
-      const qrSvgRef = useRef(null)
     
       const toggleColorMenu = () => {
         setShowColorMenu((prev) => !prev);
@@ -82,7 +81,7 @@ function Tel() {
   
     const downloadSVG = () => {
       // Récupérer l'élément SVG contenant le QR code
-      const svg = qrSvgRef.current?.querySelector("svg");
+      const svg = qrRef.current?.querySelector("svg");
       if (!svg) {
         console.error("QR code SVG not found!");
         return;
@@ -129,49 +128,25 @@ function Tel() {
           Générer QR Code
         </button>
       </form>
-      <div className="bg-blue-50 rounded-2xl  justify-center p-4">
-        <div ref={qrSvgRef}>
+      <div ref={qrRef} className="bg-blue-50 rounded-2xl  justify-center p-4">
+        <div>
           {qrValue && (
-            <div>
-              <QRCodeSVG
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={170}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoHeight,
-                        width: logoWidth,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
-            </div>
-          )}
-        </div>
-        <div ref={qrRef} className=" hidden">
-          {qrValue && (
-            <div>
-              <QRCodeCanvas
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={170}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoHeight,
-                        width: logoWidth,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
-            </div>
+            <QRCodeSVG
+              value={qrValue}
+              fgColor={color}
+              bgColor={bgColor}
+              size={170}
+              imageSettings={
+                imageInt
+                  ? {
+                      src: imageInt,
+                      height: logoHeight,
+                      width: logoWidth,
+                      excavate: true,
+                    }
+                  : undefined
+              }
+            />
           )}
         </div>
       {qrValue && (

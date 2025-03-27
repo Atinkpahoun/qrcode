@@ -24,7 +24,7 @@ function Url() {
   const [showLogoMenu, setShowLogoMenu] = useState(false);
 
   const qrRef = useRef(null); // Référence pour le QR Code PNG
-  const qrSvgRef = useRef(null)
+  const qrCanvasRef = useRef(null);
 
 
   const toggleColorMenu = () => {
@@ -84,7 +84,7 @@ function Url() {
 
   const downloadSVG = () => {
     // Récupérer l'élément SVG contenant le QR code
-    const svg = qrSvgRef.current?.querySelector("svg");
+    const svg = qrRef.current?.querySelector("svg");
     if (!svg) {
       console.error("QR code SVG not found!");
       return;
@@ -137,50 +137,26 @@ function Url() {
         </form>
 
         <div className="bg-blue-50 rounded-2xl justify-center p-4">
-          <div ref={qrSvgRef}>
-            {qrValue && (
-              <div>
-                <QRCodeSVG
-                  value={qrValue}
-                  fgColor={color}
-                  bgColor={bgColor}
-                  size={170}
-                  imageSettings={
-                    imageInt
-                      ? {
-                          src: imageInt,
-                          height: logoHeight,
-                          width: logoWidth,
-                          excavate: true,
-                        }
-                      : undefined
-                  }
-                />
-              </div>
-            )}
-          </div>
-          <div ref={qrRef} className="hidden">
-            {qrValue && (
-              <div>
-                <QRCodeCanvas
-                  value={qrValue}
-                  fgColor={color}
-                  bgColor={bgColor}
-                  size={170}
-                  imageSettings={
-                    imageInt
-                      ? {
-                          src: imageInt,
-                          height: logoHeight,
-                          width: logoWidth,
-                          excavate: true,
-                        }
-                      : undefined
-                  }
-                />
-              </div>
-            )}
-          </div>
+          {qrValue && (
+            <div ref={qrRef}>
+              <QRCodeCanvas
+                value={qrValue}
+                fgColor={color}
+                bgColor={bgColor}
+                size={170}
+                imageSettings={
+                  imageInt
+                    ? {
+                        src: imageInt,
+                        height: logoHeight,
+                        width: logoWidth,
+                        excavate: true,
+                      }
+                    : undefined
+                }
+              />
+            </div>
+          )}
 
           {qrValue && (
             <div className="mt-4 flex gap-4">

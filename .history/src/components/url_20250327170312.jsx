@@ -163,6 +163,7 @@ function Url() {
             {qrValue && (
               <div>
                 <QRCodeCanvas
+                  ref={qrRef}
                   value={qrValue}
                   fgColor={color}
                   bgColor={bgColor}

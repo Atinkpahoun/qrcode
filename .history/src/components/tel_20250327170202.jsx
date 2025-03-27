@@ -134,21 +134,21 @@ function Tel() {
           {qrValue && (
             <div>
               <QRCodeSVG
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={170}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoHeight,
-                        width: logoWidth,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
+              value={qrValue}
+              fgColor={color}
+              bgColor={bgColor}
+              size={170}
+              imageSettings={
+                imageInt
+                  ? {
+                      src: imageInt,
+                      height: logoHeight,
+                      width: logoWidth,
+                      excavate: true,
+                    }
+                  : undefined
+              }
+            />
             </div>
           )}
         </div>
@@ -156,21 +156,21 @@ function Tel() {
           {qrValue && (
             <div>
               <QRCodeCanvas
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={170}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoHeight,
-                        width: logoWidth,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
+              value={qrValue}
+              fgColor={color}
+              bgColor={bgColor}
+              size={170}
+              imageSettings={
+                imageInt
+                  ? {
+                      src: imageInt,
+                      height: logoHeight,
+                      width: logoWidth,
+                      excavate: true,
+                    }
+                  : undefined
+              }
+            />
             </div>
           )}
         </div>

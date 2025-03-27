@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
+import {  QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
 import { FaChevronDown } from "react-icons/fa";
@@ -24,7 +24,6 @@ const Email = () => {
   const [imageInt, setImageInt] = useState("");
   const [logoHeight, setLogoHeight] = useState(35);
   const [logoWidth, setLogoWidth] = useState(35);
-  const [leNom, setLeNom] = useState("")
   const [error, setError] = useState("");
 
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -90,7 +89,7 @@ const Email = () => {
     if (!canvas) return;
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
-    link.download = ` ${leNom}.png`;
+    link.download = "QRCode.png";
     link.click();
   };
 
@@ -164,7 +163,7 @@ const Email = () => {
       {/* Génération du QR Code */}
 
       <div ref={qrSvgRef}>
-        { qrValue && <QRCodeSVG 
+        { qrValue && <QRCodeCanvas 
           value={generateMailtoLink()} 
           size={170} 
           fgColor={color} 
@@ -180,7 +179,7 @@ const Email = () => {
                 : undefined
             } />}
       </div>
-      <div ref={qrRef} className="hidden">
+      <div ref={qrRef}>
         { qrValue && <QRCodeCanvas 
           value={generateMailtoLink()} 
           size={170} 
@@ -294,9 +293,6 @@ const Email = () => {
                           </label>
                         </div>
                       )}
-                      <div>
-                        <input type="text" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
-                      </div>
                     </div>
       </div> 
     </div>

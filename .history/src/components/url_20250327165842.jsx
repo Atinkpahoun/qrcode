@@ -24,7 +24,7 @@ function Url() {
   const [showLogoMenu, setShowLogoMenu] = useState(false);
 
   const qrRef = useRef(null); // Référence pour le QR Code PNG
-  const qrSvgRef = useRef(null)
+  const qrSvg = useRef(null)
 
 
   const toggleColorMenu = () => {
@@ -84,7 +84,7 @@ function Url() {
 
   const downloadSVG = () => {
     // Récupérer l'élément SVG contenant le QR code
-    const svg = qrSvgRef.current?.querySelector("svg");
+    const svg = qrRef.current?.querySelector("svg");
     if (!svg) {
       console.error("QR code SVG not found!");
       return;
@@ -136,11 +136,12 @@ function Url() {
           </button>
         </form>
 
-        <div className="bg-blue-50 rounded-2xl justify-center p-4">
-          <div ref={qrSvgRef}>
+        <div ref={qrRef} className="bg-blue-50 rounded-2xl justify-center p-4">
+          <div ref={qrRef}>
             {qrValue && (
               <div>
                 <QRCodeSVG
+                  ref={qrCanvasRef}
                   value={qrValue}
                   fgColor={color}
                   bgColor={bgColor}
@@ -163,6 +164,7 @@ function Url() {
             {qrValue && (
               <div>
                 <QRCodeCanvas
+                  ref={qrCanvasRef}
                   value={qrValue}
                   fgColor={color}
                   bgColor={bgColor}

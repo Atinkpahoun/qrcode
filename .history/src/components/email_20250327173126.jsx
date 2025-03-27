@@ -24,7 +24,6 @@ const Email = () => {
   const [imageInt, setImageInt] = useState("");
   const [logoHeight, setLogoHeight] = useState(35);
   const [logoWidth, setLogoWidth] = useState(35);
-  const [leNom, setLeNom] = useState("")
   const [error, setError] = useState("");
 
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -90,7 +89,7 @@ const Email = () => {
     if (!canvas) return;
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/png");
-    link.download = ` ${leNom}.png`;
+    link.download = `$".png"`;
     link.click();
   };
 
@@ -294,9 +293,6 @@ const Email = () => {
                           </label>
                         </div>
                       )}
-                      <div>
-                        <input type="text" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
-                      </div>
                     </div>
       </div> 
     </div>

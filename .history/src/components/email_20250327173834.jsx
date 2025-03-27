@@ -295,7 +295,7 @@ const Email = () => {
                         </div>
                       )}
                       <div>
-                        <input type="text" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
+                        <input type="text"  onChange={(e) => setLeNom(e.target.value)} />
                       </div>
                     </div>
       </div> 

@@ -136,11 +136,12 @@ function Url() {
           </button>
         </form>
 
-        <div className="bg-blue-50 rounded-2xl justify-center p-4">
+        <div ref={qrRef} className="bg-blue-50 rounded-2xl justify-center p-4">
           <div ref={qrSvgRef}>
             {qrValue && (
               <div>
                 <QRCodeSVG
+                  ref={qrSvgRef}
                   value={qrValue}
                   fgColor={color}
                   bgColor={bgColor}
@@ -163,6 +164,7 @@ function Url() {
             {qrValue && (
               <div>
                 <QRCodeCanvas
+                  ref={qrRef}
                   value={qrValue}
                   fgColor={color}
                   bgColor={bgColor}
