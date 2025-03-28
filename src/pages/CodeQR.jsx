@@ -28,7 +28,7 @@ const Principale = () => {
       </h1>
       <div className='flex flex-wrap justify-center gap-10 pt-10 md:pt-16'>
         <div className='bg-blue-50 rounded-3xl px-6 md:px-4 py-3 md:py-10 h-auto md:h-1/2'>
-          <ul className='flex md:inline'>
+          <ul className='flex md:inline items-center'>
             <li className='pb-0 md:pb-10'>
               <button onClick={() => showSection('section1')}>
                 <FaLink size={20} color="blue" />

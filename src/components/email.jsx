@@ -107,7 +107,7 @@ const Email = () => {
         </button>
         
       </form>
-      <div className="bg-blue-50 rounded-2xl  justify-center p-4 "> 
+      <div className="bg-blue-50 rounded-2xl  p-4 h-1/2"> 
       {/* Génération du QR Code */}
 
       { qrValue && <QRCodeCanvas 
