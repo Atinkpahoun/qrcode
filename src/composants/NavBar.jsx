@@ -3,6 +3,7 @@ import React, { useState, useContext,memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
+import { MdQrCode } from 'react-icons/md';
 
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -22,14 +23,17 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">
+    <nav className="bg-blue-50 py-4 px-16 text-[#0000FF] doto flex justify-between items-center">
       {/* Logo */}
-      <Link to="/" className="text-xl font-bold">
-        QR Easy
-      </Link>
+      <div className="flex gap-x-1 items-center">
+        <MdQrCode size={30} />
+        <Link to="/" className="text-3xl font-bold ">
+          QR Easy
+        </Link>
+      </div>
 
       {/* Liens de navigation */}
-      <ul className="flex gap-x-4 items-center">
+      <ul className="flex text-lg gap-x-4 items-center">
         <li>
           <Link to="/Accueil" className="hover:underline">
             Accueil
