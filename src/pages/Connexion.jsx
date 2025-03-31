@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
+import { FaQrcode } from "react-icons/fa";
 
 const Connexion = () => {
   const [formData, setFormData] = useState({
