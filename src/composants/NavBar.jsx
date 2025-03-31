@@ -23,11 +23,11 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-blue-50 py-4 px-16 text-[#0000FF] doto flex justify-between items-center">
+    <nav className="bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
       {/* Logo */}
-      <div className="flex gap-x-1 items-center">
-        <FaQrcode size={25} color="blue" />
-        <Link to="/" className="text-3xl font-bold ">
+      <div className="flex gap-x-1 items-center text-xl lg:text-3xl">
+        <FaQrcode  color="blue" />
+        <Link to="/" className=" font-bold ">
           QREasy
         </Link>
       </div>
@@ -35,12 +35,12 @@ const NavBar = () => {
       {/* Liens de navigation */}
       <ul className="flex text-lg gap-x-6 items-center">
         <li>
-          <Link to="/Accueil" className="hover:underline">
+          <Link to="/Accueil" className="hover:underline font-semibold">
             Accueil
           </Link>
         </li>
         <li>
-          <Link to="/CodeQR" className="hover:underline">
+          <Link to="/CodeQR" className="hover:underline font-semibold">
             CodeQR
           </Link>
         </li>
@@ -48,7 +48,7 @@ const NavBar = () => {
         {/* Historique visible uniquement pour les utilisateurs connectés */}
         {user && (
           <li>
-            <Link to="/Historique" className="hover:underline">
+            <Link to="/Historique" className="hover:underline font-semibold">
               Historique
             </Link>
           </li>
@@ -100,7 +100,7 @@ const NavBar = () => {
                   <p><strong>Email :</strong> {user.email}</p>
                   <button
                     onClick={handleLogout}
-                    className="mt-4 w-full bg-[#0000FF] text-white font-semibold py-2 rounded-lg hover:bg-red-600"
+                    className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
                   >
                     Se déconnecter
                   </button>

@@ -50,7 +50,7 @@ const Connexion = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen">
+    <section className="flex items-center justify-center mt-5 lg:mt-16 xl:mt-24">
       <div className="border-[#0000FF] border-2 flex w-full xl:w-1/2 rounded-lg doto">
         <div className="w-0 xl:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
           <FaQrcode size={37} color="blue" />
@@ -84,7 +84,7 @@ const Connexion = () => {
 
         {/* Bouton de soumission */}
         <button
-          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 hover:bg-blue-700 focus:outline-none focus:shadow-outline"
           type="submit"
         >
           Se connecter

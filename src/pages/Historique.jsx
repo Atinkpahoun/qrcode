@@ -10,7 +10,7 @@ function Historique(){
     };
     return(
         <div className=" pt-5 xl:pt-14 justify-center">
-            <h1 className="doto text-2xl xl:text-3xl semibold text-[#0000FF] text-center">Bienvenu(e) dans l'historique de vos codes QR</h1>
+            <h1 className="doto text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">Bienvenu(e) dans l'historique de vos codes QR</h1>
             <div className="flex items-center justify-center mt-7 xl:mt-16">
             <select 
                 value={selectedOption} 
@@ -27,7 +27,7 @@ function Historique(){
 
             </div>
             <div className="mt-5 lg:mt-10 mb-2">
-                <div className="mx-2 lg:mx-5 xl:mx-10 text-sm xl:text-xl doto text-[#0000FF] bg-blue-50 rounded border-2 border-[#0000FF] py-2 px-2 justify-between flex">
+                <div className="mx-2 lg:mx-5 xl:mx-10 text-sm xl:text-xl doto font-semibold text-[#0000FF] bg-blue-50 rounded border-2 border-[#0000FF] py-2 px-2 justify-between flex">
                     <h1>CodeQR</h1>
                     <h1>Nom</h1>
                     <h1>Contenu</h1>
