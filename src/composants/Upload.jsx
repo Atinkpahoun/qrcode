@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
-const UploadMenu = () => {
+const UploadMenu = ({ onLogoChange }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [tempLogoHeight, setTempLogoHeight] = useState('');
-  const [tempLogoWidth, setTempLogoWidth] = useState('');
+  const [image, setImage] = useState("");
+  const [tempLogoTaille, setTempLogoTaille] = useState('');
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      // Gérer le téléchargement de l'image ici
-      console.log('Image téléchargée:', file.name);
-    }
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+      onLogoChange(reader.result, setTempLogoTaille); // 🔹 Envoie la mise à jour au parent
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSizeChange = (taille) => {
+    setTempLogoTaille(taille);
+    onLogoChange(image, taille); // 🔹 Met à jour le parent
   };
 
   const toggleMenu = () => {
@@ -43,21 +52,10 @@ const UploadMenu = () => {
           <label className="block   mb-2">
             Hauteur
             <input
-              type="number"
-              className="border p-2 rounded-md w-40 text-sm mb-4"
-              value={tempLogoHeight}
-              onChange={(e) => setTempLogoHeight(e.target.value)}
+              className="border p-2 rounded-md w-72 mb-4"
+              value={tempLogoTaille}
+              onChange={(e) => handleSizeChange(Number(e.target.value), setTempLogoTaille)}
               placeholder="Entrez la hauteur"
-            />
-          </label>
-          <label className="block  mb-2">
-            Largeur
-            <input
-              type="number"
-              className="border p-2 text-sm rounded-md w-40 mb-4"
-              value={tempLogoWidth}
-              onChange={(e) => setTempLogoWidth(e.target.value)}
-              placeholder="Entrez la largeur"
             />
           </label>
         </div>

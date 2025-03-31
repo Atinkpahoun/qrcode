@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { QRCodeCanvas } from "qrcode.react";
+import { useRef, useState } from "react";
+import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
+import { FaChevronDown } from "react-icons/fa";
+
 const Email = () => {
-  
-  
 
   const [email, setEmail] = useState("");
   const [tempSubject, setTempSubject] = useState("")
@@ -12,8 +12,7 @@ const Email = () => {
   const [tempColor, setTempColor] = useState("#ffffff");
   const [tempBgColor, setTempBgColor] = useState("#000000");
   const [tempImageInt, setTempImageInt] = useState("");
-  const [tempLogoHeight, setTempLogoHeight] = useState(35);
-  const [tempLogoWidth, setTempLogoWidth] = useState(35);
+  const [tempLogoTaille, setTempLogoTaille] = useState(35);
 
   const [qrValue, setQrValue] = useState("");
   const [subject, setSubject] = useState("");
@@ -21,20 +20,12 @@ const Email = () => {
   const [color, setColor] = useState("#ffffff");
   const [bgColor, setBgColor] = useState("#000000");
   const [imageInt, setImageInt] = useState("");
-  const [logoHeight, setLogoHeight] = useState(35);
-  const [logoWidth, setLogoWidth] = useState(35);
+  const [logoTaille, setLogoTaille] = useState(35);
+  const [leNom, setLeNom] = useState("")
   const [error, setError] = useState("");
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setTempImageInt(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
+    const qrRef = useRef(null);
+    const qrSvgRef = useRef(null)
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -46,6 +37,17 @@ const Email = () => {
         return `mailto:${qrValue}?subject=${encodeURIComponent(tempSubject)}&body=${encodeURIComponent(tempBody)}`;
     };
 
+    const handleColorChange = (newColor, newBgColor) => {
+      setTempColor(newColor);
+      setTempBgColor(newBgColor);
+    };
+  
+    const handleLogoChange = (newImage, newTaille) => {
+      setTempImageInt(newImage);
+      setTempLogoTaille(newTaille);
+  
+    };
+
     const handleClick = (e) => {
         e.preventDefault()
 
@@ -55,16 +57,14 @@ const Email = () => {
           return;
         }
     
-
         setError("");
-        setQrValue(email); // Met à jour la valeur du QR Code
+        setQrValue(email);
         setTempSubject(subject)
         setTempBody(body)
         setColor(tempColor);
         setBgColor(tempBgColor);
         setImageInt(tempImageInt);
-        setLogoHeight(tempLogoHeight);
-        setLogoWidth(tempLogoWidth);
+        setLogoTaille(tempLogoTaille);
         
       };
 
@@ -110,24 +110,53 @@ const Email = () => {
       <div className="bg-blue-50 rounded-2xl  p-4 h-1/2"> 
       {/* Génération du QR Code */}
 
-      { qrValue && <QRCodeCanvas 
-        value={generateMailtoLink()} 
-        size={170} 
-        fgColor={color} 
-        bgColor={bgColor}
-          imageSettings={
-            imageInt
-              ? {
-                  src: imageInt,
-                  height: logoHeight,
-                  width: logoWidth,
-                  excavate: true,
-                }
-              : undefined
-          } />}
-          <UploadColors/>
-          <Upload/>
-      </div> 
+      <div ref={qrSvgRef}>
+        { qrValue && <QRCodeSVG 
+          value={generateMailtoLink()} 
+          size={170} 
+          fgColor={color} 
+          bgColor={bgColor}
+            imageSettings={
+              imageInt
+                ? {
+                    src: imageInt,
+                    height: logoTaille,
+                    width: logoTaille,
+                    excavate: true,
+                  }
+                : undefined
+            } />}
+      </div>
+      <div ref={qrRef} className="hidden">
+        { qrValue && <QRCodeCanvas 
+          value={generateMailtoLink()} 
+          size={170} 
+          fgColor={color} 
+          bgColor={bgColor}
+            imageSettings={
+              imageInt
+                ? {
+                    src: imageInt,
+                    height: logoTaille,
+                    width: logoTaille,
+                    excavate: true,
+                  }
+                : undefined
+            } />}
+      </div>
+
+          {qrValue && (
+            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+          )}
+          <UploadColors onColorChange={handleColorChange} />
+          <Upload onLogoChange={handleLogoChange} />
+
+
+          <div>
+            <input type="text" name="nomcode" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
+          </div>
+
+      </div>
     </div>
   );
 };
