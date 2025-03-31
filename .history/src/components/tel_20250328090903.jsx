@@ -1,4 +1,4 @@
-import { useRef, useState,} from "react";
+import { useRef, useState, } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";

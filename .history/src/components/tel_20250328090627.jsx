@@ -1,8 +1,9 @@
-import { useRef, useState,} from "react";
+import { useRef, useState, useEffect } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
 import { FaChevronDown } from "react-icons/fa";
+import Select from "react-select";
 
 function Tel() {
 
@@ -20,9 +21,24 @@ function Tel() {
   const [logoHeight, setLogoHeight] = useState(35);
   const [logoWidth, setLogoWidth] = useState(35);
   const [error, setError] = useState("");
+  const [countryCode, setCountryCode] = useState("+33");
+  const [options, setOptions] = useState([]);
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showLogoMenu, setShowLogoMenu] = useState(false);
+
+  useEffect(() => {
+    fetch("https://country.io/phone.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const countryOptions = Object.entries(data).map(([country, code]) => ({
+          value: `+${code}`,
+          label: `${country} (+${code})`,
+        }));
+        setOptions(countryOptions);
+      })
+      .catch((err) => console.error("Erreur lors du chargement des indicatifs", err));
+  }, []);
     
       const qrRef = useRef(null); // Référence pour le QR Code PNG
       const qrSvgRef = useRef(null)
@@ -107,10 +123,17 @@ function Tel() {
       URL.revokeObjectURL(svgUrl);
     };
 
+
+
   return (
     <div className="flex flex-wrap gap-y-5 gap-x-10">
       <form className="flex flex-col items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
+        <Select
+        options={options}
+        onChange={(option) => setCountryCode(option.value)}
+        className="w-80 mb-2"
+      />
         <input
           type="tel"
           value={tel}

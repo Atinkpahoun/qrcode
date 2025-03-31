@@ -1,8 +1,9 @@
-import { useRef, useState,} from "react";
+import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
 import { FaChevronDown } from "react-icons/fa";
+import Select from "react-select";
 
 function Tel() {
 
@@ -20,6 +21,7 @@ function Tel() {
   const [logoHeight, setLogoHeight] = useState(35);
   const [logoWidth, setLogoWidth] = useState(35);
   const [error, setError] = useState("");
+  const [countryCode, setCountryCode] = useState("+33");
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showLogoMenu, setShowLogoMenu] = useState(false);
@@ -107,10 +109,18 @@ function Tel() {
       URL.revokeObjectURL(svgUrl);
     };
 
+
+
   return (
     <div className="flex flex-wrap gap-y-5 gap-x-10">
       <form className="flex flex-col items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
+        <Select
+          options={countryOptions}
+          defaultValue={countryOptions[1]} // France par défaut
+          onChange={(option) => setCountryCode(option.value)}
+          className="w-80 mb-2"
+        />
         <input
           type="tel"
           value={tel}

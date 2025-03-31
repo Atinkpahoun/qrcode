@@ -76,7 +76,9 @@ function Tel() {
       if (!canvas) return;
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
-      link.download = "QRCode.png";
+      link.download = {if (condition) {
+        
+      }};
       link.click();
     };
   

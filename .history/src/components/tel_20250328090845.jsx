@@ -1,4 +1,4 @@
-import { useRef, useState,} from "react";
+import { useRef, useState, } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
@@ -106,6 +106,8 @@ function Tel() {
       // Libérer l'URL object pour éviter les fuites de mémoire
       URL.revokeObjectURL(svgUrl);
     };
+
+
 
   return (
     <div className="flex flex-wrap gap-y-5 gap-x-10">

@@ -19,7 +19,8 @@ function Tel() {
   const [imageInt, setImageInt] = useState("");
   const [logoHeight, setLogoHeight] = useState(35);
   const [logoWidth, setLogoWidth] = useState(35);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("");[]
+  const 
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showLogoMenu, setShowLogoMenu] = useState(false);
@@ -76,7 +77,7 @@ function Tel() {
       if (!canvas) return;
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
-      link.download = "QRCode.png";
+      link.download = {};
       link.click();
     };
   
@@ -268,6 +269,7 @@ function Tel() {
                                     placeholder="Entrez la largeur"
                                   />
                                 </label>
+                                <input type="text" />
                               </div>
                             )}
                           </div>

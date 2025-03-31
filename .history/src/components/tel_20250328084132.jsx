@@ -1,4 +1,4 @@
-import { useRef, useState,} from "react";
+import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
@@ -20,6 +20,8 @@ function Tel() {
   const [logoHeight, setLogoHeight] = useState(35);
   const [logoWidth, setLogoWidth] = useState(35);
   const [error, setError] = useState("");
+  const [countryCode, setCountryCode] = useState("+33");
+  
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showLogoMenu, setShowLogoMenu] = useState(false);
