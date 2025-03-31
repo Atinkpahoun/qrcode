@@ -112,12 +112,12 @@ function Url() {
   return (
     <section>
       <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
-        <form className="flex flex-col items-start " action="">
+        <form className="flex flex-col items-center md:items-start " action="">
           <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Lien/URL</h1>
           <input
             type="url"
             value={url}
-            className={`border-[#0000FF] border p-2 rounded-md w-80 mb-2 ${
+            className={`border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 ${
               error && "border-red-500"
             }`}
             onChange={(e) => setUrl(e.target.value)}
@@ -134,7 +134,7 @@ function Url() {
           </button>
         </form>
 
-        <div className="bg-blue-50 rounded-2xl justify-center p-4">
+        <div className="bg-blue-50 rounded-2xl justify-center p-4 ">
           {qrValue && (
             <div ref={qrRef}>
               <QRCodeCanvas
@@ -157,7 +157,7 @@ function Url() {
           )}
 
           {qrValue && (
-            <div className="mt-4 flex gap-4">
+            <div className="mt-4 flex flex-col gap-4">
               <button
                 onClick={downloadPNG}
                 className="bg-green-500 text-white px-4 py-2 rounded-lg"

@@ -49,9 +49,16 @@ const Connexion = () => {
   };
 
   return (
-    <section className="items-center pt-10">
-      <h1 className="text-[#0000FF] text-xl font-bold pb-4">Connexion</h1>
-      <form className="rounded border-2 p-4 bg-blue-50 gap-y-2" onSubmit={handleSubmit}>
+    <section className="flex items-center justify-center min-h-screen">
+      <div className="border-[#0000FF] border-2 flex w-full xl:w-1/2 rounded-lg doto">
+        <div className="w-0 xl:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
+          <FaQrcode size={37} color="blue" />
+          <h1 className="font-bold text-[#0000FF] text-5xl">QR Easy</h1>
+        </div>
+        <form className="flex flex-col items-center w-full xl:w-1/2 py-3 xl:py-6" onSubmit={handleSubmit}>
+          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-4">
+            Connectez-vous
+          </h1>
         {/* Champ Email */}
         <input
           type="email"
@@ -60,7 +67,7 @@ const Connexion = () => {
           value={formData.email}
           onChange={handleChange}
           required
-          className="border-[#0000FF] border p-2 rounded-md w-full mb-2"
+          className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
         />
 
         {/* Champ Mot de passe */}
@@ -71,17 +78,20 @@ const Connexion = () => {
           value={formData.password}
           onChange={handleChange}
           required
-          className="border-[#0000FF] border p-2 rounded-md w-full mb-2"
+          className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
         />
 
         {/* Bouton de soumission */}
         <button
-          className="bg-[#0000FF] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 hover:bg-blue-600 focus:outline-none focus:shadow-outline"
           type="submit"
         >
           Se connecter
         </button>
-      </form>
+        </form>
+      </div>
+      
+      
     </section>
   );
 };
