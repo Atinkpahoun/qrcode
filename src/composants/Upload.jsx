@@ -27,7 +27,7 @@ const UploadMenu = ({ onLogoChange }) => {
   };
  
   return (
-    <div className="p-4 w-1/2">
+    <div >
       <button
         onClick={toggleMenu}
         className="bg-[#0000FF] text-white font-semibold py-2 px-4 rounded-lg flex gap-x-2 items-center "
@@ -52,7 +52,7 @@ const UploadMenu = ({ onLogoChange }) => {
           <label className="block   mb-2">
             Hauteur
             <input
-              className="border p-2 rounded-md w-72 mb-4"
+              className="border p-2 rounded-md w-40 mb-4"
               value={tempLogoTaille}
               onChange={(e) => handleSizeChange(Number(e.target.value), setTempLogoTaille)}
               placeholder="Entrez la hauteur"

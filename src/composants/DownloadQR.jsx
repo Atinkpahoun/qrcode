@@ -1,4 +1,5 @@
 import React from "react";
+import { FaDownload } from 'react-icons/fa';
 
 const DownloadQR = ({ qrRef, qrSvgRef, leNom }) => {
   const downloadPNG = () => {
@@ -30,12 +31,14 @@ const DownloadQR = ({ qrRef, qrSvgRef, leNom }) => {
   };
 
   return (
-    <div className="mt-4 flex gap-4">
-      <button onClick={downloadPNG} className="bg-green-500 text-white px-4 py-2 rounded-lg">
-        Télécharger PNG
+    <div className="mt-4 flex  gap-4">
+      <button onClick={downloadPNG} className="flex items-center bg-blue-500 text-white w-20 px-4 py-2 rounded-lg">
+        <FaDownload /> 
+        <h1>PNG</h1> 
       </button>
-      <button onClick={downloadSVG} className="bg-orange-500 text-white px-4 py-2 rounded-lg">
-        Télécharger SVG
+      <button onClick={downloadSVG} className="flex bg-[#0000FF] items-center text-white w-20 px-4 py-2 rounded-lg">
+        <FaDownload /> 
+        <h1>SVG</h1> 
       </button>
     </div>
   );

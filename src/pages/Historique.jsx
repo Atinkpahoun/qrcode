@@ -27,6 +27,7 @@ function Historique(){
             <div className="mt-5 lg:mt-10">
                 <div className="mx-2 lg:mx-5 xl:mx-10 text-sm xl:text-xl doto text-[#0000FF] bg-blue-50 rounded border-2 border-[#0000FF] py-2 px-2 justify-between flex">
                     <h1>CodeQR</h1>
+                    <h1>Nom</h1>
                     <h1>Contenu</h1>
                     <h1>Options</h1>
                 </div>

@@ -85,8 +85,8 @@ function Url() {
         </form>
 
 
-        <div className="bg-blue-50 rounded-2xl justify-center p-4">
-          <div ref={qrSvgRef}>
+        <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
+          <div  ref={qrSvgRef}>
             {qrValue && (
               <div>
                 <QRCodeSVG
@@ -130,17 +130,16 @@ function Url() {
               </div>
             )}
           </div>
-
-          {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
-
+          
           <UploadColors onColorChange={handleColorChange} />
           <Upload onLogoChange={handleLogoChange} />
 
           <div>
-            <input type="text" name="nomcode" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
+            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
           </div>
+          {qrValue && (
+            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+          )}
         </div>
       </div>
     </section>
