@@ -62,12 +62,12 @@ function Url() {
   return (
     <section>
       <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
-        <form className="flex flex-col items-center md:items-start " action="">
+        <form className="flex flex-col items-start " action="">
           <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Lien/URL</h1>
           <input
             type="url"
             value={url}
-            className={`border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 ${
+            className={`border-[#0000FF] border p-2 rounded-md w-80 mb-2 ${
               error && "border-red-500"
             }`}
             onChange={(e) => setUrl(e.target.value)}
@@ -82,11 +82,10 @@ function Url() {
           >
             Générer QR Code
           </button>
-        </form>
+        </form>x
 
-
-        <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
-          <div  ref={qrSvgRef}>
+        <div className="flex flex-col items-center bg-blue-50 rounded-2xl justify-center p-4">
+          <div ref={qrSvgRef}>
             {qrValue && (
               <div>
                 <QRCodeSVG
@@ -130,16 +129,17 @@ function Url() {
               </div>
             )}
           </div>
-          
+
+          {qrValue && (
+            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+          )}
+
           <UploadColors onColorChange={handleColorChange} />
           <Upload onLogoChange={handleLogoChange} />
 
           <div>
-            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
+            <input type="text" name="nomcode" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
           </div>
-          {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
         </div>
       </div>
     </section>
