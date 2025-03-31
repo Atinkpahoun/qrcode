@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+// src/pages/Connexion.jsx
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../context/AuthContext";
 
 const Connexion = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,23 +30,21 @@ const Connexion = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        // Stocker le token et les informations utilisateur dans localStorage
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-
-        // Afficher une notification de succès
-        toast.success("Connexion réussie !", { autoClose: 3000 });
-
-        // Rediriger vers la page d'accueil après 2 secondes
-        setTimeout(() => navigate("/codeqr"), 2000);
-      } else {
-        // Afficher une notification d'erreur
-        toast.error(data.message || "Email ou mot de passe incorrect", { autoClose: 5000 });
+      if (!response.ok) {
+        throw new Error(data.message || "Email ou mot de passe incorrect.");
       }
+
+      // Connecter l'utilisateur via le contexte
+      login(data);
+
+      // Afficher une notification de succès
+      toast.success("Connexion réussie !", { autoClose: 3000 });
+
+      // Redirection vers la page d'accueil
+      navigate("/Accueil");
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
-      toast.error("Impossible de se connecter au serveur.", { autoClose: 5000 });
+      toast.error(error.message || "Une erreur s'est produite.", { autoClose: 5000 });
     }
   };
 

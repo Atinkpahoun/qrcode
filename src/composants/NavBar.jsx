@@ -1,23 +1,114 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaQrcode } from 'react-icons/fa';
+// src/composants/NavBar.jsx
+import React, { useState, useContext,memo } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
+
 const NavBar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false); // Menu fermé par défaut
+  const navigate = useNavigate();
+
+  // Gestion de la déconnexion
+  const handleLogout = () => {
+    try {
+      logout(); // Appel à la fonction de déconnexion depuis le contexte
+      toast.success("Déconnexion réussie !");
+      navigate("/connexion");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
+      toast.error("Erreur lors de la déconnexion.");
+    }
+  };
+
   return (
-    <nav className='justify-between flex flex-wrap px-3 md:px-10 py-3 md:py-5 bg-blue-50 doto'>
-        <div className='flex gap-x-1 items-center'>
-            <FaQrcode size={25}  color="blue" />
-            <h1 className='font-bold text-[#0000FF] text-2xl '><Link to="/Principale"> QR Easy </Link></h1>
-        </div>
-        <ul className='flex text-[#0000FF] gap-x-5 text-lg font-bold'>
-            <li ><Link to ="/Accueil">Accueil</Link></li>
-            <li><Link to="/Inscription">Inscription</Link></li>
-            <li><Link to="/Connexion">Connexion</Link></li>
-            <li><Link to ="/CodeQR">CodeQR</Link></li>
-            <li ><Link to ="/Historique">Historique</Link></li>
-        </ul>
+    <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">
+      {/* Logo */}
+      <Link to="/" className="text-xl font-bold">
+        QR Easy
+      </Link>
+
+      {/* Liens de navigation */}
+      <ul className="flex gap-x-4 items-center">
+        <li>
+          <Link to="/Accueil" className="hover:underline">
+            Accueil
+          </Link>
+        </li>
+        <li>
+          <Link to="/CodeQR" className="hover:underline">
+            CodeQR
+          </Link>
+        </li>
+
+        {/* Historique visible uniquement pour les utilisateurs connectés */}
+        {user && (
+          <li>
+            <Link to="/Historique" className="hover:underline">
+              Historique
+            </Link>
+          </li>
+        )}
+
+        {/* Affichage conditionnel */}
+        {!user ? (
+          <>
+            <li>
+              <Link to="/Inscription" className="hover:underline">
+                Inscription
+              </Link>
+            </li>
+            <li>
+              <Link to="/Connexion" className="hover:underline">
+                Connexion
+              </Link>
+            </li>
+          </>
+        ) : (
+          <li className="relative">
+            {/* Icône utilisateur */}
+            <button
+              onClick={() => setIsOpen(!isOpen)} // Ouvrir/fermer le menu
+              className="focus:outline-none"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </button>
+
+            {/* Menu déroulant */}
+            {isOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+                <div className="p-4">
+                  <p><strong>Nom :</strong> {user.lastname}</p>
+                  <p><strong>Prénom :</strong> {user.name}</p>
+                  <p><strong>Email :</strong> {user.email}</p>
+                  <button
+                    onClick={handleLogout}
+                    className="mt-4 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                  >
+                    Se déconnecter
+                  </button>
+                </div>
+              </div>
+            )}
+          </li>
+        )}
+      </ul>
+  
     </nav>
   );
 };
 
-
-export default NavBar;
+export default memo(NavBar);

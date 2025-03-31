@@ -1,14 +1,20 @@
-import API_URL from "../config";
+// src/services/api.js
+import axios from "axios";
 
-export const fetchUsers = async () => {
-  try {
-    const response = await fetch(`${API_URL}/users`);
-    if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des utilisateurs");
-    }
-    return await response.json();
-  } catch (error) {
-    console.error("Erreur API :", error);
-    return null;
+const api = axios.create({
+  baseURL: "http://192.168.1.228:8000/api", // URL de votre backend Laravel
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// Ajoutez un intercepteur pour inclure le token JWT dans chaque requête
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-};
+  return config;
+});
+
+export default api;
