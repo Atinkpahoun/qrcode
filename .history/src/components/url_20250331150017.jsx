@@ -82,7 +82,7 @@ function Url() {
           >
             Générer QR Code
           </button>
-        </form>
+        </form>x
 
         <div className="flex flex-col items-center bg-blue-50 rounded-2xl justify-center p-4">
           <div ref={qrSvgRef}>

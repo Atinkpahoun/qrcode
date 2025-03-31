@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
-import DownloadQR from "../composants/DownloadQR.jsx";
+http://localhost:5173/CodeQR
 import { FaChevronDown } from "react-icons/fa";
 
 const Email = () => {

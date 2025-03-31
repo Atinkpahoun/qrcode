@@ -84,7 +84,7 @@ function Url() {
           </button>
         </form>
 
-        <div className="flex flex-col items-center bg-blue-50 rounded-2xl justify-center p-4">
+        <div className="FLEX bg-blue-50 rounded-2xl justify-center p-4">
           <div ref={qrSvgRef}>
             {qrValue && (
               <div>
