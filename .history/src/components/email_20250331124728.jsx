@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
-import DownloadQR from "../composants/DownloadQR.jsx";
+http://localhost:5173/CodeQR
 import { FaChevronDown } from "react-icons/fa";
 
 const Email = () => {
@@ -108,7 +108,7 @@ const Email = () => {
         </button>
         
       </form>
-      <div className="bg-blue-50 rounded-2xl  p-4 h-1/2"> 
+      <div className="bg-blue-50 rounded-2xl  justify-center p-4 "> 
       {/* Génération du QR Code */}
 
       <div ref={qrSvgRef}>
