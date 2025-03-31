@@ -100,7 +100,7 @@ const NavBar = () => {
                   <p><strong>Email :</strong> {user.email}</p>
                   <button
                     onClick={handleLogout}
-                    className="mt-4 w-full bg-[#0000FF] text-white py-2 rounded-lg hover:bg-red-600"
+                    className="mt-4 w-full bg-[#0000FF] text-white font-semibold py-2 rounded-lg hover:bg-red-600"
                   >
                     Se déconnecter
                   </button>
