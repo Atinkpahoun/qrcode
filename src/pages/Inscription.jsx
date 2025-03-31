@@ -73,12 +73,12 @@ const Inscription = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen">
+    <section className="flex items-center justify-center mt-5 lg:mt-16 xl:mt-24">
       <div className="border-[#0000FF] border-2 flex w-full xl:w-1/2 rounded-lg doto">
         {/* Section gauche avec logo */}
         <div className="w-0 xl:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
           <FaQrcode size={37} color="blue" />
-          <h1 className="font-bold text-[#0000FF] text-5xl">QR Easy</h1>
+          <h1 className="font-bold text-[#0000FF] text-5xl">QREasy</h1>
         </div>
 
         {/* Formulaire d'inscription */}
@@ -86,7 +86,7 @@ const Inscription = () => {
           className="flex flex-col items-center w-full xl:w-1/2 py-3 xl:py-6"
           onSubmit={handleSubmit}
         >
-          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-4">
+          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-6">
             Inscrivez-vous
           </h1>
 
