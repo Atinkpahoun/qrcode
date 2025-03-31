@@ -93,14 +93,14 @@ const NavBar = () => {
 
             {/* Menu déroulant */}
             {isOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+              <div className="absolute -right-10 mt-2 w-auto bg-blue-50 rounded-lg shadow-lg top-14">
                 <div className="p-4">
                   <p><strong>Nom :</strong> {user.lastname}</p>
                   <p><strong>Prénom :</strong> {user.name}</p>
                   <p><strong>Email :</strong> {user.email}</p>
                   <button
                     onClick={handleLogout}
-                    className="mt-4 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                    className="mt-4 w-full bg-[#0000FF] text-white py-2 rounded-lg hover:bg-red-600"
                   >
                     Se déconnecter
                   </button>
