@@ -53,10 +53,10 @@ const Connexion = () => {
       <div className="border-[#0000FF] border-2 flex w-full xl:w-1/2 rounded-lg doto">
         <div className="w-0 xl:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
           <FaQrcode size={37} color="blue" />
-          <h1 className="font-bold text-[#0000FF] text-5xl">QR Easy</h1>
+          <h1 className="font-bold text-[#0000FF] text-5xl">QREasy</h1>
         </div>
         <form className="flex flex-col items-center w-full xl:w-1/2 py-3 xl:py-6" onSubmit={handleSubmit}>
-          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-4">
+          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-6">
             Connectez-vous
           </h1>
         {/* Champ Email */}

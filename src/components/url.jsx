@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
-import { FaChevronDown } from "react-icons/fa";
 import DownloadQR from "../composants/DownloadQR.jsx";
 
 function Url() {
