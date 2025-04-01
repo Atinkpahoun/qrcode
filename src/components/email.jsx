@@ -108,7 +108,7 @@ const Email = () => {
         </button>
         
       </form>
-      <div className="bg-blue-50 rounded-2xl  p-4 h-1/2"> 
+      <div className="bg-blue-50 rounded-2xl  space-y-5 p-4 h-1/2"> 
       {/* Génération du QR Code */}
 
       <div ref={qrSvgRef}>
@@ -154,7 +154,7 @@ const Email = () => {
 
 
           <div>
-            <input type="text" name="nomcode" className="border p-2 rounded-md w-72 mb-4" onChange={(e) => setLeNom(e.target.value)} />
+            <input placeholder="Donnez un nom au code" type="text" name="nomcode"  className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
           </div>
 
       </div>

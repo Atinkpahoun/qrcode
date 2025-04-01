@@ -45,7 +45,7 @@ const QRGenerator = () => {
 
   return (
     <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
-      <div className="flex flex-col items-center md:items-start ">
+      <form className="flex flex-col items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Image</h1>
         {/* Input pour sélectionner l'image */}
         <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -56,13 +56,13 @@ const QRGenerator = () => {
         {/* Bouton pour générer le QR Code */}
         {imageUrl && (
           <button
-            onClick={generateQRCode}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          onClick={generateQRCode}
+          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
           >
             Générer le QR Code
           </button>
         )}
-      </div>
+      </form>
       
 
       {/* QR Code généré */}
