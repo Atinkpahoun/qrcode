@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
-import { FaChevronDown } from "react-icons/fa";
 import DownloadQR from "../composants/DownloadQR.jsx";
 
 function Url() {
@@ -108,7 +107,7 @@ function Url() {
           <input
             type="url"
             value={url}
-            className={`border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 ${
+            className={`border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 focus:outline-none focus:ring-1 focus:ring-[#0000FF] ${
               error && "border-red-500"
             }`}
             onChange={(e) => setUrl(e.target.value)}
@@ -125,8 +124,11 @@ function Url() {
           </button>
         </form>
 
-        <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
-          <div ref={qrSvgRef}>
+
+
+        <div className="bg-blue-50 rounded-2xl  space-y-5 p-4">
+          <div  ref={qrSvgRef}>
+
             {qrValue && (
               <div>
                 <QRCodeSVG

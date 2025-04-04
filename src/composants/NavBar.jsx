@@ -3,6 +3,7 @@ import React, { useState, useContext,memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
+import { FaQrcode } from "react-icons/fa";
 
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -22,21 +23,24 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">
+    <nav className="bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
       {/* Logo */}
-      <Link to="/" className="text-xl font-bold">
-        QR Easy
-      </Link>
+      <div className="flex gap-x-1 items-center text-xl lg:text-3xl">
+        <FaQrcode  color="blue" />
+        <Link to="/" className=" font-bold ">
+          QREasy
+        </Link>
+      </div>
 
       {/* Liens de navigation */}
-      <ul className="flex gap-x-4 items-center">
+      <ul className="flex text-lg gap-x-6 items-center">
         <li>
-          <Link to="/Accueil" className="hover:underline">
+          <Link to="/Accueil" className="hover:underline font-semibold">
             Accueil
           </Link>
         </li>
         <li>
-          <Link to="/CodeQR" className="hover:underline">
+          <Link to="/CodeQR" className="hover:underline font-semibold">
             CodeQR
           </Link>
         </li>
@@ -44,7 +48,7 @@ const NavBar = () => {
         {/* Historique visible uniquement pour les utilisateurs connectés */}
         {user && (
           <li>
-            <Link to="/Historique" className="hover:underline">
+            <Link to="/Historique" className="hover:underline font-semibold">
               Historique
             </Link>
           </li>
@@ -89,14 +93,14 @@ const NavBar = () => {
 
             {/* Menu déroulant */}
             {isOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+              <div className="absolute -right-10 mt-2 w-auto bg-blue-50 rounded-lg shadow-lg top-14">
                 <div className="p-4">
                   <p><strong>Nom :</strong> {user.lastname}</p>
                   <p><strong>Prénom :</strong> {user.name}</p>
                   <p><strong>Email :</strong> {user.email}</p>
                   <button
                     onClick={handleLogout}
-                    className="mt-4 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                    className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
                   >
                     Se déconnecter
                   </button>

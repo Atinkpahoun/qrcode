@@ -36,7 +36,7 @@ const UploadColors = ({ onColorChange }) => {
       </button>
       
       {showMenu && (
-        <div className="mt-4 p-4 border border-[#0000FF] rounded-lg bg-white shadow-md w-44">
+        <div className="mt-4 p-2 border border-[#0000FF] rounded-lg bg-white shadow-md w-44">
           
           <div className="mb-4">
             <label className="text-lg font-medium">
