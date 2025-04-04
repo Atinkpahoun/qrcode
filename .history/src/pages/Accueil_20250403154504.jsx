@@ -7,7 +7,7 @@ import Ilustration from '/public/assets/café.gif'
 
 const Accueil = () => {
     return (
-        <section className=' '>
+        <section className='bg-[#0000FF]'>
             <div className='flex flex-col items-center md:flex-row justify-center gap-y-4 gap-x-2 md:gap-6 xl:gap-x-32 py-8 lg:py-10'>
             
                 <div className='flex flex-col space-y-4 justify-center items-center pt-0 lg:pt-4 text-center'>
@@ -16,7 +16,7 @@ const Accueil = () => {
                     <button className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg doto text-lg"><a href="/src/pages/CodeQR.jsx">Commencer</a></button>
                 </div>
                 <div
-                     className=' hidden md:block'>
+                     className=' hidden md:block bg-[#0000FF]'>
                     <img src={Ilustration} alt="" width={500} />
                 </div>
                 <div className=' md:hidden'>

@@ -12,7 +12,7 @@ const Accueil = () => {
             
                 <div className='flex flex-col space-y-4 justify-center items-center pt-0 lg:pt-4 text-center'>
                     <TypewriterEffect />
-                    <p className=' text-lg lg:text-lg w-72 py-5'>Créez, customisez et téléchargez au même endroit vos codes QR en quelques clics.</p>
+                    <p className=' text-start text-lg lg:text-lg w-72 py-5'>Créez, customisez et téléchargez au même endroit vos codes QR en quelques clics.</p>
                     <button className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg doto text-lg"><a href="/src/pages/CodeQR.jsx">Commencer</a></button>
                 </div>
                 <div

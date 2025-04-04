@@ -7,7 +7,7 @@ import Ilustration from '/public/assets/café.gif'
 
 const Accueil = () => {
     return (
-        <section className=' '>
+        <section>
             <div className='flex flex-col items-center md:flex-row justify-center gap-y-4 gap-x-2 md:gap-6 xl:gap-x-32 py-8 lg:py-10'>
             
                 <div className='flex flex-col space-y-4 justify-center items-center pt-0 lg:pt-4 text-center'>
