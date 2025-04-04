@@ -14,7 +14,7 @@ const QRGenerator = () => {
 
     try {
       const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dnmnqtqx2/image/upload", // Remplacez par votre Cloudinary cloud name
+        "https://api.cloudinary.com/v1_1/dnmnqtqx2/image/upload",
         {
           method: "POST",
           body: formData,
