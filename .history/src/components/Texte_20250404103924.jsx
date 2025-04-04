@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
-import DownloadQR from "../composants/DownloadQR";
 
 function Texte() {
   const [texte, setTexte] = useState("");
@@ -17,9 +16,6 @@ function Texte() {
   const [bgColor, setBgColor] = useState("#000000");
   const [imageInt, setImageInt] = useState("");
   const [tempLogoTaille, setTempLogoTaille] = useState("");
-
-  const qrRef = useRef(null);
-  const qrSvgRef = useRef(null)
 
   const handleColorChange = (newColor, newBgColor) => {
     setTempColor(newColor);

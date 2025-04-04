@@ -11,7 +11,7 @@ function Url() {
   const [bgColor, setBgColor] = useState("");
   const [imageInt, setImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
-  const [leNom, setLeNom] = useState("");
+  const [leNom, setLeNom] = useState("")
   const [error, setError] = useState("");
 
   const [url, setUrl] = useState("");
@@ -21,7 +21,7 @@ function Url() {
   const [tempLogoTaille, setTempLogoTaille] = useState("");
 
   const qrRef = useRef(null);
-  const qrSvgRef = useRef(null);
+  const qrSvgRef = useRef(null)
 
   const isValidUrl = (str) => {
     try {

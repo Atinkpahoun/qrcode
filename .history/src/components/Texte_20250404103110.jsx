@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
-import DownloadQR from "../composants/DownloadQR";
 
 function Texte() {
   const [texte, setTexte] = useState("");
@@ -10,7 +9,6 @@ function Texte() {
   const [tempBgColor, setTempBgColor] = useState("#000000");
   const [tempImageInt, setTempImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
-  const [leNom, setLeNom] = useState("");
 
   const [qrValue, setQrValue] = useState("");
   const [color, setColor] = useState("#ffffff");
@@ -18,8 +16,6 @@ function Texte() {
   const [imageInt, setImageInt] = useState("");
   const [tempLogoTaille, setTempLogoTaille] = useState("");
 
-  const qrRef = useRef(null);
-  const qrSvgRef = useRef(null)
 
   const handleColorChange = (newColor, newBgColor) => {
     setTempColor(newColor);
@@ -40,7 +36,8 @@ function Texte() {
     setColor(tempColor);
     setBgColor(tempBgColor);
     setImageInt(tempImageInt);
-    setLogoTaille(tempLogoTaille);
+    setLogoHeight(tempLogoHeight);
+    setLogoWidth(tempLogoWidth);
   };
 
   return (
@@ -62,7 +59,7 @@ function Texte() {
         </button>
       </form>
     
-      <div ref={qrSvgRef}>
+      <div>
         {qrValue && (
           <div>
             <QRCodeSVG
@@ -74,8 +71,8 @@ function Texte() {
                 imageInt
                   ? {
                       src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
+                      height: logoHeight,
+                      width: logoWidth,
                       excavate: true,
                     }
                   : undefined
@@ -84,7 +81,7 @@ function Texte() {
           </div>
         )}
       </div>
-      <div ref={qrRef} className="hidden">
+      <div className="hidden">
         {qrValue && (
           <div>
             <QRCodeCanvas
@@ -96,8 +93,8 @@ function Texte() {
                 imageInt
                   ? {
                       src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
+                      height: logoHeight,
+                      width: logoWidth,
                       excavate: true,
                     }
                   : undefined
@@ -110,12 +107,6 @@ function Texte() {
       <UploadColors onColorChange={handleColorChange} />
       <UploadMenu onLogoChange={handleLogoChange} />
 
-      <div>
-            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
-          </div>
-          {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
       </div>
     
   );

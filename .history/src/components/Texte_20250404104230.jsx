@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
-import DownloadQR from "../composants/DownloadQR";
 
 function Texte() {
   const [texte, setTexte] = useState("");

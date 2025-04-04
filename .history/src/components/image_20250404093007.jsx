@@ -1,8 +1,5 @@
 import { useRef, useState } from "react";
 import {QRCodeSVG, QRCodeCanvas} from "qrcode.react";
-import UploadColors from "../composants/UploadColors";
-import UploadMenu from "../composants/Upload";
-import DownloadQR from "../composants/DownloadQR";
 
 const QRGenerator = () => {
   const [image, setImage] = useState(null);
@@ -98,7 +95,7 @@ const QRGenerator = () => {
 
       {/* QR Code généré */}
       {qrData && (
-        <div ref={qrSvgRef} className="p-4 border rounded-lg">
+        <div className="p-4 border rounded-lg">
           <QRCodeSVG
             value={qrData}
             fgColor={color}
@@ -118,7 +115,7 @@ const QRGenerator = () => {
         </div>
       )}
       {qrData && (
-        <div ref={qrRef} className="p-4 border rounded-lg hidden">
+        <div className="p-4 border rounded-lg hidden">
           <QRCodeCanvas
             value={qrData}
             fgColor={color}
@@ -138,8 +135,8 @@ const QRGenerator = () => {
         </div>
       )}
 
-      <UploadColors onColorChange={handleColorChange} />
-      <UploadMenu onLogoChange={handleLogoChange} />
+      <UploadColor onColorChange={handleColorChange} />
+      <Upload onLogoChange={handleLogoChange} />
 
       <div>
             <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />

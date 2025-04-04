@@ -21,7 +21,7 @@ function Url() {
   const [tempLogoTaille, setTempLogoTaille] = useState("");
 
   const qrRef = useRef(null);
-  const qrSvgRef = useRef(null);
+  const qrSvgRef = useRef(null)
 
   const isValidUrl = (str) => {
     try {

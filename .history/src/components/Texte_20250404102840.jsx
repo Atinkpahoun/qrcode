@@ -1,35 +1,30 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
-import UploadColors from "../composants/UploadColors";
-import UploadMenu from "../composants/Upload";
-import DownloadQR from "../composants/DownloadQR";
 
 function Texte() {
   const [texte, setTexte] = useState("");
   const [tempColor, setTempColor] = useState("#ffffff");
   const [tempBgColor, setTempBgColor] = useState("#000000");
   const [tempImageInt, setTempImageInt] = useState("");
-  const [logoTaille, setLogoTaille] = useState(35);
-  const [leNom, setLeNom] = useState("");
+  const [tempLogoHeight, setTempLogoHeight] = useState(35);
+  const [tempLogoWidth, setTempLogoWidth] = useState(35);
 
   const [qrValue, setQrValue] = useState("");
   const [color, setColor] = useState("#ffffff");
   const [bgColor, setBgColor] = useState("#000000");
   const [imageInt, setImageInt] = useState("");
-  const [tempLogoTaille, setTempLogoTaille] = useState("");
+  const [logoHeight, setLogoHeight] = useState(35);
+  const [logoWidth, setLogoWidth] = useState(35);
 
-  const qrRef = useRef(null);
-  const qrSvgRef = useRef(null)
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
 
-  const handleColorChange = (newColor, newBgColor) => {
-    setTempColor(newColor);
-    setTempBgColor(newBgColor);
-  };
-
-  const handleLogoChange = (newImage, newTaille) => {
-    setTempImageInt(newImage);
-    setTempLogoTaille(newTaille);
-
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setTempImageInt(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleClick = (e) => {
@@ -40,7 +35,8 @@ function Texte() {
     setColor(tempColor);
     setBgColor(tempBgColor);
     setImageInt(tempImageInt);
-    setLogoTaille(tempLogoTaille);
+    setLogoHeight(tempLogoHeight);
+    setLogoWidth(tempLogoWidth);
   };
 
   return (
@@ -62,7 +58,7 @@ function Texte() {
         </button>
       </form>
     
-      <div ref={qrSvgRef}>
+      <div>
         {qrValue && (
           <div>
             <QRCodeSVG
@@ -74,8 +70,8 @@ function Texte() {
                 imageInt
                   ? {
                       src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
+                      height: logoHeight,
+                      width: logoWidth,
                       excavate: true,
                     }
                   : undefined
@@ -84,7 +80,7 @@ function Texte() {
           </div>
         )}
       </div>
-      <div ref={qrRef} className="hidden">
+      <div className="hidden">
         {qrValue && (
           <div>
             <QRCodeCanvas
@@ -96,8 +92,8 @@ function Texte() {
                 imageInt
                   ? {
                       src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
+                      height: logoHeight,
+                      width: logoWidth,
                       excavate: true,
                     }
                   : undefined
@@ -108,14 +104,8 @@ function Texte() {
       </div>
 
       <UploadColors onColorChange={handleColorChange} />
-      <UploadMenu onLogoChange={handleLogoChange} />
+        <Upload onLogoChange={handleLogoChange} />
 
-      <div>
-            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
-          </div>
-          {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
       </div>
     
   );
