@@ -15,7 +15,7 @@ const Typewriter = ({ text, speed = 100 }) => {
   }, [index, text, speed]);
 
   return (
-    <h1 className="text-3xl lg:text-4xl font-bold text-center sm:text-start text-[#0000FF]  ">
+    <h1 className="text-3xl lg:text-6xl font-bold text-center sm:text-start text-[#0000FF]  ">
       {displayedText}
       <span className="animate-pulse">|</span>
     </h1>
@@ -24,8 +24,8 @@ const Typewriter = ({ text, speed = 100 }) => {
 
 export default function TypewriterEffect() {
   return (
-    <div className="h-20 max-w-[500px] pb-4">
-      <Typewriter text="Générez facilement vos codes QR avec QREasy" speed={50} />
+    <div className="h-20 max-w-[600px] pb-4">
+      <Typewriter  text="Générez facilement vos codes QR avec QREasy" speed={50} />
     </div>
   );
 }
