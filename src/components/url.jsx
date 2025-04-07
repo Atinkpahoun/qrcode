@@ -125,10 +125,8 @@ function Url() {
         </form>
 
 
-
-        <div className="bg-blue-50 rounded-2xl  space-y-5 p-4">
-          <div  ref={qrSvgRef}>
-
+        <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
+        <div  ref={qrSvgRef}>
             {qrValue && (
               <div>
                 <QRCodeSVG

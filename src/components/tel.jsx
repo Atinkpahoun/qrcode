@@ -4,6 +4,9 @@ import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
 import { FaChevronDown } from "react-icons/fa";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
+
 
 function Tel() {
 
@@ -62,12 +65,9 @@ function Tel() {
     <div className="flex flex-wrap gap-y-5 gap-x-10">
       <form className="flex flex-col items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
-        <input
-          type="tel"
+        <PhoneInput
           value={tel}
-          className="border-[#0000FF] border p-2 rounded-md w-80 mb-2"
-          onChange={(e) => setTel(e.target.value)}
-        />
+          onChange={setTel}/>
         {error && <p className="text-red-500">{error}</p>}
 
         
