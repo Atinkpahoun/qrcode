@@ -8,8 +8,8 @@ export default {
     extend: {
       keyframes: {
         'color-pulse': {
-          '0%, 100%': { backgroundColor: '#0000FF' },
-          '50%': { backgroundColor: '#eff6ff' },       // blue-400
+          '0%, 100%': { backgroundColor: '##0000FF' }, // blue-500
+          '50%': { backgroundColor: '#60a5fa' },       // blue-400
         },
       },
       animation: {

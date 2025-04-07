@@ -15,7 +15,7 @@ const Typewriter = ({ text, speed = 100 }) => {
   }, [index, text, speed]);
 
   return (
-    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-center sm:text-start text-[#0000FF]  ">
+    <h1 className="text-3xl md:text-6xl font-bold text-center sm:text-start text-[#0000FF]  ">
       {displayedText}
       <span className="animate-pulse">|</span>
     </h1>

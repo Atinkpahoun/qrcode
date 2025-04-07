@@ -24,7 +24,7 @@ const Typewriter = ({ text, speed = 100 }) => {
 
 export default function TypewriterEffect() {
   return (
-    <div className="max-w-[600px] pb-4">
+    <div className="h-[500px]max-w-[600px] pb-4">
       <Typewriter  text="Générez facilement vos codes QR avec QREasy" speed={50} />
     </div>
   );
