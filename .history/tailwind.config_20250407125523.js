@@ -9,7 +9,7 @@ export default {
       keyframes: {
         'color-pulse': {
           '0%, 100%': { backgroundColor: '#0000FF' },
-          '50%': { backgroundColor: '#eff6ff' },       // blue-400
+          '50%': { backgroundColor: '#eff' },       // blue-400
         },
       },
       animation: {

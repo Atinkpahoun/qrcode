@@ -34,8 +34,8 @@ const Accueil = () => {
                 <div className='hidden md:block max-w-[520px] max-h-[450px] invisible'>Choose QRL Pixel for its easy QR code generation, customizability with colors and logos, and advanced tracking features. Monitor scans in real-time, including location and device data, all within an intuitive, user-friendly interface. Perfect for businesses and marketers seeking efficient, insightful QR code management.</div>
 
                 <div className='flex flex-col space-y-4 max-w-[520px] max-h-[450px] p-6'>
-                    <h1 className='text-[#0000FF] text-[24px] lg:text-[40px] font-medium max-w-[300px]'>Why you choose QRL Pixel</h1>
-                    <p className=' text-lg'>Choose QRL Pixel for its easy QR code generation, customizability with colors and logos, and advanced tracking features. Monitor scans in real-time, including location and device data, all within an intuitive, user-friendly interface. Perfect for businesses and marketers seeking efficient, insightful QR code management.</p>
+                    <h1 className='text-[#0000FF] text-[24px] lg:text-[40px] font max-w-[300px]'>Why you choose QRL Pixel</h1>
+                    <p className=''>Choose QRL Pixel for its easy QR code generation, customizability with colors and logos, and advanced tracking features. Monitor scans in real-time, including location and device data, all within an intuitive, user-friendly interface. Perfect for businesses and marketers seeking efficient, insightful QR code management.</p>
                 </div>
             </div>
         </section>
