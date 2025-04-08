@@ -1,6 +1,5 @@
-import React from "react";
-import { useRef, useState } from "react";
-import {QRCodeSVG, QRCodeCanvas} from "qrcode.react";
+import React, { useRef, useState } from "react";
+import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
 import DownloadQR from "../composants/DownloadQR";
@@ -13,7 +12,7 @@ const QRGenerator = () => {
   const [bgColor, setBgColor] = useState("");
   const [imageInt, setImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
-  const [leNom, setLeNom] = useState("")
+  const [leNom, setLeNom] = useState("");
 
   const [tempColor, setTempColor] = useState("#ffffff");
   const [tempBgColor, setTempBgColor] = useState("#000000");
@@ -21,13 +20,13 @@ const QRGenerator = () => {
   const [tempLogoTaille, setTempLogoTaille] = useState("");
 
   const qrRef = useRef(null);
-    const qrSvgRef = useRef(null)
+  const qrSvgRef = useRef(null);
 
-  // Fonction pour uploader l'image sur Cloudinary
+ 
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "upload_preset_qr"); // Remplacez par votre upload preset
+    formData.append("upload_preset", "upload_preset_qr");
 
     try {
       const res = await fetch(
@@ -44,19 +43,49 @@ const QRGenerator = () => {
     }
   };
 
-  // Gestion du fichier sélectionné
+  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file)); // Afficher l'image sélectionnée
-      uploadImage(file); // Uploader sur Cloudinary
+      setImage(URL.createObjectURL(file));
+      uploadImage(file);
     }
   };
 
-  // Fonction pour générer le QR Code
-  const generateQRCode = () => {
+  
+  const enregistrerQRCode = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://192.168.1.228:8000/api/qrcodes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          nom: leNom,
+          image_url: imageUrl,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("QR Code enregistré :", data);
+      } else {
+        console.error("Erreur d'enregistrement :", data);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'appel à l'API :", error);
+    }
+  };
+
+  
+  const generateQRCode = (e) => {
+    e.preventDefault();
     if (imageUrl) {
       setQrData(imageUrl);
+      enregistrerQRCode(); 
     }
     setColor(tempColor);
     setBgColor(tempBgColor);
@@ -72,32 +101,31 @@ const QRGenerator = () => {
   const handleLogoChange = (newImage, newTaille) => {
     setTempImageInt(newImage);
     setTempLogoTaille(newTaille);
-
   };
 
   return (
     <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
-      <form className="flex flex-col items-start ">
+      <form className="flex flex-col items-start">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Image</h1>
-        {/* Input pour sélectionner l'image */}
         <input type="file" accept="image/*" onChange={handleFileChange} />
-
-        {/* Afficher l'image sélectionnée */}
-        {image && <img src={image} alt="Aperçu" className="w-40 h-40 object-cover rounded-lg" />}
-
-        {/* Bouton pour générer le QR Code */}
+        {image && (
+          <img
+            src={image}
+            alt="Aperçu"
+            className="w-40 h-40 object-cover rounded-lg"
+          />
+        )}
         {imageUrl && (
           <button
-          onClick={generateQRCode}
-          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
+            onClick={generateQRCode}
+            className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
           >
             Générer le QR Code
           </button>
         )}
       </form>
-      
 
-      {/* QR Code généré */}
+     
       {qrData && (
         <div ref={qrSvgRef} className="p-4 border rounded-lg">
           <QRCodeSVG
@@ -115,9 +143,11 @@ const QRGenerator = () => {
                   }
                 : undefined
             }
-             />
+          />
         </div>
       )}
+
+     
       {qrData && (
         <div ref={qrRef} className="p-4 border rounded-lg hidden">
           <QRCodeCanvas
@@ -135,19 +165,29 @@ const QRGenerator = () => {
                   }
                 : undefined
             }
-             />
+          />
         </div>
       )}
 
+     
       <UploadColors onColorChange={handleColorChange} />
       <UploadMenu onLogoChange={handleLogoChange} />
 
+      
       <div>
-            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
-          </div>
-          {qrData && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
+        <input
+          placeholder="Donnez un nom au code"
+          type="text"
+          name="nomcode"
+          className="border p-2 w-54 border-[#0000FF] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+          onChange={(e) => setLeNom(e.target.value)}
+        />
+      </div>
+
+      
+      {qrData && (
+        <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+      )}
     </div>
   );
 };
