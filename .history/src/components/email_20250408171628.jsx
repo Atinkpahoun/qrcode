@@ -133,7 +133,7 @@ const Email = () => {
         { qrValue && <QRCodeCanvas 
           value={generateMailtoLink()} 
           size={170} 
-          fgColor={color}
+          fgColor={color}!
           bgColor={bgColor}
             imageSettings={
               imageInt
