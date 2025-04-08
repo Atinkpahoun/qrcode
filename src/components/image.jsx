@@ -54,7 +54,8 @@ const QRGenerator = () => {
   };
 
   // Fonction pour générer le QR Code
-  const generateQRCode = () => {
+  const generateQRCode = (e) => {
+    e.preventDefault()
     if (imageUrl) {
       setQrData(imageUrl);
     }
