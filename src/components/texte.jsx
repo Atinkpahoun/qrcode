@@ -48,9 +48,9 @@ function Texte() {
   };
 
   return (
-    <div>
-      <form>
-        
+    <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
+      <form className="flex flex-col items-center md:items-start">
+        <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Texte</h1>
         <input
           type="text"
           value={texte}
@@ -60,12 +60,12 @@ function Texte() {
 
         <button
           onClick={handleClick}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          className="bg-[#0000FF] text-white px-4 py-2 rounded-md"
         >
           Générer QR Code
         </button>
       </form>
-    
+      <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
       <div ref={qrSvgRef}>
         {qrValue && (
           <div>
@@ -120,6 +120,7 @@ function Texte() {
           {qrValue && (
             <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
           )}
+      </div>
       </div>
     
   );

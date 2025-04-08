@@ -77,7 +77,7 @@ const QRGenerator = () => {
 
   return (
     <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
-      <form className="flex flex-col items-start ">
+      <form className="flex flex-col items-center md:items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Image</h1>
         {/* Input pour sélectionner l'image */}
         <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -96,18 +96,18 @@ const QRGenerator = () => {
         )}
       </form>
       
-
-      {/* QR Code généré */}
-      {qrData && (
-        <div ref={qrSvgRef} className="p-4 border rounded-lg">
-          <QRCodeSVG
-            value={qrData}
-            fgColor={color}
-            bgColor={bgColor}
-            size={170}
-            imageSettings={
-              imageInt
-                ? {
+      <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
+        {/* QR Code généré */}
+        {qrData && (
+          <div ref={qrSvgRef} className="p-4 border rounded-lg">
+            <QRCodeSVG
+              value={qrData}
+              fgColor={color}
+              bgColor={bgColor}
+              size={170}
+              imageSettings={
+                imageInt
+                  ? {
                     src: imageInt,
                     height: logoTaille,
                     width: logoTaille,
@@ -116,38 +116,39 @@ const QRGenerator = () => {
                 : undefined
             }
              />
-        </div>
-      )}
-      {qrData && (
-        <div ref={qrRef} className="p-4 border rounded-lg hidden">
-          <QRCodeCanvas
-            value={qrData}
-            fgColor={color}
-            bgColor={bgColor}
-            size={170}
-            imageSettings={
-              imageInt
-                ? {
-                    src: imageInt,
-                    height: logoTaille,
-                    width: logoTaille,
-                    excavate: true,
-                  }
-                : undefined
-            }
-             />
-        </div>
-      )}
-
-      <UploadColors onColorChange={handleColorChange} />
-      <UploadMenu onLogoChange={handleLogoChange} />
-
-      <div>
-            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
           </div>
+        )}
+          {qrData && (
+            <div ref={qrRef} className="p-4 border rounded-lg hidden">
+              <QRCodeCanvas
+                value={qrData}
+                fgColor={color}
+                bgColor={bgColor}
+                size={170}
+                imageSettings={
+              imageInt
+                ? {
+                    src: imageInt,
+                    height: logoTaille,
+                    width: logoTaille,
+                    excavate: true,
+                  }
+                : undefined
+            }
+             />
+          </div>
+        )}
+        <UploadColors onColorChange={handleColorChange} />
+        <UploadMenu onLogoChange={handleLogoChange} />
+
+        <div>
+            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
+          
           {qrData && (
             <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
           )}
+        </div>
+      </div>
     </div>
   );
 };

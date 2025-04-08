@@ -4,7 +4,6 @@ import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
-import { FaChevronDown } from "react-icons/fa";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 
@@ -63,8 +62,8 @@ function Tel() {
   };
 
   return (
-    <div className="flex flex-wrap gap-y-5 gap-x-10">
-      <form className="flex flex-col items-start ">
+    <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
+      <form className="flex flex-col items-center md:items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
         <PhoneInput
           value={tel}

@@ -121,7 +121,7 @@ function Url() {
             onClick={handleClick}
             className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
           >
-            Générer et Enregistrer QR Code
+            Générer QRCode
           </button>
         </form>
 

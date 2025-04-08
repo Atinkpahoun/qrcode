@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   server: {
-    host: '192.168.1.151',
+    host: '0.0.0.0',
     port: 5174
   }
 })
