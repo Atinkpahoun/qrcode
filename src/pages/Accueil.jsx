@@ -18,7 +18,7 @@ const Accueil = () => {
         <section className=''>
             <div className='flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4'>
             
-                <div className='flex flex-col items-center  w-full pt-10 lg:pt-4 px-5'>
+                <div className='flex flex-col items-center lg:items-start ml-0 lg:ml-16 xl:ml-32   w-full pt-10 lg:pt-4 px-5'>
                     <TypewriterEffect />
                     <p className='pt-4 sm:pt-10 md:pt-5 text-center lg:text-start lg:text-2xl max-w-[410px] py-5'>Créez, customisez et téléchargez au même endroit vos codes QR en quelques clics.</p>
                     <ButtonCommencer  /> 

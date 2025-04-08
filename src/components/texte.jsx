@@ -53,14 +53,15 @@ function Texte() {
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Texte</h1>
         <input
           type="text"
+          placeholder="Entrez le texte"
           value={texte}
-          className="border p-2 rounded-md w-80 mb-4"
+          className="border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
           onChange={(e) => setTexte(e.target.value)}
         />
 
         <button
           onClick={handleClick}
-          className="bg-[#0000FF] text-white px-4 py-2 rounded-md"
+          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
         >
           Générer QR Code
         </button>
