@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
-import React from 'react'
+
 import { ToastContainer } from "react-toastify"; 
 import { AuthProvider } from "./context/AuthContext";
 import NavBar from "./composants/NavBar"; 
