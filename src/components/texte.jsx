@@ -1,10 +1,14 @@
+import React from "react";
 import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
 import DownloadQR from "../composants/DownloadQR";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Texte() {
+  
   const [texte, setTexte] = useState("");
   const [tempColor, setTempColor] = useState("#ffffff");
   const [tempBgColor, setTempBgColor] = useState("#000000");

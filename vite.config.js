@@ -4,10 +4,9 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      "@composants": path.resolve(__dirname, "./src/composants"),
-    },
-  },
-});
+  server: {
+    host: '192.168.1.228',
+    port: 5173
+  }
+})
+;
