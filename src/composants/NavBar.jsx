@@ -1,5 +1,4 @@
-// src/composants/NavBar.jsx
-import React, { useState, useContext,memo } from "react";
+import React, { useState, useContext, memo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
@@ -13,7 +12,7 @@ const NavBar = () => {
   // Gestion de la déconnexion
   const handleLogout = () => {
     try {
-      logout(); // Appel à la fonction de déconnexion depuis le contexte
+      logout();
       toast.success("Déconnexion réussie !");
       navigate("/connexion");
     } catch (error) {
@@ -26,14 +25,55 @@ const NavBar = () => {
     <nav className="bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
       {/* Logo */}
       <div className="flex gap-x-1 items-center text-xl lg:text-3xl">
-        <FaQrcode  color="blue" />
-        <Link to="/" className=" font-bold ">
+        <FaQrcode color="blue" />
+        <Link to="/" className="font-bold">
           QREasy
         </Link>
       </div>
 
+      {/* Bouton Toggle */}
+      <button
+        onClick={() => setIsOpen(!isOpen)} // Ouvrir/fermer le menu
+        className="md:hidden focus:outline-none"
+      >
+        {isOpen ? (
+    // SVG pour le bouton lorsque le menu est ouvert
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    ) : (
+    // SVG pour le bouton lorsque le menu est fermé
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M4 6h16M4 12h16m-7 6h7"
+      />
+      </svg>
+    )}
+</button>
+
+
       {/* Liens de navigation */}
-      <ul className="flex text-lg gap-x-6 items-center">
+      <ul className={`shadow-lg md:shadow-none p-4 md:p-0 absolute md:relative top-16 md:top-0 right-5 rounded md:rounded-none bg-blue-50 flex-col md:flex-row md:flex space-y-5 md:space-y-0 space-x-0 md:space-x-5 ${isOpen ? 'flex' : 'hidden'} md:flex`}>
         <li>
           <Link to="/Accueil" className="hover:underline font-semibold">
             Accueil
@@ -70,11 +110,7 @@ const NavBar = () => {
           </>
         ) : (
           <li className="relative">
-            {/* Icône utilisateur */}
-            <button
-              onClick={() => setIsOpen(!isOpen)} // Ouvrir/fermer le menu
-              className="focus:outline-none"
-            >
+            <button className="focus:outline-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -110,7 +146,6 @@ const NavBar = () => {
           </li>
         )}
       </ul>
-  
     </nav>
   );
 };
