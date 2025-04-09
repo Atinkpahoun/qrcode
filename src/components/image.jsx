@@ -100,7 +100,7 @@ const QRGenerator = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5 doto">
       <form className="flex flex-col items-center md:items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Image</h1>
         <input type="file" accept="image/*" onChange={handleFileChange} />
