@@ -1,44 +1,28 @@
-
+import React from "react";
 import { useRef, useState } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
-import Upload from "../composants/Upload.jsx";
-import UploadColors from "../composants/UploadColors.jsx";
-import DownloadQR from "../composants/DownloadQR.jsx";
+import UploadColors from "../composants/UploadColors";
+import UploadMenu from "../composants/Upload";
+import DownloadQR from "../composants/DownloadQR";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const Email = () => {
-  const [email, setEmail] = useState("");
-  const [tempSubject, setTempSubject] = useState("");
-  const [tempBody, setTempBody] = useState("");
-  const [tempColor, setTempColor] = useState("#ffffff");
-  const [tempBgColor, setTempBgColor] = useState("#000000");
+function Texte() {
+  const [texte, setTexte] = useState("");
+  const [tempColor, setTempColor] = useState("#000000");
+  const [tempBgColor, setTempBgColor] = useState("#ffffff");
   const [tempImageInt, setTempImageInt] = useState("");
-  const [tempLogoTaille, setTempLogoTaille] = useState(35);
-
-  const [qrValue, setQrValue] = useState("");
-  const [subject, setSubject] = useState("");
-  const [body, setBody] = useState("");
-  const [color, setColor] = useState("#ffffff");
-  const [bgColor, setBgColor] = useState("#000000");
-  const [imageInt, setImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
   const [leNom, setLeNom] = useState("");
-  const [error, setError] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+
+  const [qrValue, setQrValue] = useState("");
+  const [color, setColor] = useState("#000000");
+  const [bgColor, setBgColor] = useState("#ffffff");
+  const [imageInt, setImageInt] = useState("");
+  const [tempLogoTaille, setTempLogoTaille] = useState("");
 
   const qrRef = useRef(null);
   const qrSvgRef = useRef(null);
-
-  const validateEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
-
-  const generateMailtoLink = () => {
-    if (!email) return "";
-    return `mailto:${qrValue}?subject=${encodeURIComponent(
-      tempSubject
-    )}&body=${encodeURIComponent(tempBody)}`;
-  };
 
   const handleColorChange = (newColor, newBgColor) => {
     setTempColor(newColor);
@@ -50,57 +34,48 @@ const Email = () => {
     setTempLogoTaille(newTaille);
   };
 
-  const enregistrerQRCode = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const response = await fetch("http://192.168.1.228:8000/api/qrcodes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          nom: leNom,
-          image_url: generateMailtoLink(),
-        }),
-      });
-
-      
-
-      if (response.ok) {
-        setSuccessMsg("QR Code enregistré avec succès !");
-        setTimeout(() => setSuccessMsg(""), 5000);
-      } else {
-        setError("Erreur lors de l'enregistrement !");
-        setTimeout(() => setError(""), 5000);
-      }
-    } catch (error) {
-      setError("Erreur serveur !");
-      console.error("Erreur API:", error);
-      setTimeout(() => setError(""), 5000);
-    }
-  };
-
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
 
-    if (!validateEmail(email)) {
-      setError("Adresse Mail invalide !");
-      setQrValue("");
+    if (!texte.trim() || !leNom.trim()) {
+      toast.error("Veuillez remplir tous les champs !");
       return;
     }
 
-    setError("");
-    setQrValue(email);
-    setTempSubject(subject);
-    setTempBody(body);
+    // Mise à jour des valeurs pour affichage
+    setQrValue(texte);
     setColor(tempColor);
     setBgColor(tempBgColor);
     setImageInt(tempImageInt);
     setLogoTaille(tempLogoTaille);
 
-    enregistrerQRCode();
+    // Envoi au backend
+    try {
+      const token = localStorage.getItem("token"); // Ou récupère depuis ton AuthContext
+
+      const response = await axios.post(
+        "http://192.168.1.228:8000/api/qrcode",
+        {
+          nom: leNom,
+          contenu: texte,
+          color: tempColor,
+          bgColor: tempBgColor,
+          logo: tempImageInt || null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
+
+      toast.success("QR Code enregistré avec succès !");
+      console.log("Réponse backend :", response.data);
+    } catch (error) {
+      console.error("Erreur lors de l'enregistrement :", error);
+      toast.error("Échec de l'enregistrement du QR Code");
+    }
   };
 
   return (
@@ -109,103 +84,88 @@ const Email = () => {
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Email</h1>
         <input
           type="text"
-          placeholder="Your Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border border-[#0000FF] p-2 rounded-md w-80 mb-4"
+          placeholder="Texte à convertir"
+          value={texte}
+          onChange={(e) => setTexte(e.target.value)}
+          className="border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
         />
-
-        {error && <p className="text-red-500">{error}</p>}
-        {successMsg && <p className="text-blue-500">{successMsg}</p>}
 
         <input
           type="text"
-          placeholder="Subject"
-          onChange={(e) => setSubject(e.target.value)}
-          value={subject}
-          className="border border-[#0000FF] p-2 rounded-md w-80 mb-4"
-        />
-        <input
-          type="text"
-          placeholder="Message"
-          className="border border-[#0000FF] p-2 rounded-md w-80 mb-4"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
+          placeholder="Nom du QR Code"
+          value={leNom}
+          onChange={(e) => setLeNom(e.target.value)}
+          className="border-[#0000FF] border p-2 rounded-md w-72 lg:w-80 mb-2 ml-4 md:ml-0 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
         />
 
         <button
+          type="submit"
           className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
-          onClick={handleClick}
         >
-          Générer QR Code
+          Générer QRCode
         </button>
       </form>
-
-      <div className="bg-blue-50 rounded-2xl space-y-5 p-4 h-1/2">
-        {/* QR Code visible */}
-        <div ref={qrSvgRef}>
-          {qrValue && (
-            <QRCodeSVG
-              value={generateMailtoLink()}
-              size={170}
-              fgColor={color}
-              bgColor={bgColor}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
-                    }
-                  : undefined
-              }
-            />
-          )}
-        </div>
-
-        {/* QR Code caché pour le téléchargement */}
-        <div ref={qrRef} className="hidden">
-          {qrValue && (
-            <QRCodeCanvas
-              value={generateMailtoLink()}
-              size={170}
-              fgColor={color}
-              bgColor={bgColor}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
-                    }
-                  : undefined
-              }
-            />
-          )}
-        </div>
-
+      <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
+      {/* Affichage QR visible */}
+      <div ref={qrSvgRef}>
         {qrValue && (
-          <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-        )}
-
-        <UploadColors onColorChange={handleColorChange} />
-        <Upload onLogoChange={handleLogoChange} />
-
-        <div>
-          <input
-            placeholder="Donnez un nom au code"
-            type="text"
-            name="nomcode"
-            className="border p-2 w-54 border-[#0000FF] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
-            onChange={(e) => setLeNom(e.target.value)}
+          <QRCodeSVG
+            value={qrValue}
+            fgColor={color}
+            bgColor={bgColor}
+            size={170}
+            imageSettings={
+              imageInt
+                ? {
+                    src: imageInt,
+                    height: logoTaille,
+                    width: logoTaille,
+                    excavate: true,
+                  }
+                : undefined
+            }
           />
-        </div>
+        )}
       </div>
-    </div>
-    
-  );
-};
 
-export default Email;
+      {/* QR Code en canvas caché pour téléchargement */}
+      <div ref={qrRef} className="hidden">
+        {qrValue && (
+          <QRCodeCanvas
+            value={qrValue}
+            fgColor={color}
+            bgColor={bgColor}
+            size={170}
+            imageSettings={
+              imageInt
+                ? {
+                    src: imageInt,
+                    height: logoTaille,
+                    width: logoTaille,
+                    excavate: true,
+                  }
+                : undefined
+            }
+          />
+        )}
+      </div>
+
+      <UploadColors onColorChange={handleColorChange} />
+      <UploadMenu onLogoChange={handleLogoChange} />
+      <div>
+            <input
+              placeholder="Donnez un nom au code"
+              type="text"
+              name="nomcode"
+              className="border p-2 w-54 border-[#0000FF] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+              onChange={(e) => setLeNom(e.target.value)}
+            />
+      </div>
+
+      {qrValue && <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />}
+    </div>
+    </div>
+  );
+}
+
+export default Texte;
