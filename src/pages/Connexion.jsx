@@ -50,14 +50,14 @@ const Connexion = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen">
-      <div className="border-[#0000FF] border-2 flex w-full xl:w-1/2 rounded-lg doto">
+    <section className="flex items-center justify-center min-h-screen mx-auto w-auto lg:w-1/2 xl:w-auto">
+      <div className="border-[#0000FF] border-2 flex w-auto p-4 lg:p-0 xl:w-1/2 rounded-lg doto">
         <div className="w-0 xl:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
           <FaQrcode size={37} color="blue" />
           <h1 className="font-bold text-[#0000FF] text-5xl">QREasy</h1>
         </div>
-        <form className="flex flex-col items-center w-full xl:w-1/2 py-3 xl:py-6" onSubmit={handleSubmit}>
-          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-6">
+        <form className="flex flex-col items-center w-full px-2 md:px-4 xl:w-1/2 py-3 xl:py-6" onSubmit={handleSubmit}>
+          <h1 className="text-[#0000FF] text-xl md:text-2xl lg:text-3xl font-bold pb-6">
             Connectez-vous
           </h1>
         {/* Champ Email */}
