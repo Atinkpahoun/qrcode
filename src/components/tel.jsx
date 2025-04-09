@@ -66,6 +66,7 @@ function Tel() {
       <form className="flex flex-col items-center md:items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
         <PhoneInput
+          defaultCountry="bj"
           value={tel}
           onChange={setTel}/>
         {error && <p className="text-red-500">{error}</p>}
@@ -83,7 +84,7 @@ function Tel() {
       <div className="bg-blue-50 rounded-2xl  space-y-5 p-4">
         <div ref={qrSvgRef}>
           {qrValue && (
-            <div>
+            <div className="p-4 border rounded-lg">
               <QRCodeSVG
                 value={qrValue}
                 fgColor={color}

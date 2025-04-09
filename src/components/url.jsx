@@ -54,7 +54,7 @@ function Url() {
           "Authorization": `Bearer ${localStorage.getItem("token")}`
        },
         body: JSON.stringify({
-          user_id: 1,
+          user_id: userId,
           type: "url",
           data: {
             url: qrValue,
@@ -129,7 +129,7 @@ function Url() {
         <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
         <div  ref={qrSvgRef}>
             {qrValue && (
-              <div>
+              <div className="p-4 border rounded-lg">
                 <QRCodeSVG
                   value={qrValue}
                   fgColor={color}
@@ -172,6 +172,10 @@ function Url() {
             )}
           </div>
 
+          {qrValue && (
+            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+          )}
+
           <UploadColors onColorChange={handleColorChange} />
           <Upload onLogoChange={handleLogoChange} />
 
@@ -184,9 +188,7 @@ function Url() {
               onChange={(e) => setLeNom(e.target.value)}
             />
           </div>
-          {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
+          
         </div>
       </div>
     </section>

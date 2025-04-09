@@ -4,8 +4,6 @@ import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
 import DownloadQR from "../composants/DownloadQR";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 function Texte() {
   
@@ -69,7 +67,7 @@ function Texte() {
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
       <div ref={qrSvgRef}>
         {qrValue && (
-          <div>
+          <div className="p-4 border rounded-lg">
             <QRCodeSVG
               value={qrValue}
               fgColor={color}
@@ -111,6 +109,10 @@ function Texte() {
           </div>
         )}
       </div>
+      
+      {qrValue && (
+            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+          )}
 
       <UploadColors onColorChange={handleColorChange} />
       <UploadMenu onLogoChange={handleLogoChange} />
@@ -118,9 +120,7 @@ function Texte() {
       <div>
             <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
           </div>
-          {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
+          
       </div>
       </div>
     
