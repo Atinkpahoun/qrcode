@@ -104,7 +104,7 @@ function Url() {
     <section>
       <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
         <form className="flex flex-col items-center md:items-start" action="">
-          <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Lien/URL</h1>
+          <h1 className="text-3xl font-bold text-[#0000FF] mb-5 md:mb-8">Lien/URL</h1>
           <input
             type="url"
             value={url}
