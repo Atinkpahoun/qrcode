@@ -141,7 +141,7 @@ const Email = () => {
   
 
   return (
-    <div className="flex flex-wrap gap-y-5 gap-x-10">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
       <form className="flex flex-col items-start">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Email</h1>
         <input
