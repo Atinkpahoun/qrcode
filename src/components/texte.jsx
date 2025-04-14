@@ -3,6 +3,8 @@ import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
 import DownloadQR from "../composants/DownloadQR";
+import axios from "axios"; // Assurez-vous d'importer axios
+import { toast } from "react-toastify"; // Assurez-vous d'importer toast
 
 function Texte() {
   const [texte, setTexte] = useState("");
@@ -114,7 +116,7 @@ function Texte() {
   }, [qrValue, showQr]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5 doto">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
       <form className="flex flex-col items-center md:items-start">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Texte</h1>
         <input
@@ -132,24 +134,9 @@ function Texte() {
         >
           {loading ? (
             <>
-              <svg
-                className="animate-spin h-5 w-5 text-white"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8z"
-                />
+              <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
               QR en cours de génération...
             </>
@@ -158,35 +145,35 @@ function Texte() {
           )}
         </button>
       </form>
-      <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
-      <div ref={qrSvgRef}>
-        {qrValue && (
-          <div className="p-4 border border-[#0000FF] rounded-lg">
-            <QRCodeSVG
-              marginSize={2}
-              value={qrValue}
-              fgColor={color}
-              bgColor={bgColor}
-              size={250}
-              level={"H"}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
-                    }
-                  : undefined
-              }
-            />
-          </div>
-        )}
-      </div>
 
-      <div ref={qrRef} className="hidden">
-        {qrValue && (
-          <div>
+      <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
+        <div ref={qrSvgRef}>
+          {qrValue && (
+            <div className="p-4 border border-[#0000FF] rounded-lg">
+              <QRCodeSVG
+                marginSize={2}
+                value={qrValue}
+                fgColor={color}
+                bgColor={bgColor}
+                size={250}
+                level={"H"}
+                imageSettings={
+                  imageInt
+                    ? {
+                        src: imageInt,
+                        height: logoTaille,
+                        width: logoTaille,
+                        excavate: true,
+                      }
+                    : undefined
+                }
+              />
+            </div>
+          )}
+        </div>
+
+        <div ref={qrRef} className="hidden">
+          {qrValue && (
             <QRCodeCanvas
               marginSize={2}
               value={qrValue}
@@ -205,27 +192,25 @@ function Texte() {
                   : undefined
               }
             />
-          </div>
-        )}
-      </div>
-      
-      {qrValue && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
           )}
+        </div>
 
-      <UploadColors onColorChange={handleColorChange} />
-      <UploadMenu onLogoChange={handleLogoChange} />
+        {qrValue && <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />}
+        <UploadColors onColorChange={handleColorChange} />
+        <UploadMenu onLogoChange={handleLogoChange} />
 
-      <div>
-            <input placeholder="Donnez un nom au code" type="text" name="nomcode" className="border p-2  w-54   border-[#0000FF] rounded-md  focus:outline-none focus:ring-1 focus:ring-[#0000FF]" onChange={(e) => setLeNom(e.target.value)} />
-          </div>
-          
+        <div>
+          <input
+            placeholder="Donnez un nom au code"
+            type="text"
+            name="nomcode"
+            className="border p-2 w-54 border-[#0000FF] rounded-md focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+            onChange={(e) => setLeNom(e.target.value)}
+          />
+        </div>
       </div>
-      </div>
 
-      {qrValue && showQr && (
-        <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-      )}
+      {qrValue && showQr && <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />}
     </div>
   );
 }
