@@ -1,4 +1,3 @@
-// src/context/AuthContext.js
 import React, { createContext, useState, useEffect } from "react";
 import api from "../services/Api";
 
@@ -13,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await api.get("/userInfo");
+          const response = await api.get("/api/userInfo");
           setUser(response.data.user);
         } catch (error) {
           console.error("Erreur lors du chargement des données utilisateur :", error);

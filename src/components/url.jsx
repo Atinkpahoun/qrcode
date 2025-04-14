@@ -1,9 +1,10 @@
-import React from "react";
-import { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import Upload from "../composants/Upload.jsx";
 import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function Url() {
   const [qrValue, setQrValue] = useState("");
@@ -19,6 +20,7 @@ function Url() {
   const [tempBgColor, setTempBgColor] = useState("#000000");
   const [tempImageInt, setTempImageInt] = useState("");
   const [tempLogoTaille, setTempLogoTaille] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const qrRef = useRef(null);
   const qrSvgRef = useRef(null);
@@ -42,45 +44,6 @@ function Url() {
     setTempLogoTaille(newTaille);
   };
 
-
-  const userId = localStorage.getItem('userId');
-  const saveQrCode = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/qrcodes`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-       },
-        body: JSON.stringify({
-          user_id: 1,
-          type: "url",
-          data: {
-            url: qrValue,
-          },
-          customization: {
-            color: tempColor,
-            bgColor: tempBgColor,
-            imageInt: tempImageInt,
-            logoTaille: tempLogoTaille,
-          },
-          nom: leNom,
-          date_creation: new Date().toISOString(),
-        }),
-      });
-  
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'enregistrement du QR Code.");
-      }
-  
-      const data = await response.json();
-      console.log("QR Code enregistré :", data);
-    } catch (error) {
-      console.error("Erreur :", error.message);
-    }
-  };  
-
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -90,15 +53,71 @@ function Url() {
     }
 
     setError("");
-    setQrValue(url);
-    setColor(tempColor);
-    setBgColor(tempBgColor);
-    setImageInt(tempImageInt);
-    setLogoTaille(tempLogoTaille);
+    setIsGenerating(true);
 
-      
-    saveQrCode();
+    setTimeout(() => {
+      setQrValue(url);
+      setColor(tempColor);
+      setBgColor(tempBgColor);
+      setImageInt(tempImageInt);
+      setLogoTaille(tempLogoTaille);
+      setIsGenerating(false);
+    }, 3000);
   };
+
+  useEffect(() => {
+    if (!qrValue || !qrRef.current) return;
+
+    const timeout = setTimeout(() => {
+      const canvas = qrRef.current.querySelector("canvas");
+      if (!canvas) return;
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        try {
+          const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const userData = await userResponse.json();
+          const formData = new FormData();
+
+          formData.append("user_id", userData.id);
+          formData.append("type", "url");
+          formData.append("data[url]", url);
+          formData.append("customization[color]", color);
+          formData.append("customization[bgColor]", bgColor);
+          formData.append("customization[imageInt]", imageInt);
+          formData.append("customization[logoTaille]", logoTaille);
+          formData.append("nom", leNom || "Sans nom");
+          formData.append("date_creation", new Date().toISOString());
+          formData.append("png_file", blob, `${leNom || "qr"}_${Date.now()}.png`);
+
+          const response = await axios.post(`${import.meta.env.VITE_API_URL}/qrcodes`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          console.log("QR Code URL enregistré :", response.data);
+          toast.success("QR Code URL enregistré !");
+        } catch (error) {
+          toast.error("Erreur lors de l'enregistrement.");
+          console.error(error);
+        }
+      }, "image/png");
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [qrValue]);
 
   return (
     <section>
@@ -119,16 +138,42 @@ function Url() {
 
           <button
             onClick={handleClick}
-            className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
+            className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 flex items-center gap-2 disabled:opacity-50"
+            disabled={isGenerating}
           >
-            Générer et Enregistrer QR Code
+            {isGenerating ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                QR en cours de génération...
+              </>
+            ) : (
+              "Générer et Enregistrer QR Code"
+            )}
           </button>
         </form>
 
-
         <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
-        <div  ref={qrSvgRef}>
-            {qrValue && (
+          <div ref={qrSvgRef}>
+            {qrValue && !isGenerating && (
               <div>
                 <QRCodeSVG
                   value={qrValue}
@@ -149,8 +194,9 @@ function Url() {
               </div>
             )}
           </div>
+
           <div ref={qrRef} className="hidden">
-            {qrValue && (
+            {qrValue && !isGenerating && (
               <div>
                 <QRCodeCanvas
                   value={qrValue}
@@ -184,7 +230,8 @@ function Url() {
               onChange={(e) => setLeNom(e.target.value)}
             />
           </div>
-          {qrValue && (
+
+          {qrValue && !isGenerating && (
             <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
           )}
         </div>

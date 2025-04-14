@@ -32,6 +32,7 @@ const Inscription = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           nom: formData.nom,
@@ -46,7 +47,7 @@ const Inscription = () => {
       console.log("Réponse du backend :", data);
   
       if (response.ok) {
-        toast.success("Inscription réussie !", { autoClose: 5000 });
+        toast.success("Inscription réussie. Vérifiez votre email pour activer votre compte.", { autoClose: 5000 });
         setFormData({
           nom: "",
           prenoms: "",
@@ -54,7 +55,8 @@ const Inscription = () => {
           password: "",
           pass_valid: "",
         });
-        setTimeout(() => navigate("/connexion"), 2000);
+
+         navigate("/email-check");
       } else {
         if (response.status === 422 && data.errors) {
           if (data.errors.email) {

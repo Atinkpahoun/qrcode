@@ -1,41 +1,144 @@
+import React, { useEffect, useState } from "react";
+import DownloadQR from "../composants/DownloadQR";
+import axios from "axios";
 
-import {useState} from "react";
+function Historique() {
+  const [qrcodes, setQrcodes] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [selectedType, setSelectedType] = useState("tous");
+  const [search, setSearch] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
+  useEffect(() => {
+    fetchQRCodes();
+  }, []);
 
-function Historique(){
-    const [selectedOption, setSelectedOption] = useState('');
+  useEffect(() => {
+    filterData();
+  }, [qrcodes, selectedType, search, fromDate, toDate]);
 
-    const handleChange = (event) => {
-        setSelectedOption(event.target.value);
-    };
-    return(
-        <div className=" pt-5 xl:pt-14 justify-center">
-            <h1 className="doto text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">Bienvenu(e) dans l'historique de vos codes QR</h1>
-            <div className="flex items-center justify-center mt-7 xl:mt-16">
-            <select 
-                value={selectedOption} 
-                onChange={handleChange} 
-                className="bg-blue-50 border-2 border-[#0000FF] rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
-            >
-                <option value="tous">Tous les codes QR</option>
-                <option value="URL">URL</option>
-                <option value="email">Email</option>
-                <option value="texte">Texte</option>
-                <option value="téléphone">Téléphone</option>
-                <option value="image">Image</option>
-            </select>
+  const fetchQRCodes = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/qrcodes`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setQrcodes(res.data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des QR codes :", error);
+    }
+  };
 
+  const filterData = () => {
+    let data = [...qrcodes];
+
+    if (selectedType !== "tous") {
+      data = data.filter((qr) => qr.type === selectedType);
+    }
+
+    if (search.trim() !== "") {
+      data = data.filter((qr) =>
+        qr.nom.toLowerCase().includes(search.trim().toLowerCase())
+      );
+    }
+
+    if (fromDate) {
+      data = data.filter((qr) => new Date(qr.date_creation) >= new Date(fromDate));
+    }
+
+    if (toDate) {
+      data = data.filter((qr) => new Date(qr.date_creation) <= new Date(toDate));
+    }
+
+    setFiltered(data);
+  };
+
+  const handleModify = (id) => {
+    window.location.href = `/modifier/${id}`;
+  };
+
+  return (
+    <div className="pt-5 xl:pt-12 justify-center doto">
+      <h1 className="text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">
+        Bienvenu(e) dans l'historique de vos codes QR
+      </h1>
+
+      <div className="flex flex-wrap justify-center gap-3 mt-6 xl:mt-10">
+        <input
+          type="text"
+          placeholder="Rechercher par nom..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="bg-blue-50 border-2 border-[#0000FF] rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+        />
+
+        <select
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+          className="bg-blue-50 border-2 border-[#0000FF] rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#0000FF]"
+        >
+          <option value="tous">Tous les codes QR</option>
+          <option value="url">URL</option>
+          <option value="email">Email</option>
+          <option value="texte">Texte</option>
+          <option value="téléphone">Téléphone</option>
+          <option value="image">Image</option>
+        </select>
+
+        <input
+          type="date"
+          value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+          className="border border-[#0000FF] rounded-md p-2"
+        />
+
+        <input
+          type="date"
+          value={toDate}
+          onChange={(e) => setToDate(e.target.value)}
+          className="border border-[#0000FF] rounded-md p-2"
+        />
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-5 lg:gap-10 mt-8">
+        {filtered.map((qr) => (
+          <div
+            key={qr.id}
+            className="flex rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
+          >
+            <div className="justify-center flex flex-col pr-2 md:pr-4 border-r border-[#0000FF]">
+              <img
+                className="h-28 w-28 object-contain"
+                src={qr.image_url || "/src/assets/degrader1.gif"}
+                alt="qr preview"
+              />
+              <div className="justify-center flex flex-col mt-4 space-y-3">
+                <button className="border-2 border-[#0000FF] rounded px-6 bg-blue-50 py-1">
+                  {qr.scan_count} scans
+                </button>
+                <DownloadQR qrId={qr.id} />
+              </div>
             </div>
-            <div className="mt-5 lg:mt-10 mb-2">
-                <div className="mx-2 lg:mx-5 xl:mx-10 text-sm xl:text-xl doto font-semibold text-[#0000FF] bg-blue-50 rounded border-2 border-[#0000FF] py-2 px-2 justify-between flex">
-                    <h1>CodeQR</h1>
-                    <h1>Nom</h1>
-                    <h1>Contenu</h1>
-                    <h1>Options</h1>
-                </div>
-
+            <div className="pl-2 md:pl-4 justify-between space-y-6">
+              <div className="space-y-3">
+                <h1 className="text-[#0000FF] font-medium text-lg capitalize">{qr.type}</h1>
+                <h1>{qr.nom}</h1>
+                <h1>Créé : {new Date(qr.date_creation).toLocaleDateString()}</h1>
+                <h1>Modifié : {new Date(qr.updated_at).toLocaleDateString()}</h1>
+              </div>
+              <button
+                className="rounded px-6 py-1 bg-[#0000FF] text-white"
+                onClick={() => handleModify(qr.id)}
+              >
+                Modifier
+              </button>
             </div>
-        </div>
-    )
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
-export default Historique
+
+export default Historique;
