@@ -1,5 +1,5 @@
 
-import {useState} from "react";
+import React, {useState} from "react";
 
 
 function Historique(){
@@ -9,9 +9,9 @@ function Historique(){
         setSelectedOption(event.target.value);
     };
     return(
-        <div className=" pt-5 xl:pt-14 justify-center">
-            <h1 className="doto text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">Bienvenu(e) dans l'historique de vos codes QR</h1>
-            <div className="flex items-center justify-center mt-7 xl:mt-16">
+        <div className=" pt-5 xl:pt-14 justify-center doto">
+            <h1 className=" text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">Bienvenu(e) dans l'historique de vos codes QR</h1>
+            <div className="flex items-center justify-center mt-7 xl:mt-16 mb-5 xl:mb-10">
             <select 
                 value={selectedOption} 
                 onChange={handleChange} 
@@ -26,12 +26,18 @@ function Historique(){
             </select>
 
             </div>
-            <div className="mt-5 lg:mt-10 mb-2">
-                <div className="mx-2 lg:mx-5 xl:mx-10 text-sm xl:text-xl doto font-semibold text-[#0000FF] bg-blue-50 rounded border-2 border-[#0000FF] py-2 px-2 justify-between flex">
-                    <h1>CodeQR</h1>
-                    <h1>Nom</h1>
-                    <h1>Contenu</h1>
-                    <h1>Options</h1>
+            <div className="flex flex-wrap justify-center">
+                <div className="flex rounded border-2 border-[#0000FF] p-4 max-w-96">
+                    <div className="justify-center flex flex-col pr-4 border-r-2 border-[#0000FF]">
+                        <img className="h-20" src="/src/assets/degrader1.gif" alt="" />
+                        <div className="justify-center flex flex-col mt-4 space-y-2">
+                            <button className="border-2 border-[#0000FF] rounded px-6 bg-blue-50 py-1">Scans</button>
+                            <button className="rounded px-6 py-1 bg-[#0000FF] text-white ">Télécharger</button>
+                        </div>
+                    </div>
+                    <div className="pl-4">
+                        
+                    </div>
                 </div>
 
             </div>
