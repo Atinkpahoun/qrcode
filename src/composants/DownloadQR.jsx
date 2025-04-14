@@ -32,14 +32,15 @@ const DownloadQR = ({ qrRef, qrSvgRef, leNom }) => {
 
   return (
     <div className="mt-4 flex  gap-4">
-      <button onClick={downloadPNG} className="flex items-center bg-blue-500 text-white w-20 px-4 py-2 rounded-lg">
-        <FaDownload /> 
-        <h1>PNG</h1> 
-      </button>
       <button onClick={downloadSVG} className="flex bg-[#0000FF] items-center text-white w-20 px-4 py-2 rounded-lg">
         <FaDownload /> 
         <h1>SVG</h1> 
       </button>
+      <button onClick={downloadPNG} className="flex bg-white items-center border-2 border-[#0000FF] text-[#0000FF] w-20 px-4 py-2 rounded-lg">
+        <FaDownload /> 
+        <h1>PNG</h1> 
+      </button>
+      
     </div>
   );
 };

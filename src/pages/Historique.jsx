@@ -1,6 +1,6 @@
 
 import React, {useState} from "react";
-
+import DownloadQR from "../composants/DownloadQR";
 
 function Historique(){
     const [selectedOption, setSelectedOption] = useState('');
@@ -28,11 +28,11 @@ function Historique(){
             </div>
             <div className="flex flex-wrap justify-center gap-5 lg:gap-10">
                 <div className="flex rounded border-2 border-[#0000FF] p-2 md:p-4  max-w-[500px] shadow">
-                    <div className="justify-center flex flex-col pr-2 md:pr-4 border-r-2 border-[#0000FF]">
-                        <img className="h-24" src="/src/assets/degrader1.gif" alt="" />
-                        <div className="justify-center flex flex-col mt-4 space-y-2">
+                    <div className="justify-center flex flex-col pr-2 md:pr-4 border-r border-[#0000FF]">
+                        <img className="h-28" src="/src/assets/degrader1.gif" alt="" />
+                        <div className="justify-center flex flex-col mt-4 space-y-3">
                             <button className="border-2 border-[#0000FF] rounded px-6 bg-blue-50 py-1">Scans</button>
-                            <button className="rounded px-6 py-1 bg-[#0000FF] text-white ">Télécharger</button>
+                            <DownloadQR/>
                         </div>
                     </div>
                     <div className="pl-2 md:pl-4 justify-between space-y-6 ">
