@@ -151,14 +151,14 @@ const QRGenerator = () => {
             className="w-40 h-40 object-cover rounded-lg"
           />
         )}
-        {imageUrl && (
+        
           <button
             onClick={generateQRCode}
             className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
           >
-            Générer le QR Code
+            Générer QRCode
           </button>
-        )}
+        
       </form>
 
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4">

@@ -51,7 +51,7 @@ const UploadMenu = ({ onLogoChange }) => {
               <img src={preview} alt="Logo preview" className="w-12 h-12 object-contain mb-2" />
               <button
                 onClick={handleRemoveImage}
-                className="text-sm text-red-600 underline hover:text-red-800"
+                className="text-sm text-white font-medium rounded  px-2 py-1  bg-[#0000FF]"
               >
                 Supprimer le logo
               </button>
