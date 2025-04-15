@@ -118,7 +118,7 @@ function Historique() {
                   {qr.scan_count} scans
                 </button>
                 <DownloadQR qrId={qr.id} />
-              </div>  
+              </div>
             </div>
             <div className="pt-4 md:pt-0 pl-0 md:pl-4 justify-between space-y-6">
               <div className="space-y-3">

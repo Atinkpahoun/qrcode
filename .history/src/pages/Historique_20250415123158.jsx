@@ -116,9 +116,9 @@ function Historique() {
               <div className="justify-center flex flex-col mt-4 space-y-3">
                 <button className="border-2 border-[#0000FF] rounded px-3 md:px-6 bg-blue-50 py-1">
                   {qr.scan_count} scans
-                </button>
+                </button> 
                 <DownloadQR qrId={qr.id} />
-              </div>  
+              </div>
             </div>
             <div className="pt-4 md:pt-0 pl-0 md:pl-4 justify-between space-y-6">
               <div className="space-y-3">
