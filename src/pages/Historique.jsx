@@ -64,7 +64,7 @@ function Historique() {
         Bienvenu(e) dans l'historique de vos codes QR
       </h1>
 
-      <div className="flex flex-wrap justify-center gap-3 mt-6 xl:mt-10">
+      <div className="flex flex-wrap justify-center gap-3 mt-6 xl:mt-10  ">
         <input
           type="text"
           placeholder="Rechercher par nom..."
@@ -82,7 +82,7 @@ function Historique() {
           <option value="url">URL</option>
           <option value="email">Email</option>
           <option value="texte">Texte</option>
-          <option value="téléphone">Téléphone</option>
+          <option value="tel">Téléphone</option>
           <option value="image">Image</option>
         </select>
 
@@ -101,11 +101,11 @@ function Historique() {
         />
       </div>
 
-      <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mt-8">
+      <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mt-10 xl:mt-14 ">
         {filtered.map((qr) => (
           <div
             key={qr.id}
-            className="flex flex-col md:flex-row rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
+            className="bg-slate-50 flex flex-col md:flex-row rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
           >
             <div className="space-x-2   justify-center flex flex-row md:flex-col pb-4 md:pb-0 pr-0 md:pr-4 border-b md:border-b-0 border-r-0 md:border-r border-[#0000FF]">
               <img
