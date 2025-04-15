@@ -22,7 +22,7 @@ const Principale = () => {
   };
   
   return (
-    <section className='text-center doto '>
+    <section className='text-center doto pt-12 md:pt-14 lg:pt-16 xl:pt-20'>
       
       <div className='    space-y-5  pt-10 md:pt-16'>
         <div className='bg-blue-50 rounded-3xl   py-3  w-auto md:w-1/2  mx-auto '>

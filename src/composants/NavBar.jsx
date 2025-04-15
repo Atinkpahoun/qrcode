@@ -22,7 +22,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0  w-full bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
+    <nav className="fixed top-0 left-0 z-10 w-full bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
       {/* Logo */}
       <div className="flex gap-x-1 items-center text-xl lg:text-3xl">
         <FaQrcode color="blue" />
@@ -134,12 +134,21 @@ const NavBar = () => {
                   <p><strong>Nom :</strong> {user.lastname}</p>
                   <p><strong>Prénom :</strong> {user.name}</p>
                   <p><strong>Email :</strong> {user.email}</p>
+                  {/* 🔹 Bouton pour accéder au profil principal */}
                   <button
-                    onClick={handleLogout}
-                    className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
-                  >
-                    Se déconnecter
-                  </button>
+                      onClick={() => navigate("/profil-utilisateur")}
+                      className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
+                    >
+                      Modifier mon profil
+                    </button>
+
+                    {/* 🔻 Bouton de déconnexion */}
+                    <button
+                      onClick={handleLogout}
+                      className="mt-2 w-full bg-red-500 text-white font-semibold py-2 rounded-lg hover:bg-red-600"
+                    >
+                      Se déconnecter
+                    </button>
                 </div>
               </div>
             )}
