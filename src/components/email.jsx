@@ -8,15 +8,23 @@ import { toast } from "react-toastify";
 
 const Email = () => {
   const [email, setEmail] = useState("");
+  const [tempSubject, setTempSubject] = useState("");
+  const [tempBody, setTempBody] = useState("");
+  const [tempColor, setTempColor] = useState("#ffffff");
+  const [tempBgColor, setTempBgColor] = useState("#000000");
+  const [tempImageInt, setTempImageInt] = useState("");
+  const [tempLogoTaille, setTempLogoTaille] = useState(35);
+
+  const [qrValue, setQrValue] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [color, setColor] = useState("#ffffff");
   const [bgColor, setBgColor] = useState("#000000");
   const [imageInt, setImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
-  const [qrValue, setQrValue] = useState("");
   const [leNom, setLeNom] = useState("");
   const [error, setError] = useState("");
+  const successMsg ="";
   const [mailtoLink, setMailtoLink] = useState("");
 
   const qrRef = useRef(null);
@@ -115,22 +123,11 @@ const Email = () => {
       setQrValue("");
       return;
     }
-  
-    setError("");
+
+    const link = generateMailtoLink();
+    setMailtoLink(link);
     setQrValue(email);
-    setTempSubject(subject);
-    setTempBody(body);
-    setColor(tempColor);
-    setBgColor(tempBgColor);
-    setImageInt(tempImageInt);
-    setLogoTaille(tempLogoTaille);
-  
-    enregistrerQRCode(email, {
-      color: tempColor,
-      bgColor: tempBgColor,
-      imageInt: tempImageInt,
-      logoTaille: tempLogoTaille,
-    }, leNom);
+    setError("");
   };
   
 
