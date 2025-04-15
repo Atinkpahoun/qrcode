@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
     return (
 
-        <div className="flex flex-col md:flex-row md:justify-between space-y-6 items-center px-5 md:px-14 pb-5">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-6 items-center px-5 md:px-14 pb-5">
             <div className="flex flex-col md:flex-row space-x-2 space-y-6 gap-x-1 items-center text-xl">
                 <div className="flex items-center">
                     <FaQrcode  color="blue" />
