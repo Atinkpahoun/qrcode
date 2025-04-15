@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaQrcode } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
+import Retour from "../composants/Retour.jsx";
 
 const Inscription = () => {
   const [formData, setFormData] = useState({
@@ -32,6 +33,7 @@ const Inscription = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           nom: formData.nom,
@@ -46,7 +48,7 @@ const Inscription = () => {
       console.log("Réponse du backend :", data);
   
       if (response.ok) {
-        toast.success("Inscription réussie !", { autoClose: 5000 });
+        toast.success("Inscription réussie. Vérifiez votre email pour activer votre compte.", { autoClose: 5000 });
         setFormData({
           nom: "",
           prenoms: "",
@@ -54,7 +56,8 @@ const Inscription = () => {
           password: "",
           pass_valid: "",
         });
-        setTimeout(() => navigate("/connexion"), 2000);
+
+         navigate("/email-check");
       } else {
         if (response.status === 422 && data.errors) {
           if (data.errors.email) {
@@ -73,80 +76,84 @@ const Inscription = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen mx-auto w-auto lg:w-1/2 xl:w-auto">
-      <div className="border-[#0000FF] border-2 flex w-auto p-4 lg:p-0 xl:w-1/2 rounded-lg doto">
-        {/* Section gauche avec logo */}
-        <div className="w-0 lg:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
-          <FaQrcode size={37} color="blue" />
-          <h1 className="font-bold text-[#0000FF] text-5xl">QREasy</h1>
-        </div>
+    <section>
+      <Retour/>
+      <div className="flex items-center justify-center min-h-screen mx-auto w-auto lg:w-1/2 xl:w-auto">
+        <div className="border-[#0000FF] border-2 flex w-auto p-4 lg:p-0 xl:w-1/2 rounded-lg doto">
+          {/* Section gauche avec logo */}
+          <div className="w-0 lg:w-1/2 bg-blue-50 hidden xl:flex items-center justify-center gap-x-1">
+            <FaQrcode size={37} color="blue" />
+            <h1 className="font-bold text-[#0000FF] text-5xl">QREasy</h1>
+          </div>
 
-        {/* Formulaire d'inscription */}
-        <form
-          className="flex flex-col items-center w-full px-2 md:px-4 xl:w-1/2 py-3 xl:py-6"
-          onSubmit={handleSubmit}
-        >
-          <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-4 md:pb-6">
-            Inscrivez-vous
-          </h1>
-
-          {/* Champs du formulaire */}
-          <input
-            className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
-            type="text"
-            name="nom"
-            placeholder="Nom"
-            value={formData.nom}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
-            type="text"
-            name="prenoms"
-            placeholder="Prénoms"
-            value={formData.prenoms}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
-            type="password"
-            name="password"
-            placeholder="Mot de passe"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
-            type="password"
-            name="pass_valid"
-            placeholder="Confirmez le mot de passe"
-            value={formData.pass_valid}
-            onChange={handleChange}
-            required
-          />
-
-          {/* Bouton de soumission */}
-          <button
-            className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-            type="submit"
+          {/* Formulaire d'inscription */}
+          <form
+            className="flex flex-col items-center w-full px-2 md:px-4 xl:w-1/2 py-3 xl:py-6"
+            onSubmit={handleSubmit}
           >
-            Envoyer
-          </button>
-        </form>
+            <h1 className="text-[#0000FF] text-xl lg:text-3xl font-bold pb-4 md:pb-6">
+              Inscrivez-vous
+            </h1>
+
+            {/* Champs du formulaire */}
+            <input
+              className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
+              type="text"
+              name="nom"
+              placeholder="Nom"
+              value={formData.nom}
+              onChange={handleChange}
+              required
+            />
+            <input
+              className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
+              type="text"
+              name="prenoms"
+              placeholder="Prénoms"
+              value={formData.prenoms}
+              onChange={handleChange}
+              required
+            />
+            <input
+              className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <input
+              className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
+              type="password"
+              name="password"
+              placeholder="Mot de passe"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <input
+              className="border-[#0000FF] border p-2 rounded-md w-64 md:w-80 mb-2"
+              type="password"
+              name="pass_valid"
+              placeholder="Confirmez le mot de passe"
+              value={formData.pass_valid}
+              onChange={handleChange}
+              required
+            />
+
+            {/* Bouton de soumission */}
+            <button
+              className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Envoyer
+            </button>
+          </form>
+        </div>
       </div>
     </section>
+    
   );
 };
 

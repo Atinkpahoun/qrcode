@@ -41,12 +41,22 @@ const Profile = () => {
       </div>
 
       {/* Bouton de déconnexion */}
-      <button
-        onClick={handleLogout}
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-      >
-        Se déconnecter
-      </button>
+      <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <button
+          onClick={() => navigate("/profil-utilisateur")}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Modifier mon profil
+        </button>
+
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Se déconnecter
+        </button>
+      </div>
+
     </div>
   );
 };

@@ -22,7 +22,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
+    <nav className="fixed top-0 left-0  w-full bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
       {/* Logo */}
       <div className="flex gap-x-1 items-center text-xl lg:text-3xl">
         <FaQrcode color="blue" />
