@@ -15,7 +15,7 @@ const Accueil = () => {
         threshold: 0.2,
     });
     return (
-        <section className=''>
+        <section className='pt-10 md:pt-14 lg:pt-16 xl:pt-20'>
             <div className='flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4'>
             
                 <div className='flex flex-col items-center sm:items-start xl:pl-40 w-full pt-10 lg:pt-4 px-5'>

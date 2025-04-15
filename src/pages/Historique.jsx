@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DownloadQR from "../composants/DownloadQR";
 import axios from "axios";
-
+import { FaTrash } from 'react-icons/fa';
 function Historique() {
   const [qrcodes, setQrcodes] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -101,38 +101,41 @@ function Historique() {
         />
       </div>
 
-      <div className="flex flex-wrap justify-center gap-5 lg:gap-10 mt-8">
+      <div className="flex flex-wrap justify-center gap-8 lg:gap-10 mt-8">
         {filtered.map((qr) => (
           <div
             key={qr.id}
-            className="flex rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
+            className="flex flex-col md:flex-row rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
           >
-            <div className="justify-center flex flex-col pr-2 md:pr-4 border-r border-[#0000FF]">
+            <div className="space-x-2   justify-center flex flex-row md:flex-col pb-4 md:pb-0 pr-0 md:pr-4 border-b md:border-b-0 border-r-0 md:border-r border-[#0000FF]">
               <img
                 className="h-28 w-28 object-contain"
                 src={qr.image_url || "/src/assets/degrader1.gif"}
                 alt="qr preview"
               />
               <div className="justify-center flex flex-col mt-4 space-y-3">
-                <button className="border-2 border-[#0000FF] rounded px-6 bg-blue-50 py-1">
+                <button className="border-2 border-[#0000FF] rounded px-3 md:px-6 bg-blue-50 py-1">
                   {qr.scan_count} scans
                 </button>
                 <DownloadQR qrId={qr.id} />
               </div>
             </div>
-            <div className="pl-2 md:pl-4 justify-between space-y-6">
+            <div className="pt-4 md:pt-0 pl-0 md:pl-4 justify-between space-y-6">
               <div className="space-y-3">
-                <h1 className="text-[#0000FF] font-medium text-lg capitalize">{qr.type}</h1>
+                <h1 className="text-[#0000FF] font-bold text-xl capitalize">{qr.type}</h1>
                 <h1>{qr.nom}</h1>
                 <h1>Créé : {new Date(qr.date_creation).toLocaleDateString()}</h1>
                 <h1>Modifié : {new Date(qr.updated_at).toLocaleDateString()}</h1>
               </div>
-              <button
-                className="rounded px-6 py-1 bg-[#0000FF] text-white"
-                onClick={() => handleModify(qr.id)}
-              >
-                Modifier
-              </button>
+              <div className="flex space-x-5 items-center">
+                <button
+                  className="rounded px-6 py-1 bg-[#0000FF] text-white"
+                  onClick={() => handleModify(qr.id)}
+                >
+                  Modifier
+                </button>
+                <FaTrash color="red"size={25} />
+              </div>
             </div>
           </div>
         ))}
