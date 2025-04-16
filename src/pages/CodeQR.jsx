@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaLink, FaEnvelope, FaFont, FaPhone, FaImage } from 'react-icons/fa';
+import { Tooltip } from 'react-tooltip'
+
 import Url from "../components/url.jsx";
 import Email from "../components/email.jsx";
 import Texte from "../components/texte.jsx";
@@ -27,28 +29,33 @@ const Principale = () => {
       <div className='    space-y-5  pt-10 md:pt-16'>
         <div className='bg-blue-50 rounded-3xl   py-3  w-auto md:w-1/2  mx-auto '>
           <ul className='flex space-x-10 md:space-x-16 lg:space-x-20 xl:space-x-28  items-center justify-center'>
-            <li >
-              <button onClick={() => showSection('section1')}>
+            <li>
+              <Tooltip id="my-tooltip" />
+              <button  data-tooltip-id="my-tooltip" data-tooltip-content="Lien/URL" onClick={() => showSection('section1')}>
                 <FaLink size={20} color="blue" />
-              </button>
-            </li>
+              </button>  
+            </li>       
             <li >
-              <button onClick={() => showSection('section2')}>
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Email" onClick={() => showSection('section2')}>
                 <FaEnvelope size={20} color="blue" />
               </button>
             </li>
             <li >
-              <button onClick={() => showSection('section3')}>
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Texte" onClick={() => showSection('section3')}>
                 <FaFont size={20} color="blue" />
               </button>
             </li>
             <li >
-              <button onClick={() => showSection('section4')}>
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Numéro de téléphone" onClick={() => showSection('section4')}>
                 <FaPhone size={20} color="blue" />
               </button>
             </li>
             <li>
-              <button onClick={() => showSection('section5')}>
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Image" onClick={() => showSection('section5')}>
                 <FaImage size={20} color="blue" />
               </button>
             </li>

@@ -130,9 +130,7 @@ function Tel() {
           onChange={setTel}/>
         {error && <p className="text-red-500">{error}</p>}
 
-        <PhoneInput value={tel} onChange={setTel} />
-
-        {error && <p className="text-red-500">{error}</p>}
+     
 
         <button
           onClick={handleClick}
