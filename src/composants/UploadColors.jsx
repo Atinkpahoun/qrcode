@@ -22,7 +22,7 @@ const UploadColors = ({ onColorChange }) => {
   const handleBgColorChange = (e) => {
     const newBgColor = e.target.value;
     setBgColor(newBgColor);
-    onColorChange(color, newBgColor); // Met à jour uniquement la couleur de fond
+    onColorChange(color, newBgColor);
   };
 
   return (

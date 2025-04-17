@@ -6,7 +6,7 @@ import Url from "../components/url.jsx";
 import Email from "../components/email.jsx";
 import Texte from "../components/texte.jsx";
 import Tel from "../components/tel.jsx";
-import Img from "../components/Image.jsx";
+import Img from "../components/image.jsx";
 
 const Principale = () => {
   const sections = [
