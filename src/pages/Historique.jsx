@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DownloadQR from "../composants/DownloadQR";
 import ModifierQRCodeDrawer from "../components/ModifierQRCodeDrawer";
 import axios from "axios";
-
+import { FaTrash } from 'react-icons/fa';
 function Historique() {
   const [qrcodes, setQrcodes] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -28,8 +28,9 @@ function Historique() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await axios.get(${import.meta.env.VITE_API_URL}/qrcodes, {
-        headers: { Authorization: Bearer ${token} },
+
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/qrcodes`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setQrcodes(res.data);
     } catch (error) {
@@ -38,6 +39,7 @@ function Historique() {
       setLoading(false);
     }
   };
+  
 
   const filterData = () => {
     let data = [...qrcodes];
@@ -64,46 +66,48 @@ function Historique() {
 
   const handleModify = async (qr) => {
     const token = localStorage.getItem("token");
-
+  
     try {
-      const res = await axios.get(${import.meta.env.VITE_API_URL}/qrcodes/${qr.id}, {
+      // Correction ici : utilisez les backticks pour les chaînes de caractères
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/qrcodes/${qr.id}`, {
         headers: {
-          Authorization: Bearer ${token},
+          Authorization: `Bearer ${token}`, // Utilisation correcte des backticks
         },
       });
-
-
+  
       if (res.data && res.data.qrcode) {
         setQrCodeSelectionné(res.data.qrcode);
         setIsEditing(true);
       } else {
         alert("QR code introuvable.");
       }
-      setIsEditing(true);
     } catch (error) {
       console.error("Erreur lors du chargement du QR code :", error);
       alert("Impossible de charger les données complètes du QR code.");
     }
   };
-
+  
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer ce QR code ?");
     if (!confirmed) return;
-
+  
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(${import.meta.env.VITE_API_URL}/qrcodes/${id}, {
+      
+      // Correction ici : utilisez les backticks pour les chaînes de caractères
+      await axios.delete(`${import.meta.env.VITE_API_URL}/qrcodes/${id}`, {
         headers: {
-          Authorization: Bearer ${token},
+          Authorization: `Bearer ${token}`, // Utilisation correcte des backticks
         },
       });
-
+  
       setQrcodes((prev) => prev.filter((qr) => qr.id !== id));
     } catch (error) {
       console.error("Erreur lors de la suppression du QR code :", error);
       alert("Une erreur est survenue lors de la suppression.");
     }
   };
+  
 
   return (
     <div className="pt-5 xl:pt-12 justify-center doto">
@@ -129,7 +133,7 @@ function Historique() {
           <option value="url">URL</option>
           <option value="email">Email</option>
           <option value="texte">Texte</option>
-          <option value="téléphone">Téléphone</option>
+          <option value="tel">Téléphone</option>
           <option value="image">Image</option>
         </select>
 
@@ -164,43 +168,49 @@ function Historique() {
               </div>
             </div>
             <div className="pl-2 md:pl-4 justify-between space-y-6">
-              <div className="space-y-3">
-                <h1 className="text-[#0000FF] font-medium text-lg capitalize">{qr.type}</h1>
-                <h1>{qr.nom}</h1>
-                <h1>
-                  Créé : {
-                    (() => {
-                      const [date, time] = qr.date_creation.split(" ");
-                      return ${date} à ${time};
-                    })()
-                  }
-                </h1>
+  <div className="space-y-3">
+    <h1 className="text-[#0000FF] font-medium text-lg capitalize">{qr.type}</h1>
+    <h1>{qr.nom}</h1>
+    <h1>
+      Créé : {
+        (() => {
+          const [date, time] = qr.date_creation.split(" ");
+          return `${date} à ${time}`; // Utilisation correcte des backticks
+        })()
+      }
+    </h1>
 
-                <h1>
-                    Modifié : {
-                      (() => {
-                        const updated = new Date(qr.updated_at);
-                        const date = updated.toLocaleDateString('fr-FR'); // jj/mm/aaaa
-                        const time = updated.toLocaleTimeString('fr-FR'); // hh:mm:ss
-                        return ${date} à ${time};
-                      })()
-                    }
-                </h1>
-              </div>
-              <button
-                className="rounded px-6 py-1 bg-[#0000FF] text-white"
-                onClick={() => handleModify(qr)}
-              >
-                Modifier
-              </button>
+    <h1>
+      Modifié : {
+        (() => {
+          const updated = new Date(qr.updated_at);
+          const date = updated.toLocaleDateString('fr-FR'); // jj/mm/aaaa
+          const time = updated.toLocaleTimeString('fr-FR'); // hh:mm:ss
+          return `${date} à ${time}`; // Utilisation correcte des backticks
+        })()
+      }
+    </h1>
+  </div>
+  <div className="flex space-x-4 items-center">
+    <button
+      className="rounded px-6 py-1 bg-[#0000FF] text-white"
+      onClick={() => handleModify(qr)}
+    >
+      Modifier
+    </button>
 
-              <button
-                onClick={() => handleDelete(qr.id)}
-                className="text-red-600 hover:text-red-800"
-                title="Supprimer"
-              >
-                🗑
-              </button>
+    <button
+      onClick={() => handleDelete(qr.id)}
+      className="text-red-600 hover:text-red-800"
+      title="Supprimer"
+      >
+        <FaTrash color="red"size={25} />
+    </button>
+  </div>
+  
+
+
+              
             </div>
           </div>
         ))}
