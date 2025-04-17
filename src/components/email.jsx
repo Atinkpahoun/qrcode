@@ -8,15 +8,23 @@ import { toast } from "react-toastify";
 
 const Email = () => {
   const [email, setEmail] = useState("");
+  const [tempSubject, setTempSubject] = useState("");
+  const [tempBody, setTempBody] = useState("");
+  const [tempColor, setTempColor] = useState("#ffffff");
+  const [tempBgColor, setTempBgColor] = useState("#000000");
+  const [tempImageInt, setTempImageInt] = useState("");
+  const [tempLogoTaille, setTempLogoTaille] = useState(35);
+
+  const [qrValue, setQrValue] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [color, setColor] = useState("#ffffff");
   const [bgColor, setBgColor] = useState("#000000");
   const [imageInt, setImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
-  const [qrValue, setQrValue] = useState("");
   const [leNom, setLeNom] = useState("");
   const [error, setError] = useState("");
+  const successMsg ="";
   const [mailtoLink, setMailtoLink] = useState("");
 
   const qrRef = useRef(null);
@@ -39,13 +47,77 @@ const Email = () => {
   };
 
   const handleLogoChange = (newImage, newTaille) => {
-    setImageInt(newImage);
-    setLogoTaille(newTaille);
+    setTempImageInt(newImage);
+    setTempLogoTaille(newTaille);
   };
 
+  const enregistrerQRCode = async (emailSave, custom, nom) => {
+    const { color, bgColor, imageInt, logoTaille } = custom;
+  
+    // Récupérer le token de l'utilisateur connecté
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("Aucun utilisateur connecté. QR Code non enregistré.");
+      return;
+    }
+  
+    try {
+      // Appel pour récupérer l'utilisateur connecté
+      const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!userResponse.ok) {
+        throw new Error("Impossible de récupérer les infos de l'utilisateur.");
+      }
+  
+      // Récupérer l'ID de l'utilisateur
+      const userData = await userResponse.json();
+      const userId = userData.id;
+  
+      // Ensuite, on peut faire l'enregistrement du QR Code
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/qrcodes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          type: "email",
+          data: {
+            email: emailSave,
+          },
+          customization: {
+            color,
+            bgColor,
+            imageInt,
+            logoTaille,
+          },
+          nom,
+          date_creation: new Date().toISOString(),
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'enregistrement du QR Code.");
+      }
+  
+      const data = await response.json();
+      console.log("QR Code enregistré :", data);
+    } catch (error) {
+      console.error("Erreur :", error.message);
+    }
+  };
+  
   const handleClick = (e) => {
     e.preventDefault();
-
+  
     if (!validateEmail(email)) {
       setError("Adresse Mail invalide !");
       setQrValue("");
@@ -57,6 +129,7 @@ const Email = () => {
     setQrValue(email);
     setError("");
   };
+  
 
   // Enregistrement automatique avec délai après génération
   useEffect(() => {
@@ -131,7 +204,7 @@ const Email = () => {
   }, [mailtoLink]);
 
   return (
-    <div className="flex flex-wrap gap-y-5 gap-x-10">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
       <form className="flex flex-col items-start">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Email</h1>
         <input
@@ -169,9 +242,12 @@ const Email = () => {
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4 h-1/2">
         <div ref={qrSvgRef}>
           {qrValue && (
-            <QRCodeSVG
-              value={mailtoLink}
-              size={170}
+            <div className="p-4 border border-[#0000FF] rounded-lg">
+              <QRCodeSVG
+              marginSize={2}
+              value={generateMailtoLink()}
+              size={250}
+              level={"H"}
               fgColor={color}
               bgColor={bgColor}
               imageSettings={
@@ -185,14 +261,17 @@ const Email = () => {
                   : undefined
               }
             />
+            </div>
           )}
         </div>
 
         <div ref={qrRef} className="hidden">
           {qrValue && (
             <QRCodeCanvas
-              value={mailtoLink}
-              size={170}
+              marginSize={2}
+              value={generateMailtoLink()}
+              size={250}
+              level={"H"}
               fgColor={color}
               bgColor={bgColor}
               imageSettings={

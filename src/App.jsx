@@ -17,10 +17,16 @@ import ChangerEmail from './pages/ChangerEmail.jsx'
 import EmailEnvoi from "./pages/EmailEnvoi";
 import ConfirmerNouvelEmail from "./pages/ConfirmerNouvelEmail";
 import ChangerMotDePasse from "./pages/ChangerMotDePasse";
+import axios from 'axios';
+
+
+
 
 function App() {
   
-
+  axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+  
   return (
     <AuthProvider>
       <ToastContainer position="top-right" />
@@ -42,7 +48,7 @@ function App() {
         <Route path="/changer-email" element={<ChangerEmail/>} />
         <Route path="/email-envoi" element={<EmailEnvoi />} />    
         <Route path="/confirmer-nouvel-email" element={<ConfirmerNouvelEmail />} /> 
-        <Route path="/changer-mot-de-passe" element={<ChangerMotDePasse />} />  
+        <Route path="/changer-mot-de-passe" element={<ChangerMotDePasse />} />
       </Routes>
     </AuthProvider>
   );

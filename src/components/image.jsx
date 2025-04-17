@@ -27,7 +27,7 @@ const QRGenerator = () => {
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "upload_preset_qr");
+    formData.append("upload_preset", "upload_preset_qr"); // Remplace par ton preset
 
     try {
       const res = await fetch(
@@ -148,7 +148,7 @@ const QRGenerator = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
       <form className="flex flex-col items-center md:items-start">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Image</h1>
         <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -160,25 +160,26 @@ const QRGenerator = () => {
             className="w-40 h-40 object-cover rounded-lg"
           />
         )}
-
-        {imageUrl && (
+        
           <button
             onClick={handleGenerate}
             className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
           >
-            Générer le QR Code
+            Générer QRCode
           </button>
-        )}
+        
       </form>
 
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
         {qrData && (
-          <div ref={qrSvgRef} className="p-4 border rounded-lg">
+          <div ref={qrSvgRef} className="p-4 border border-[#0000FF] rounded-lg">
             <QRCodeSVG
+              marginSize={2}
               value={qrData}
               fgColor={color}
               bgColor={bgColor}
-              size={170}
+              size={250}
+              level={"H"}
               imageSettings={
                 imageInt
                   ? {
@@ -192,18 +193,15 @@ const QRGenerator = () => {
             />
           </div>
         )}
-
         {qrData && (
-          <div
-            ref={qrRef}
-            className="p-4 border rounded-lg"
-            style={{ position: "absolute", opacity: 0, pointerEvents: "none" }}
-          >
+          <div ref={qrRef} className="p-4 border rounded-lg hidden">
             <QRCodeCanvas
+              marginSize={2}
               value={qrData}
               fgColor={color}
               bgColor={bgColor}
-              size={170}
+              size={250}
+              level={"H"}
               imageSettings={
                 imageInt
                   ? {

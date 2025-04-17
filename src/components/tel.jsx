@@ -121,13 +121,16 @@ function Tel() {
   }, [qrValue, showQr]);
 
   return (
-    <div className="flex flex-wrap gap-y-5 gap-x-10">
-      <form className="flex flex-col items-start">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5 doto">
+      <form className="flex flex-col items-center md:items-start ">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
-
-        <PhoneInput value={tel} onChange={setTel} />
-
+        <PhoneInput
+          defaultCountry="bj"
+          value={tel}
+          onChange={setTel}/>
         {error && <p className="text-red-500">{error}</p>}
+
+     
 
         <button
           onClick={handleClick}
@@ -165,44 +168,51 @@ function Tel() {
 
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
         <div ref={qrSvgRef}>
-          {qrValue && showQr && (
-            <QRCodeSVG
-              value={qrValue}
-              fgColor={color}
-              bgColor={bgColor}
-              size={170}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
-                    }
-                  : undefined
-              }
-            />
+          {qrValue && (
+            <div className="p-4 border border-[#0000FF] rounded-lg">
+              <QRCodeSVG
+                marginSize={2}
+                value={qrValue}
+                fgColor={color}
+                bgColor={bgColor}
+                size={250}
+                level={"H"}
+                imageSettings={
+                  imageInt
+                    ? {
+                        src: imageInt,
+                        height: logoTaille,
+                        width: logoTaille,
+                        excavate: true,
+                      }
+                    : undefined
+                }
+              />
+            </div>
           )}
         </div>
-
-        <div ref={qrRef} className="hidden">
-          {qrValue && showQr && (
-            <QRCodeCanvas
-              value={qrValue}
-              fgColor={color}
-              bgColor={bgColor}
-              size={170}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
-                    }
-                  : undefined
-              }
-            />
+        <div ref={qrRef} className=" hidden">
+          {qrValue && (
+            <div>
+              <QRCodeCanvas
+                marginSize={2}
+                value={qrValue}
+                fgColor={color}
+                bgColor={bgColor}
+                size={250}
+                level={"H"}
+                imageSettings={
+                  imageInt
+                    ? {
+                        src: imageInt,
+                        height: logoTaille,
+                        width: logoTaille,
+                        excavate: true,
+                      }
+                    : undefined
+                }
+              />
+            </div>
           )}
         </div>
 

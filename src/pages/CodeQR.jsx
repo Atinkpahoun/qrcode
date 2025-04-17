@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { FaLink, FaEnvelope, FaFont, FaPhone, FaImage } from 'react-icons/fa';
+import { Tooltip } from 'react-tooltip'
+
 import Url from "../components/url.jsx";
 import Email from "../components/email.jsx";
 import Texte from "../components/texte.jsx";
 import Tel from "../components/tel.jsx";
-import Img from "../components/Image.jsx";
+import Img from "../components/image.jsx";
 
 const Principale = () => {
   const sections = [
@@ -22,41 +24,44 @@ const Principale = () => {
   };
   
   return (
-    <section className='text-center doto'>
-      <h1 className='pt-5 md:pt-10 font-medium text-2xl md:text-3xl'>
-        Obtenez votre code QR en quelques clics sur <em className='text-[#0000FF] font-bold '>QR Easy</em>
-      </h1>
-      <div className='flex flex-wrap justify-center gap-10 pt-10 md:pt-16'>
-        <div className='bg-blue-50 rounded-3xl px-6 md:px-4 py-3 md:py-10 h-auto md:h-1/2'>
-          <ul className='flex md:inline items-center'>
-            <li className='pb-0 md:pb-10'>
-              <button onClick={() => showSection('section1')}>
+    <section className='text-center doto pt-12 md:pt-14 lg:pt-16 xl:pt-20'>
+      
+      <div className='    space-y-5  pt-10 md:pt-16'>
+        <div className='bg-blue-50 rounded-3xl   py-3  w-auto md:w-1/2  mx-auto '>
+          <ul className='flex space-x-10 md:space-x-16 lg:space-x-20 xl:space-x-28  items-center justify-center'>
+            <li>
+              <Tooltip id="my-tooltip" />
+              <button  data-tooltip-id="my-tooltip" data-tooltip-content="Lien/URL" onClick={() => showSection('section1')}>
                 <FaLink size={20} color="blue" />
-              </button>
-            </li>
-            <li className='pb-0 px-8 md:px-0 md:pb-10'>
-              <button onClick={() => showSection('section2')}>
+              </button>  
+            </li>       
+            <li >
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Email" onClick={() => showSection('section2')}>
                 <FaEnvelope size={20} color="blue" />
               </button>
             </li>
-            <li className='pb-0 md:pb-10'>
-              <button onClick={() => showSection('section3')}>
+            <li >
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Texte" onClick={() => showSection('section3')}>
                 <FaFont size={20} color="blue" />
               </button>
             </li>
-            <li className='pb-0 px-8 md:px-0 md:pb-10'>
-              <button onClick={() => showSection('section4')}>
+            <li >
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Numéro de téléphone" onClick={() => showSection('section4')}>
                 <FaPhone size={20} color="blue" />
               </button>
             </li>
             <li>
-              <button onClick={() => showSection('section5')}>
+              <Tooltip id="my-tooltip" />
+              <button data-tooltip-id="my-tooltip" data-tooltip-content="Image" onClick={() => showSection('section5')}>
                 <FaImage size={20} color="blue" />
               </button>
             </li>
           </ul>
         </div>
-        <div>
+        <div >
           {sections.find(section => section.id === visibleSection)?.content}
         </div>
       </div>

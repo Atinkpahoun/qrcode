@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 const UploadMenu = ({ onLogoChange }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [image, setImage] = useState("");
-  const [tempLogoTaille, setTempLogoTaille] = useState('');
+  const [preview, setPreview] = useState(null);
+
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -11,15 +11,15 @@ const UploadMenu = ({ onLogoChange }) => {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImage(reader.result);
-      onLogoChange(reader.result, setTempLogoTaille); // 🔹 Envoie la mise à jour au parent
+      setPreview(reader.result);
+      onLogoChange(reader.result, 60);
     };
     reader.readAsDataURL(file);
   };
 
-  const handleSizeChange = (taille) => {
-    setTempLogoTaille(taille);
-    onLogoChange(image, taille); // 🔹 Met à jour le parent
+  const handleRemoveImage = () => {
+    setPreview(null);
+    onLogoChange("", 0);
   };
 
   const toggleMenu = () => {
@@ -37,7 +37,7 @@ const UploadMenu = ({ onLogoChange }) => {
       </button>
       
       {showMenu && (
-        <div className="mt-4 p-4 w-48 border border-[#0000FF] rounded-lg bg-white shadow-md  ">
+        <div className="mt-4 p-4 w-48 border border-[#0000FF] rounded-lg bg-white shadow-md">
           <div className="flex flex-col mb-4">
             <input
               type="file"
@@ -46,18 +46,19 @@ const UploadMenu = ({ onLogoChange }) => {
               className="mb-2"
             />
             <div >
-              {handleImageUpload} 
+            {preview && (
+            <div className="flex flex-col items-center">
+              <img src={preview} alt="Logo preview" className="w-12 h-12 object-contain mb-2" />
+              <button
+                onClick={handleRemoveImage}
+                className="text-sm text-white font-medium rounded  px-2 py-1  bg-[#0000FF]"
+              >
+                Supprimer le logo
+              </button>
+            </div>
+          )}
             </div>
           </div>
-          <label className="block   mb-2">
-            Hauteur
-            <input
-              className="border p-2 rounded-md w-40 mb-4"
-              value={tempLogoTaille}
-              onChange={(e) => handleSizeChange(Number(e.target.value), setTempLogoTaille)}
-              placeholder="Entrez la hauteur"
-            />
-          </label>
         </div>
       )}
     </div>

@@ -5,7 +5,6 @@ import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
-
 function Url() {
   const [qrValue, setQrValue] = useState("");
   const [color, setColor] = useState("#ffffff");
@@ -43,6 +42,45 @@ function Url() {
     setTempImageInt(newImage);
     setTempLogoTaille(newTaille);
   };
+
+
+  const userId = localStorage.getItem('userId');
+  const saveQrCode = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/qrcodes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+       },
+        body: JSON.stringify({
+          user_id: userId,
+          type: "url",
+          data: {
+            url: qrValue,
+          },
+          customization: {
+            color: tempColor,
+            bgColor: tempBgColor,
+            imageInt: tempImageInt,
+            logoTaille: tempLogoTaille,
+          },
+          nom: leNom,
+          date_creation: new Date().toISOString(),
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'enregistrement du QR Code.");
+      }
+  
+      const data = await response.json();
+      console.log("QR Code enregistré :", data);
+    } catch (error) {
+      console.error("Erreur :", error.message);
+    }
+  };  
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -121,9 +159,9 @@ function Url() {
 
   return (
     <section>
-      <div className="flex flex-wrap gap-y-5 gap-x-10 doto">
+      <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
         <form className="flex flex-col items-center md:items-start" action="">
-          <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Lien/URL</h1>
+          <h1 className="text-3xl font-bold text-[#0000FF] mb-5 md:mb-8">Lien/URL</h1>
           <input
             type="url"
             value={url}
@@ -176,10 +214,37 @@ function Url() {
             {qrValue && !isGenerating && (
               <div>
                 <QRCodeSVG
+                  marginSize={2}
                   value={qrValue}
                   fgColor={color}
                   bgColor={bgColor}
-                  size={170}
+                  size={250}
+                  level={"H"}
+                  imageSettings={
+                    imageInt
+                      ? {
+                          src: imageInt,
+                          height: logoTaille,
+                          width:logoTaille,
+                          excavate: true,
+                        }
+                      : undefined
+                  }
+                />
+              </div>
+            )}
+          </div>
+
+          <div ref={qrRef} className="hidden">
+            {qrValue && !isGenerating && (
+              <div>
+                <QRCodeCanvas
+                  marginSize={2}
+                  value={qrValue}
+                  fgColor={color}
+                  bgColor={bgColor}
+                  size={200}
+                  level={"M"}
                   imageSettings={
                     imageInt
                       ? {
@@ -195,28 +260,9 @@ function Url() {
             )}
           </div>
 
-          <div ref={qrRef} className="hidden">
-            {qrValue && !isGenerating && (
-              <div>
-                <QRCodeCanvas
-                  value={qrValue}
-                  fgColor={color}
-                  bgColor={bgColor}
-                  size={170}
-                  imageSettings={
-                    imageInt
-                      ? {
-                          src: imageInt,
-                          height: logoTaille,
-                          width: logoTaille,
-                          excavate: true,
-                        }
-                      : undefined
-                  }
-                />
-              </div>
-            )}
-          </div>
+          {qrValue && (
+            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
+          )}
 
           <UploadColors onColorChange={handleColorChange} />
           <Upload onLogoChange={handleLogoChange} />
