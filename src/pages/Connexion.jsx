@@ -66,7 +66,7 @@ const Connexion = () => {
       if (response.ok) {
         localStorage.setItem("token", data.access_token);
         toast.success("Connexion réussie", { autoClose: 5000 });
-        navigate("/");
+        window.location.href = "/"; // Rediriger vers la page d'accueil avec rechargement
       } else if (response.status === 403 && data.unverified) {
         toast.warn("Veuillez vérifier votre adresse email.");
         navigate("/email-check", { state: { email: data.email } });

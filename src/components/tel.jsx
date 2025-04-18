@@ -22,9 +22,9 @@ function Tel() {
   const [logoTaille, setLogoTaille] = useState(35);
   const [leNom, setLeNom] = useState("");
   const [error, setError] = useState("");
-
   const [showQr, setShowQr] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false); // Ajout de l'état isGenerating
 
   const qrRef = useRef(null);
   const qrSvgRef = useRef(null);
@@ -59,13 +59,14 @@ function Tel() {
     setImageInt(tempImageInt);
     setLogoTaille(tempLogoTaille);
     setQrValue(tel);
-
     setShowQr(false);
     setLoading(true);
+    setIsGenerating(true); // Démarrer la génération
 
     setTimeout(() => {
       setShowQr(true);
       setLoading(false);
+      setIsGenerating(false); // Fin de la génération
     }, 3000);
   };
 
@@ -121,54 +122,32 @@ function Tel() {
   }, [qrValue, showQr]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5 doto">
-      <form className="flex flex-col items-center md:items-start ">
+    <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
+      <form className="flex flex-col items-center md:items-start">
         <h1 className="text-3xl font-bold text-[#0000FF] mb-8">Téléphone</h1>
         <PhoneInput
           defaultCountry="bj"
           value={tel}
-          onChange={setTel}/>
+          onChange={setTel}
+        />
         {error && <p className="text-red-500">{error}</p>}
-
-     
 
         <button
           onClick={handleClick}
           className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 flex items-center gap-2"
-          disabled={loading}
         >
-          {loading ? (
-            <>
-              <svg
-                className="animate-spin h-5 w-5 text-white"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8z"
-                />
-              </svg>
-              QR en cours de génération...
-            </>
-          ) : (
-            "Générer QR Code"
-          )}
+          Générer CodeQR
         </button>
       </form>
 
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
         <div ref={qrSvgRef}>
-          {qrValue && (
+          {isGenerating && (
+            <div className="flex items-center justify-center h-[250px]">
+              <div className="loader-spinner"></div>
+            </div>
+          )}
+          {qrValue && !isGenerating && (
             <div className="p-4 border border-[#0000FF] rounded-lg">
               <QRCodeSVG
                 marginSize={2}
@@ -191,28 +170,26 @@ function Tel() {
             </div>
           )}
         </div>
-        <div ref={qrRef} className=" hidden">
+        <div ref={qrRef} className="hidden">
           {qrValue && (
-            <div>
-              <QRCodeCanvas
-                marginSize={2}
-                value={qrValue}
-                fgColor={color}
-                bgColor={bgColor}
-                size={250}
-                level={"H"}
-                imageSettings={
-                  imageInt
-                    ? {
-                        src: imageInt,
-                        height: logoTaille,
-                        width: logoTaille,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
-            </div>
+            <QRCodeCanvas
+              marginSize={2}
+              value={qrValue}
+              fgColor={color}
+              bgColor={bgColor}
+              size={250}
+              level={"H"}
+              imageSettings={
+                imageInt
+                  ? {
+                      src: imageInt,
+                      height: logoTaille,
+                      width: logoTaille,
+                      excavate: true,
+                    }
+                  : undefined
+              }
+            />
           )}
         </div>
 

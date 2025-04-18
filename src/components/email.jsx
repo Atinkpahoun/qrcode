@@ -245,7 +245,7 @@ const Email = () => {
           className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
           onClick={handleClick}
         >
-          Générer QR Code
+          Générer CodeQR
         </button>
       </form>
 

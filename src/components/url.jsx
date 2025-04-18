@@ -5,6 +5,7 @@ import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
+
 function Url() {
   const [qrValue, setQrValue] = useState("");
   const [color, setColor] = useState("#ffffff");
@@ -13,7 +14,6 @@ function Url() {
   const [logoTaille, setLogoTaille] = useState(35);
   const [leNom, setLeNom] = useState("");
   const [error, setError] = useState("");
-
   const [url, setUrl] = useState("");
   const [tempColor, setTempColor] = useState("#ffffff");
   const [tempBgColor, setTempBgColor] = useState("#000000");
@@ -43,7 +43,6 @@ function Url() {
     setTempLogoTaille(newTaille);
   };
 
-
   const userId = localStorage.getItem('userId');
   const saveQrCode = async () => {
     try {
@@ -53,7 +52,7 @@ function Url() {
           "Content-Type": "application/json",
           "Accept": "application/json",
           "Authorization": `Bearer ${localStorage.getItem("token")}`
-       },
+        },
         body: JSON.stringify({
           user_id: userId,
           type: "url",
@@ -70,17 +69,17 @@ function Url() {
           date_creation: new Date().toISOString(),
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Erreur lors de l'enregistrement du QR Code.");
       }
-  
+
       const data = await response.json();
       console.log("QR Code enregistré :", data);
     } catch (error) {
       console.error("Erreur :", error.message);
     }
-  };  
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -177,40 +176,18 @@ function Url() {
           <button
             onClick={handleClick}
             className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 flex items-center gap-2 disabled:opacity-50"
-            disabled={isGenerating}
           >
-            {isGenerating ? (
-              <>
-                <svg
-                  className="animate-spin h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-                QR en cours de génération...
-              </>
-            ) : (
-              "Générer et Enregistrer QR Code"
-            )}
+            Générer CodeQR
           </button>
         </form>
 
         <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
           <div ref={qrSvgRef}>
+            {isGenerating && (
+              <div className="flex items-center justify-center h-[250px]">
+                <div className="loader-spinner"></div>
+              </div>
+            )}
             {qrValue && !isGenerating && (
               <div>
                 <QRCodeSVG
@@ -225,7 +202,7 @@ function Url() {
                       ? {
                           src: imageInt,
                           height: logoTaille,
-                          width:logoTaille,
+                          width: logoTaille,
                           excavate: true,
                         }
                       : undefined
@@ -276,8 +253,6 @@ function Url() {
               onChange={(e) => setLeNom(e.target.value)}
             />
           </div>
-
-         
         </div>
       </div>
     </section>

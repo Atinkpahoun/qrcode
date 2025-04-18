@@ -10,16 +10,12 @@ const QRGenerator = () => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [qrData, setQrData] = useState("");
-  const [color, setColor] = useState("");
-  const [bgColor, setBgColor] = useState("");
+  const [color, setColor] = useState("#000000");
+  const [bgColor, setBgColor] = useState("#ffffff");
   const [imageInt, setImageInt] = useState("");
   const [logoTaille, setLogoTaille] = useState(35);
   const [leNom, setLeNom] = useState("");
-
-  const [tempColor, setTempColor] = useState("#ffffff");
-  const [tempBgColor, setTempBgColor] = useState("#000000");
-  const [tempImageInt, setTempImageInt] = useState("");
-  const [tempLogoTaille, setTempLogoTaille] = useState(35);
+  const [isGenerating, setIsGenerating] = useState(false); // Ajout de l'état isGenerating
 
   const qrRef = useRef(null);
   const qrSvgRef = useRef(null);
@@ -41,6 +37,7 @@ const QRGenerator = () => {
       setImageUrl(data.secure_url);
     } catch (error) {
       console.error("Erreur lors de l'upload :", error);
+      toast.error("Erreur lors de l'upload de l'image.");
     }
   };
 
@@ -54,14 +51,13 @@ const QRGenerator = () => {
 
   const handleGenerate = (e) => {
     e.preventDefault();
-
-    if (!imageUrl) return;
+    if (!imageUrl) {
+      toast.error("Veuillez télécharger une image avant de générer le QR Code.");
+      return;
+    }
 
     setQrData(imageUrl);
-    setColor(tempColor);
-    setBgColor(tempBgColor);
-    setImageInt(tempImageInt);
-    setLogoTaille(tempLogoTaille);
+    setIsGenerating(true); // Démarrer la génération
   };
 
   useEffect(() => {
@@ -69,21 +65,23 @@ const QRGenerator = () => {
 
     const timeout = setTimeout(() => {
       const canvas = qrRef.current.querySelector("canvas");
-
       if (!canvas) {
         console.error("Canvas non trouvé !");
+        setIsGenerating(false); // Arrêter le chargement si le canvas est introuvable
         return;
       }
 
       canvas.toBlob(async (blob) => {
         if (!blob) {
           console.error("Erreur lors de la conversion en blob");
+          setIsGenerating(false); // Arrêter le chargement en cas d'erreur
           return;
         }
 
         const token = localStorage.getItem("token");
         if (!token) {
           console.error("Token manquant !");
+          setIsGenerating(false); // Arrêter le chargement si le token est manquant
           return;
         }
 
@@ -122,6 +120,7 @@ const QRGenerator = () => {
           console.log("QR Code image enregistré :", response.data);
           toast.success("QR Code image enregistré !");
         } catch (error) {
+          setIsGenerating(false); // Arrêter le chargement en cas d'erreur
           if (error.response?.status === 422) {
             const apiErrors = error.response.data.errors;
             console.log("Erreurs Laravel :", apiErrors);
@@ -131,6 +130,7 @@ const QRGenerator = () => {
             toast.error("Erreur lors de l'enregistrement du QR Code.");
           }
         }
+        setIsGenerating(false); // Arrêter le chargement après l'enregistrement
       }, "image/png");
     }, 300);
 
@@ -138,13 +138,13 @@ const QRGenerator = () => {
   }, [qrData]);
 
   const handleColorChange = (newColor, newBgColor) => {
-    setTempColor(newColor);
-    setTempBgColor(newBgColor);
+    setColor(newColor);
+    setBgColor(newBgColor);
   };
 
   const handleLogoChange = (newImage, newTaille) => {
-    setTempImageInt(newImage);
-    setTempLogoTaille(newTaille);
+    setImageInt(newImage);
+    setLogoTaille(newTaille);
   };
 
   return (
@@ -161,17 +161,21 @@ const QRGenerator = () => {
           />
         )}
         
-          <button
-            onClick={handleGenerate}
-            className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
-          >
-            Générer QRCode
-          </button>
-        
+        <button
+          onClick={handleGenerate}
+          className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
+        >
+          Générer CodeQR
+        </button>
       </form>
 
-      <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
-        {qrData && (
+      <div className="bg-blue-50 rounded-2xl space-y-5 p-4 h-1/2">
+        {isGenerating && (
+          <div className="flex items-center justify-center h-[250px]">
+            <div className="loader-spinner"></div>
+          </div>
+        )}
+        {qrData && !isGenerating && (
           <div ref={qrSvgRef} className="p-4 border border-[#0000FF] rounded-lg">
             <QRCodeSVG
               marginSize={2}

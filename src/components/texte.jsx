@@ -3,8 +3,8 @@ import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import UploadColors from "../composants/UploadColors";
 import UploadMenu from "../composants/Upload";
 import DownloadQR from "../composants/DownloadQR";
-import axios from "axios"; // Assurez-vous d'importer axios
-import { toast } from "react-toastify"; // Assurez-vous d'importer toast
+import axios from "axios"; 
+import { toast } from "react-toastify"; 
 
 function Texte() {
   const [texte, setTexte] = useState("");
@@ -21,6 +21,7 @@ function Texte() {
   const [logoTaille, setLogoTaille] = useState(35);
   const [showQr, setShowQr] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false); // Ajout de isGenerating
 
   const qrRef = useRef(null);
   const qrSvgRef = useRef(null);
@@ -37,6 +38,11 @@ function Texte() {
 
   const handleClick = (e) => {
     e.preventDefault();
+    if (!texte) {
+      toast.error("Veuillez entrer un texte.");
+      return;
+    }
+    
     setLoading(true);
     setShowQr(false);
     setColor(tempColor);
@@ -44,11 +50,13 @@ function Texte() {
     setImageInt(tempImageInt);
     setLogoTaille(tempLogoTaille);
     setQrValue(texte);
+    setIsGenerating(true); // Démarrer la génération
 
     setTimeout(() => {
       setShowQr(true);
       setLoading(false);
-    }, 3000); // ⏱️ 3 secondes avant d'afficher le QR
+      setIsGenerating(false); // Fin de la génération
+    }, 3000);
   };
 
   useEffect(() => {
@@ -130,25 +138,19 @@ function Texte() {
         <button
           onClick={handleClick}
           className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4"
-          disabled={loading}
         >
-          {loading ? (
-            <>
-              <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-              </svg>
-              QR en cours de génération...
-            </>
-          ) : (
-            "Générer QR Code"
-          )}
+          Générer CodeQR
         </button>
       </form>
 
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4">
         <div ref={qrSvgRef}>
-          {qrValue && (
+          {isGenerating && (
+            <div className="flex items-center justify-center h-[250px]">
+              <div className="loader-spinner"></div>
+            </div>
+          )}
+          {qrValue && !isGenerating && (
             <div className="p-4 border border-[#0000FF] rounded-lg">
               <QRCodeSVG
                 marginSize={2}

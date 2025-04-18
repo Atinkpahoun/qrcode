@@ -169,10 +169,11 @@ function Historique() {
             </div>
             <div className="pl-2 md:pl-4 justify-between space-y-6">
   <div className="space-y-3">
-    <h1 className="text-[#0000FF] font-medium text-lg capitalize">{qr.type}</h1>
-    <h1>{qr.nom}</h1>
+    <h1 className="text-[#0000FF] font-bold text-xl md:text-2xl capitalize">{qr.type}</h1>
+    <h1> <strong>Nom du codeQR:</strong> {qr.nom}</h1>
     <h1>
-      Créé : {
+      <strong>Créé :</strong>
+       {
         (() => {
           const [date, time] = qr.date_creation.split(" ");
           return `${date} à ${time}`; // Utilisation correcte des backticks
@@ -181,7 +182,8 @@ function Historique() {
     </h1>
 
     <h1>
-      Modifié : {
+      <strong>Modifié : </strong>
+      {
         (() => {
           const updated = new Date(qr.updated_at);
           const date = updated.toLocaleDateString('fr-FR'); // jj/mm/aaaa
