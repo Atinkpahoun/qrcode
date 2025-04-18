@@ -15,10 +15,6 @@ function Url() {
   const [leNom, setLeNom] = useState("");
   const [error, setError] = useState("");
   const [url, setUrl] = useState("");
-  const [tempColor, setTempColor] = useState("#ffffff");
-  const [tempBgColor, setTempBgColor] = useState("#000000");
-  const [tempImageInt, setTempImageInt] = useState("");
-  const [tempLogoTaille, setTempLogoTaille] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const qrRef = useRef(null);
@@ -34,13 +30,13 @@ function Url() {
   };
 
   const handleColorChange = (newColor, newBgColor) => {
-    setTempColor(newColor);
-    setTempBgColor(newBgColor);
+    setColor(newColor);
+    setBgColor(newBgColor);
   };
 
   const handleLogoChange = (newImage, newTaille) => {
-    setTempImageInt(newImage);
-    setTempLogoTaille(newTaille);
+    setImageInt(newImage);
+    setLogoTaille(newTaille);
   };
 
   const userId = localStorage.getItem('userId');
@@ -60,10 +56,10 @@ function Url() {
             url: qrValue,
           },
           customization: {
-            color: tempColor,
-            bgColor: tempBgColor,
-            imageInt: tempImageInt,
-            logoTaille: tempLogoTaille,
+            color: color,
+            bgColor: bgColor,
+            imageInt: imageInt,
+            logoTaille: logoTaille,
           },
           nom: leNom,
           date_creation: new Date().toISOString(),
@@ -94,10 +90,6 @@ function Url() {
 
     setTimeout(() => {
       setQrValue(url);
-      setColor(tempColor);
-      setBgColor(tempBgColor);
-      setImageInt(tempImageInt);
-      setLogoTaille(tempLogoTaille);
       setIsGenerating(false);
     }, 3000);
   };

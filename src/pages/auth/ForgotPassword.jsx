@@ -24,6 +24,7 @@ const ForgotPassword = () => {
           frontend_url: window.location.origin,
         }),
       });
+      
 
       const data = await response.json();
 

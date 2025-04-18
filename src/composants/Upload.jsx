@@ -12,7 +12,7 @@ const UploadMenu = ({ onLogoChange }) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result);
-      onLogoChange(reader.result, 60);
+      onLogoChange(reader.result, 50);
     };
     reader.readAsDataURL(file);
   };
