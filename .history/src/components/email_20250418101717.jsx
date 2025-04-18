@@ -24,6 +24,7 @@ const Email = () => {
   const [logoTaille, setLogoTaille] = useState(35);
   const [leNom, setLeNom] = useState("");
   const [error, setError] = useState("");
+  const successMsg ="";
   const [mailtoLink, setMailtoLink] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [qrReady, setQrReady] = useState(false);
@@ -35,7 +36,7 @@ const Email = () => {
   // Génère le lien mailto dynamique
   const generateMailtoLink = () => {
     if (!email) return "";
-    return `mailto:${email}?subject=${encodeURIComponent(tempSubject)}&body=${encodeURIComponent(tempBody)}`;
+    return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const validateEmail = (email) => {
@@ -44,8 +45,8 @@ const Email = () => {
   };
 
   const handleColorChange = (newColor, newBgColor) => {
-    setTempColor(newColor);
-    setTempBgColor(newBgColor);
+    setColor(newColor);
+    setBgColor(newBgColor);
   };
 
   const handleLogoChange = (newImage, newTaille) => {
@@ -127,9 +128,6 @@ const Email = () => {
     }
 
     setError("");
-    setQrValue(email);
-    setTempSubject(subject);
-    setTempBody(body);
     setColor(tempColor);
     setBgColor(tempBgColor);
     setImageInt(tempImageInt);

@@ -5,7 +5,6 @@ import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
-
 function Url() {
   const [qrValue, setQrValue] = useState("");
   const [color, setColor] = useState("#ffffff");

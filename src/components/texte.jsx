@@ -209,8 +209,6 @@ function Texte() {
           />
         </div>
       </div>
-
-      {qrValue && showQr && <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />}
     </div>
   );
 }

@@ -21,8 +21,13 @@ const NavBar = () => {
     }
   };
 
+  // Fonction pour basculer l'état d'ouverture
+  const toggleMenu = () => {
+    setIsOpen(prev => !prev);
+  };
+
   return (
-    <nav className="fixed top-0 left-0 z-10 w-full bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] doto flex justify-between items-center">
+    <nav className="doto fixed top-0 left-0 z-10 w-full bg-blue-50 py-4 px-4 md:px-10 xl:px-16 text-[#0000FF] flex justify-between items-center">
       {/* Logo */}
       <div className="flex gap-x-1 items-center text-xl lg:text-3xl">
         <FaQrcode color="blue" />
@@ -37,40 +42,39 @@ const NavBar = () => {
         className="md:hidden focus:outline-none"
       >
         {isOpen ? (
-    // SVG pour le bouton lorsque le menu est ouvert
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    ) : (
-    // SVG pour le bouton lorsque le menu est fermé
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M4 6h16M4 12h16m-7 6h7"
-      />
-      </svg>
-    )}
-</button>
-
+          // SVG pour le bouton lorsque le menu est ouvert
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        ) : (
+          // SVG pour le bouton lorsque le menu est fermé
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        )}
+      </button>
 
       {/* Liens de navigation */}
       <ul className={`shadow-lg md:shadow-none p-4 md:p-0 absolute md:relative top-16 md:top-0 right-5 rounded md:rounded-none bg-blue-50 flex-col md:flex-row md:flex space-y-5 md:space-y-0 space-x-0 md:space-x-5 ${isOpen ? 'flex' : 'hidden'} md:flex`}>
@@ -110,7 +114,7 @@ const NavBar = () => {
           </>
         ) : (
           <li className="relative">
-            <button className="focus:outline-none">
+            <button onClick={toggleMenu} className="focus:outline-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -136,19 +140,19 @@ const NavBar = () => {
                   <p><strong>Email :</strong> {user.email}</p>
                   {/* 🔹 Bouton pour accéder au profil principal */}
                   <button
-                      onClick={() => navigate("/profil-utilisateur")}
-                      className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
-                    >
-                      Modifier mon profil
-                    </button>
+                    onClick={() => navigate("/profil-utilisateur")}
+                    className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
+                  >
+                    Modifier mon profil
+                  </button>
 
-                    {/* 🔻 Bouton de déconnexion */}
-                    <button
-                      onClick={handleLogout}
-                      className="mt-2 w-full bg-red-500 text-white font-semibold py-2 rounded-lg hover:bg-red-600"
-                    >
-                      Se déconnecter
-                    </button>
+                  {/* 🔻 Bouton de déconnexion */}
+                  <button
+                    onClick={handleLogout}
+                    className="mt-2 w-full bg-red-500 text-white font-semibold py-2 rounded-lg hover:bg-red-600"
+                  >
+                    Se déconnecter
+                  </button>
                 </div>
               </div>
             )}

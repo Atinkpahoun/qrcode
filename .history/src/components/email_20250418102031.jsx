@@ -127,9 +127,6 @@ const Email = () => {
     }
 
     setError("");
-    setQrValue(email);
-    setTempSubject(subject);
-    setTempBody(body);
     setColor(tempColor);
     setBgColor(tempBgColor);
     setImageInt(tempImageInt);

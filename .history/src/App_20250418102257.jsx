@@ -22,7 +22,6 @@ import ConfirmerNouvelEmail from "./pages/ConfirmerNouvelEmail";
 import ChangerMotDePasse from "./pages/ChangerMotDePasse";
 
 import axios from 'axios';
-import Footer from './composants/Footer.jsx';
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -36,7 +35,7 @@ function App() {
         <Route path="/" element={<Navigate to="/Accueil" />} />
 
         {/* Routes publiques */}
-        <Route path="/Accueil" element={<><NavBar /><Accueil /><Footer /></>} />
+        <Route path="/Accueil" element={<><NavBar /><Accueil /><</>} />
         <Route path="/codeqr" element={<><NavBar /><CodeQR /></>} />
         <Route path="/inscription" element={<Inscription />} />
         <Route path="/connexion" element={<Connexion />} />

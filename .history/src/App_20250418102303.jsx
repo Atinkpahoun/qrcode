@@ -36,7 +36,7 @@ function App() {
         <Route path="/" element={<Navigate to="/Accueil" />} />
 
         {/* Routes publiques */}
-        <Route path="/Accueil" element={<><NavBar /><Accueil /><Footer /></>} />
+        <Route path="/Accueil" element={<><NavBar /><Accueil /><Footer</>} />
         <Route path="/codeqr" element={<><NavBar /><CodeQR /></>} />
         <Route path="/inscription" element={<Inscription />} />
         <Route path="/connexion" element={<Connexion />} />

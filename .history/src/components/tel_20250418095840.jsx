@@ -129,6 +129,10 @@ function Tel() {
           value={tel}
           onChange={setTel}/>
         {error && <p className="text-red-500">{error}</p>}
+
+     
+
+>>>>>>> b9952b7ee406e65eee2b6d4518c20e4fbb3ae8ee
         <button
           onClick={handleClick}
           className="bg-[#0000FF] text-white font-bold px-4 py-2 rounded-lg mt-4 flex items-center gap-2"

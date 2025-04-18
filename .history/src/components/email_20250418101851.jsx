@@ -35,7 +35,7 @@ const Email = () => {
   // Génère le lien mailto dynamique
   const generateMailtoLink = () => {
     if (!email) return "";
-    return `mailto:${email}?subject=${encodeURIComponent(tempSubject)}&body=${encodeURIComponent(tempBody)}`;
+    return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const validateEmail = (email) => {
@@ -127,9 +127,6 @@ const Email = () => {
     }
 
     setError("");
-    setQrValue(email);
-    setTempSubject(subject);
-    setTempBody(body);
     setColor(tempColor);
     setBgColor(tempBgColor);
     setImageInt(tempImageInt);
