@@ -16,6 +16,10 @@ function Url() {
   const [error, setError] = useState("");
 
   const [url, setUrl] = useState("");
+  const [tempColor, setTempColor] = useState("#ffffff");
+  const [tempBgColor, setTempBgColor] = useState("#000000");
+  const [tempImageInt, setTempImageInt] = useState("");
+  const [tempLogoTaille, setTempLogoTaille] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const qrRef = useRef(null);
@@ -31,13 +35,13 @@ function Url() {
   };
 
   const handleColorChange = (newColor, newBgColor) => {
-    setColor(newColor);
-    setBgColor(newBgColor);
+    setTempColor(newColor);
+    setTempBgColor(newBgColor);
   };
 
   const handleLogoChange = (newImage, newTaille) => {
-    setImageInt(newImage);
-    setLogoTaille(newTaille);
+    setTempImageInt(newImage);
+    setTempLogoTaille(newTaille);
   };
 
 
@@ -58,10 +62,10 @@ function Url() {
             url: qrValue,
           },
           customization: {
-            color: color,
-            bgColor: bgColor,
-            imageInt: imageInt,
-            logoTaille: logoTaille,
+            color: tempColor,
+            bgColor: tempBgColor,
+            imageInt: tempImageInt,
+            logoTaille: tempLogoTaille,
           },
           nom: leNom,
           date_creation: new Date().toISOString(),
@@ -92,6 +96,10 @@ function Url() {
 
     setTimeout(() => {
       setQrValue(url);
+      setColor(tempColor);
+      setBgColor(tempBgColor);
+      setImageInt(tempImageInt);
+      setLogoTaille(tempLogoTaille);
       setIsGenerating(false);
     }, 3000);
   };
@@ -209,7 +217,7 @@ function Url() {
                 <QRCodeSVG
                   marginSize={2}
                   value={qrValue}
-                  fgColor={color}
+                  fgColor={tempColor}
                   bgColor={bgColor}
                   size={250}
                   level={"H"}

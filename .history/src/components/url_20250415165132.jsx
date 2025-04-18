@@ -16,6 +16,7 @@ function Url() {
   const [error, setError] = useState("");
 
   const [url, setUrl] = useState("");
+  const [tempImageInt, setTempImageInt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const qrRef = useRef(null);
@@ -36,7 +37,7 @@ function Url() {
   };
 
   const handleLogoChange = (newImage, newTaille) => {
-    setImageInt(newImage);
+    setTempImageInt(newImage);
     setLogoTaille(newTaille);
   };
 
@@ -60,7 +61,7 @@ function Url() {
           customization: {
             color: color,
             bgColor: bgColor,
-            imageInt: imageInt,
+            imageInt: tempImageInt,
             logoTaille: logoTaille,
           },
           nom: leNom,
@@ -92,6 +93,7 @@ function Url() {
 
     setTimeout(() => {
       setQrValue(url);
+      setImageInt(tempImageInt);
       setIsGenerating(false);
     }, 3000);
   };

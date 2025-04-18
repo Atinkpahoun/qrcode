@@ -60,7 +60,7 @@ function Url() {
           customization: {
             color: color,
             bgColor: bgColor,
-            imageInt: imageInt,
+            imageInt: tempImageInt,
             logoTaille: logoTaille,
           },
           nom: leNom,
@@ -92,6 +92,7 @@ function Url() {
 
     setTimeout(() => {
       setQrValue(url);
+      setImageInt(tempImageInt);
       setIsGenerating(false);
     }, 3000);
   };

@@ -18,10 +18,8 @@ const ForgotPassword = () => {
         },
         body: JSON.stringify({
           email: email.toLowerCase(),
-          frontend_url: window.location.origin,
         }),
       });
-      
 
       const data = await response.json();
 

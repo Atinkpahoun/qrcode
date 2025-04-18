@@ -5,7 +5,6 @@ import UploadColors from "../composants/UploadColors.jsx";
 import DownloadQR from "../composants/DownloadQR.jsx";
 import { toast } from "react-toastify";
 import axios from "axios";
-
 function Url() {
   const [qrValue, setQrValue] = useState("");
   const [color, setColor] = useState("#ffffff");
@@ -16,6 +15,10 @@ function Url() {
   const [error, setError] = useState("");
 
   const [url, setUrl] = useState("");
+  const [tempColor, setTempColor] = useState("#ffffff");
+  const [tempBgColor, setTempBgColor] = useState("#000000");
+  const [tempImageInt, setTempImageInt] = useState("");
+  const [tempLogoTaille, setTempLogoTaille] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const qrRef = useRef(null);
@@ -31,25 +34,25 @@ function Url() {
   };
 
   const handleColorChange = (newColor, newBgColor) => {
-    setColor(newColor);
-    setBgColor(newBgColor);
+    setTempColor(newColor);
+    setTempBgColor(newBgColor);
   };
 
   const handleLogoChange = (newImage, newTaille) => {
-    setImageInt(newImage);
-    setLogoTaille(newTaille);
+    setTempImageInt(newImage);
+    setTempLogoTaille(newTaille);
   };
 
 
   const userId = localStorage.getItem('userId');
   const saveQrCode = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/qrcodes`, {
+      const response = await fetch(${import.meta.env.VITE_API_URL}/qrcodes, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": Bearer ${localStorage.getItem("token")}
        },
         body: JSON.stringify({
           user_id: userId,
@@ -58,10 +61,10 @@ function Url() {
             url: qrValue,
           },
           customization: {
-            color: color,
-            bgColor: bgColor,
-            imageInt: imageInt,
-            logoTaille: logoTaille,
+            color: tempColor,
+            bgColor: tempBgColor,
+            imageInt: tempImageInt,
+            logoTaille: tempLogoTaille,
           },
           nom: leNom,
           date_creation: new Date().toISOString(),
@@ -92,6 +95,10 @@ function Url() {
 
     setTimeout(() => {
       setQrValue(url);
+      setColor(tempColor);
+      setBgColor(tempBgColor);
+      setImageInt(tempImageInt);
+      setLogoTaille(tempLogoTaille);
       setIsGenerating(false);
     }, 3000);
   };
@@ -110,10 +117,10 @@ function Url() {
         if (!token) return;
 
         try {
-          const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/user`, {
+          const userResponse = await fetch(${import.meta.env.VITE_API_URL}/user, {
             headers: {
               Accept: "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: Bearer ${token},
             },
           });
 
@@ -129,12 +136,12 @@ function Url() {
           formData.append("customization[logoTaille]", logoTaille);
           formData.append("nom", leNom || "Sans nom");
           formData.append("date_creation", new Date().toISOString());
-          formData.append("png_file", blob, `${leNom || "qr"}_${Date.now()}.png`);
+          formData.append("png_file", blob, ${leNom || "qr"}_${Date.now()}.png);
 
-          const response = await axios.post(`${import.meta.env.VITE_API_URL}/qrcodes`, formData, {
+          const response = await axios.post(${import.meta.env.VITE_API_URL}/qrcodes, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
+              Authorization: Bearer ${token},
             },
           });
 

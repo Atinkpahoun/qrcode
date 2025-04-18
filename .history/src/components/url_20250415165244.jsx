@@ -92,6 +92,7 @@ function Url() {
 
     setTimeout(() => {
       setQrValue(url);
+      setImageInt(tempImageInt);
       setIsGenerating(false);
     }, 3000);
   };
