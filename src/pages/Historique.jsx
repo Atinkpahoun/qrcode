@@ -110,7 +110,7 @@ function Historique() {
   
 
   return (
-    <div className="pt-5 xl:pt-12 justify-center doto">
+    <div className="pt-10 xl:pt-32 justify-center doto">
       <h1 className="text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">
         Bienvenu(e) dans l'historique de vos codes QR
       </h1>
@@ -146,7 +146,7 @@ function Historique() {
       </div>
 
       {loading ? (
-            <div className="text-center mt-10 text-blue-500">Chargement en cours...</div>
+            <div className="text-center  mt-10 text-[#0000FF]">Chargement en cours...</div>
           ) : (
       <div className="flex flex-wrap justify-center gap-5 lg:gap-10 mt-8">
         {filtered.map((qr) => (

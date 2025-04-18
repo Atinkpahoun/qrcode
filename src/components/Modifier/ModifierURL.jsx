@@ -116,52 +116,47 @@ function ModifierUrl({ qrCodeData, onClose, onUpdate }) {
   };
 
   return (
-    <div className="p-4 space-y-4">
-      <h2 className="text-xl font-bold text-blue-700">Modifier QR Code URL</h2>
-
-      <input
-        type="text"
-        className="border p-2 w-full rounded-md border-blue-400"
-        placeholder="Lien URL"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-      />
-
-      <input
-        type="text"
-        className="border p-2 w-full rounded-md border-blue-400"
-        placeholder="Nom du QR Code"
-        value={nom}
-        onChange={(e) => setNom(e.target.value)}
-      />
-
-      <UploadColors
-        initialColor={color}
-        initialBgColor={bgColor}
-        onColorChange={handleColorChange}
-      />
-
-      <Upload
-        initialImage={imageInt}
-        initialSize={logoTaille}
-        onLogoChange={handleLogoChange}
-      />
-
-      <div className="flex justify-center items-center w-[250px] h-[250px] border rounded-md">
-        {isImageUpdating ? (
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
-        ) : (
-          <img
-            src={`${import.meta.env.VITE_API_URL.replace("/api", "")}/storage/${png_file_path}?t=${imageTimestamp}`}
-            alt="QR Code"
-            className="w-full h-full object-contain"
+    <div>
+      <div className=" flex flex-col md:flex-row">
+        <div className="space-y-4">
+          <h2 className="text-xl md:text-2xl pb-4 font-bold text-[#0000FF]">Modifier QR Code URL</h2>
+          <input
+          type="text"
+          className="border p-2 w-96 rounded-md border-[#0000FF]"
+          placeholder="Lien URL"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
           />
-        )}
-      </div>
-
-
-
-      <div ref={qrRef} className="hidden">
+          <input
+          type="text"
+          className="border p-2 w-96 rounded-md border-[#0000FF]"
+          placeholder="Nom du QR Code"
+          value={nom}
+          onChange={(e) => setNom(e.target.value)}
+          />
+          <UploadColors
+          initialColor={color}
+          initialBgColor={bgColor}
+          onColorChange={handleColorChange}
+          />
+          <Upload
+          initialImage={imageInt}
+          initialSize={logoTaille}
+          onLogoChange={handleLogoChange}
+          />
+        </div>
+        <div className="flex justify-center items-center w-[250px] h-[250px] border rounded-md">
+          {isImageUpdating ? (
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#0000FF] border-solid"></div>
+          ) : (
+            <img
+              src={`${import.meta.env.VITE_API_URL.replace("/api", "")}/storage/${png_file_path}?t=${imageTimestamp}`}
+              alt="QR Code"
+              className="w-full h-full object-contain"
+            />
+          )}
+        </div>
+        <div ref={qrRef} className="hidden">
         <QRCodeCanvas
           value={qrValue}
           fgColor={color}
@@ -179,26 +174,31 @@ function ModifierUrl({ qrCodeData, onClose, onUpdate }) {
               : undefined
           }
         />
+        </div>
       </div>
 
-      <button
-        onClick={handleUpdate}
-        disabled={!hasChanged || isUpdating}
-        className={`w-full py-2 rounded-md font-semibold text-white ${
+      <div>
+        <button
+          onClick={handleUpdate}
+          disabled={!hasChanged || isUpdating}
+          className={`w-96 py-2 rounded-md font-semibold text-white  ${
           hasChanged && !isUpdating
-            ? "bg-blue-600 hover:bg-blue-700"
+            ? "bg-[#0000FF] hover:bg-blue-700"
             : "bg-gray-400 cursor-not-allowed"
-        }`}
-      >
-        {isUpdating ? "Mise à jour en cours..." : "Mettre à jour les informations"}
-      </button>
+          }`}
+        >
+          {isUpdating ? "Mise à jour en cours..." : "Mettre à jour les informations"}
+        </button>
 
-      <button
+        <button
         onClick={onClose}
-        className="w-full py-2 rounded-md bg-red-500 text-white font-semibold hover:bg-red-600"
-      >
-        Annuler
-      </button>
+        className="w-96 py-2 rounded-md bg-red-500 text-white font-semibold hover:bg-red-600"
+        >
+          Annuler
+        </button>
+      </div>
+      
+    
     </div>
   );
 }
