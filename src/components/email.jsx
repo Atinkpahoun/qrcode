@@ -26,6 +26,9 @@ const Email = () => {
   const [error, setError] = useState("");
   const successMsg ="";
   const [mailtoLink, setMailtoLink] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [qrReady, setQrReady] = useState(false);
+
 
   const qrRef = useRef(null);
   const qrSvgRef = useRef(null);
@@ -124,11 +127,19 @@ const Email = () => {
       return;
     }
 
-    const link = generateMailtoLink();
-    setMailtoLink(link);
+      const link = generateMailtoLink();
+      setIsLoading(true);
+  setQrReady(false); // réinitialise l'affichage du QRCode
+
+  // simule un délai de chargement (2s)
+  setTimeout(() => {
     setQrValue(email);
+    setMailtoLink(link);
+    setIsLoading(false);
+    setQrReady(true);
     setError("");
-  };
+  }, 2000);
+};
   
 
   // Enregistrement automatique avec délai après génération
@@ -151,7 +162,6 @@ const Email = () => {
 
         const token = localStorage.getItem("token");
         if (!token) {
-          toast.error("Connectez-vous pour enregistrer le QR Code.");
           return;
         }
 
@@ -240,53 +250,61 @@ const Email = () => {
       </form>
 
       <div className="bg-blue-50 rounded-2xl space-y-5 p-4 h-1/2">
-        <div ref={qrSvgRef}>
-          {qrValue && (
-            <div className="p-4 border border-[#0000FF] rounded-lg">
-              <QRCodeSVG
-              marginSize={2}
-              value={generateMailtoLink()}
-              size={250}
-              level={"H"}
-              fgColor={color}
-              bgColor={bgColor}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
-                    }
-                  : undefined
-              }
-            />
-            </div>
-          )}
-        </div>
+      <div ref={qrSvgRef}>
+  {isLoading && (
+    <div className="flex items-center justify-center h-[250px]">
+      <div className="loader-spinner"></div>
+    </div>
+  )}
 
-        <div ref={qrRef} className="hidden">
-          {qrValue && (
-            <QRCodeCanvas
-              marginSize={2}
-              value={generateMailtoLink()}
-              size={250}
-              level={"H"}
-              fgColor={color}
-              bgColor={bgColor}
-              imageSettings={
-                imageInt
-                  ? {
-                      src: imageInt,
-                      height: logoTaille,
-                      width: logoTaille,
-                      excavate: true,
+  {qrReady && !isLoading && (
+    <div className="p-4 border border-[#0000FF] rounded-lg">
+                  <QRCodeSVG
+                    marginSize={2}
+                    value={generateMailtoLink()}
+                    size={250}
+                    level={"H"}
+                    fgColor={color}
+                    bgColor={bgColor}
+                    imageSettings={
+                      imageInt
+                        ? {
+                            src: imageInt,
+                            height: logoTaille,
+                            width: logoTaille,
+                            excavate: true,
+                          }
+                        : undefined
                     }
-                  : undefined
-              }
-            />
-          )}
-        </div>
+                  />
+                </div>
+              )}
+            </div>
+
+
+            <div ref={qrRef} className="hidden">
+              {qrReady && (
+                <QRCodeCanvas
+                  marginSize={2}
+                  value={generateMailtoLink()}
+                  size={250}
+                  level={"H"}
+                  fgColor={color}
+                  bgColor={bgColor}
+                  imageSettings={
+                    imageInt
+                      ? {
+                          src: imageInt,
+                          height: logoTaille,
+                          width: logoTaille,
+                          excavate: true,
+                        }
+                      : undefined
+                  }
+                />
+              )}
+            </div>
+
 
         {qrValue && (
           <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />

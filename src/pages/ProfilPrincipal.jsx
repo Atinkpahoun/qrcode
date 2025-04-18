@@ -7,25 +7,16 @@ import { useNavigate } from "react-router-dom";
 const ProfilPrincipal = () => {
   const { user, login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    lastname: "",
-    email: "",
-  });
-
-  const [editMode, setEditMode] = useState({
-    name: false,
-    lastname: false,
-    email: false,
-  });
+  const [formData, setFormData] = useState({ name: "", lastname: "", email: "" });
+  const [initialData, setInitialData] = useState({ name: "", lastname: "", email: "" });
+  const [editMode, setEditMode] = useState({ name: false, lastname: false });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
-      setFormData({
-        name: user.name,
-        lastname: user.lastname,
-        email: user.email,
-      });
+      const userData = { name: user.name, lastname: user.lastname, email: user.email };
+      setFormData(userData);
+      setInitialData(userData);
     }
   }, [user]);
 
@@ -33,26 +24,36 @@ const ProfilPrincipal = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleEdit = (field) => {
-    if (field === "email") {
-      // Redirection spéciale pour la modification de l'email
-      navigate("/changer-email");
-    } else {
-      setEditMode({ ...editMode, [field]: true });
-    }
+  const toggleEdit = (field) => {
+    setEditMode((prev) => ({ ...prev, [field]: !prev[field] }));
   };
+
+  const isFormChanged = () =>
+    formData.name !== initialData.name || formData.lastname !== initialData.lastname;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await api.put("/api/update-profile", formData);
-      login({ token: localStorage.getItem("token"), user: response.data.user });
-      toast.success("Profil mis à jour !");
-      setEditMode({ name: false, lastname: false, email: false });
-    } catch (error) {
-      console.error(error);
-      toast.error("Erreur lors de la mise à jour.");
-    }
+    setIsLoading(true);
+
+    setTimeout(async () => {
+      try {
+        const payload = {
+          name: formData.name,
+          lastname: formData.lastname,
+        };
+
+        const response = await api.put("/api/update-profile", payload);
+        login({ token: localStorage.getItem("token"), user: response.data.user });
+        toast.success("Profil mis à jour !");
+        setInitialData({ name: formData.name, lastname: formData.lastname, email: formData.email });
+        setEditMode({ name: false, lastname: false });
+      } catch (error) {
+        console.error(error);
+        toast.error("Erreur lors de la mise à jour.");
+      } finally {
+        setIsLoading(false);
+      }
+    }, 2000); // délai de 2s pour effet loader
   };
 
   return (
@@ -66,44 +67,60 @@ const ProfilPrincipal = () => {
         {/* Nom */}
         <div className="mb-4">
           <label className="block mb-1 font-semibold">Nom</label>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <input
               type="text"
               name="lastname"
               value={formData.lastname}
               onChange={handleChange}
               disabled={!editMode.lastname}
-              className="w-full p-3 border rounded-xl bg-gray-100 focus:bg-white"
+              className={`w-full p-3 border rounded-xl transition-all duration-200 ${
+                editMode.lastname
+                  ? "bg-white border-blue-500 ring-2 ring-blue-200"
+                  : "bg-gray-100 opacity-60 cursor-not-allowed"
+              }`}
             />
-            <button
-              type="button"
-              onClick={() => handleEdit("lastname")}
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Modifier
-            </button>
+            {/* Switch */}
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={editMode.lastname}
+                onChange={() => toggleEdit("lastname")}
+                className="sr-only peer"
+              />
+              <div className="w-10 h-5 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 transition duration-300"></div>
+              <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transform peer-checked:translate-x-5 transition duration-300"></div>
+            </label>
           </div>
         </div>
 
         {/* Prénom */}
         <div className="mb-4">
           <label className="block mb-1 font-semibold">Prénom</label>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               disabled={!editMode.name}
-              className="w-full p-3 border rounded-xl bg-gray-100 focus:bg-white"
+              className={`w-full p-3 border rounded-xl transition-all duration-200 ${
+                editMode.name
+                  ? "bg-white border-blue-500 ring-2 ring-blue-200"
+                  : "bg-gray-100 opacity-60 cursor-not-allowed"
+              }`}
             />
-            <button
-              type="button"
-              onClick={() => handleEdit("name")}
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Modifier
-            </button>
+            {/* Switch */}
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={editMode.name}
+                onChange={() => toggleEdit("name")}
+                className="sr-only peer"
+              />
+              <div className="w-10 h-5 bg-gray-300 rounded-full peer peer-checked:bg-blue-600 transition duration-300"></div>
+              <div className="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transform peer-checked:translate-x-5 transition duration-300"></div>
+            </label>
           </div>
         </div>
 
@@ -116,11 +133,11 @@ const ProfilPrincipal = () => {
               name="email"
               value={formData.email}
               disabled
-              className="w-full p-3 border rounded-xl bg-gray-100"
+              className="w-full p-3 border rounded-xl bg-gray-100 opacity-60 cursor-not-allowed"
             />
             <button
               type="button"
-              onClick={() => handleEdit("email")}
+              onClick={() => navigate("/changer-email")}
               className="text-sm text-blue-600 hover:underline"
             >
               Modifier
@@ -128,11 +145,39 @@ const ProfilPrincipal = () => {
           </div>
         </div>
 
+        {/* Mettre à jour */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition"
+          disabled={!isFormChanged() || isLoading}
+          className={`w-full p-3 rounded-xl font-semibold flex justify-center items-center gap-2 transition ${
+            isFormChanged() && !isLoading
+              ? "bg-blue-600 text-white hover:bg-blue-700"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
         >
-          Mettre à jour
+          {isLoading && (
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              ></path>
+            </svg>
+          )}
+          {isLoading ? "Mise à jour..." : "Mettre à jour"}
         </button>
 
         <button
