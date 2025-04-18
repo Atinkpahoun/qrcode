@@ -110,7 +110,7 @@ function Historique() {
   
 
   return (
-    <div className="pt-5 xl:pt-12 justify-center doto">
+    <div className="pt-5 xl:pt-20 justify-center doto">
       <h1 className="text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">
         Bienvenu(e) dans l'historique de vos codes QR
       </h1>
