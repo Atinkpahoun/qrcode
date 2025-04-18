@@ -146,8 +146,10 @@ function ModifierImage({ qrCodeData, onClose, onUpdate }) {
   };
 
   return (
-    <div className="p-4 space-y-4">
-      <h2 className="text-xl font-bold text-blue-700">Modifier QR Code Image</h2>
+    <div className="space-y-4">
+      <div className="flex flex-col md:flex-row space-x-0 md:space-x-4 lg:space-x-10 ">
+        <div className="space-y-4">
+          <h2 className="text-xl md:text-2xl pb-4 font-bold text-[#0000FF]">Modifier QR Code Image</h2>
 
       {/* Upload image Cloudinary */}
       <div>
@@ -156,7 +158,7 @@ function ModifierImage({ qrCodeData, onClose, onUpdate }) {
           type="file"
           accept="image/*"
           onChange={handleCloudinaryUpload}
-          className="mt-1 block w-full border border-blue-300 rounded-md shadow-sm"
+          className="mt-1 block w-full border border-[#0000FF] rounded-md shadow-sm"
         />
       </div>
 
@@ -181,7 +183,7 @@ function ModifierImage({ qrCodeData, onClose, onUpdate }) {
         type="text"
         value={nom}
         onChange={(e) => setNom(e.target.value)}
-        className="border p-2 w-full rounded-md border-blue-400"
+        className="border p-2 w-96 rounded-md border-[#0000FF]"
         placeholder="Nom du QR Code"
       />
 
@@ -197,10 +199,10 @@ function ModifierImage({ qrCodeData, onClose, onUpdate }) {
         initialSize={logoTaille}
         onLogoChange={handleLogoChange}
       />
-
+      </div>
       {/* PNG du QR code affiché */}
       <div>
-        <label className="text-sm font-medium text-gray-700">PNG actuel du QR Code</label>
+        
         <div className="flex justify-center items-center w-[250px] h-[250px] border rounded-md">
           {isImageUpdating ? (
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
@@ -234,12 +236,13 @@ function ModifierImage({ qrCodeData, onClose, onUpdate }) {
           }
         />
       </div>
-
+      </div>
+      <div className="space-y-2">
       {/* Boutons */}
       <button
         onClick={handleUpdate}
         disabled={!hasChanged || isUpdating}
-        className={`w-full py-2 rounded-md font-semibold text-white ${
+        className={`w-96 py-2 rounded-md font-semibold text-white ${
           hasChanged && !isUpdating
             ? "bg-blue-600 hover:bg-blue-700"
             : "bg-gray-400 cursor-not-allowed"
@@ -250,10 +253,11 @@ function ModifierImage({ qrCodeData, onClose, onUpdate }) {
 
       <button
         onClick={onClose}
-        className="w-full py-2 rounded-md bg-red-500 text-white font-semibold hover:bg-red-600"
+        className="w-96 py-2 rounded-md bg-red-500 text-white font-semibold hover:bg-red-600"
       >
         Annuler
       </button>
+      </div>
     </div>
   );
 }

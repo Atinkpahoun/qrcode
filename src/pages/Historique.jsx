@@ -110,7 +110,7 @@ function Historique() {
   
 
   return (
-    <div className="pt-10 xl:pt-32 justify-center doto">
+    <div className="pt-20 md:pt-24 xl:pt-32 justify-center doto">
       <h1 className="text-2xl xl:text-3xl font-bold text-[#0000FF] text-center">
         Bienvenu(e) dans l'historique de vos codes QR
       </h1>
@@ -152,9 +152,9 @@ function Historique() {
         {filtered.map((qr) => (
           <div
             key={qr.id}
-            className="flex rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
+            className="flex flex-col md:flex-row rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
           >
-            <div className="justify-center flex flex-col pr-2 md:pr-4 border-r border-[#0000FF]">
+            <div className="space-x-2 md:space-x-0 justify-center flex flex-row md:flex-col pr-0 md:pr-4 pb-3 md:pb-0  border-b md:border-b-0 border-r-0 md:border-r border-[#0000FF]">
               <img
                 className="h-28 w-28 object-contain"
                 src={qr.image_url || "/src/assets/degrader1.gif"}
@@ -167,7 +167,7 @@ function Historique() {
                 <DownloadQR qrId={qr.id} />
               </div>  
             </div>
-            <div className="pl-2 md:pl-4 justify-between space-y-6">
+            <div className="pt-2 md:pt-0 pl-0 md:pl-4 justify-between space-y-6">
   <div className="space-y-3">
     <h1 className="text-[#0000FF] font-bold text-xl md:text-2xl capitalize">{qr.type}</h1>
     <h1> <strong>Nom du codeQR:</strong> {qr.nom}</h1>
