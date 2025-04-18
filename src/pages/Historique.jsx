@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import DownloadQR from "../composants/DownloadQR";
 import ModifierQRCodeDrawer from "../components/ModifierQRCodeDrawer";
 import axios from "axios";
+import api from "../services/Api";
+
 
 function Historique() {
   const [qrcodes, setQrcodes] = useState([]);
@@ -103,7 +105,7 @@ function Historique() {
       console.error("Erreur lors de la suppression du QR code :", error);
       alert("Une erreur est survenue lors de la suppression.");
     }
-  };
+  };  
 
   return (
     <div className="pt-5 xl:pt-12 justify-center doto">
@@ -151,11 +153,16 @@ function Historique() {
             className="flex rounded border-2 border-[#0000FF] p-2 md:p-4 max-w-[500px] shadow"
           >
             <div className="justify-center flex flex-col pr-2 md:pr-4 border-r border-[#0000FF]">
-              <img
-                className="h-28 w-28 object-contain"
+            <img
+                className="h-28 w-28 object-contain cursor-pointer"
                 src={qr.image_url || "/src/assets/degrader1.gif"}
                 alt="qr preview"
-              />
+                
+             />
+
+
+
+
               <div className="justify-center flex flex-col mt-4 space-y-3">
                 <button className="border-2 border-[#0000FF] rounded px-6 bg-blue-50 py-1">
                   {qr.scan_count} scans
