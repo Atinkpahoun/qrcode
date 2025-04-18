@@ -23,9 +23,11 @@ const NavBar = () => {
   };
 
   // Fonction pour basculer l'état d'ouverture
-
-
   const toggleMenu = () => {
+    setIsOpen(prev => !prev);
+  };
+
+  const toggleMenu2 = () => {
     setIsOpenProfil(prev => !prev);
   };
 
@@ -41,7 +43,6 @@ const NavBar = () => {
 
       {/* Bouton Toggle */}
       <button
-        
         onClick={() => setIsOpen(!isOpen)} // Ouvrir/fermer le menu
         className="md:hidden focus:outline-none"
       >
@@ -136,7 +137,7 @@ const NavBar = () => {
             </button>
 
             {/* Menu déroulant */}
-            {isOpenProfil && (
+            {isOpenP && (
               <div className="absolute -right-10 mt-2 w-auto bg-blue-50 rounded-lg shadow-lg top-14">
                 <div className="p-4">
                   <p><strong>Nom :</strong> {user.lastname}</p>

@@ -7,7 +7,6 @@ import { FaQrcode } from "react-icons/fa";
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false); // Menu fermé par défaut
-  const [isOpenProfil, setIsOpenProfil] = useState(false);
   const navigate = useNavigate();
 
   // Gestion de la déconnexion
@@ -23,10 +22,8 @@ const NavBar = () => {
   };
 
   // Fonction pour basculer l'état d'ouverture
-
-
   const toggleMenu = () => {
-    setIsOpenProfil(prev => !prev);
+    setIsOpen(prev => !prev);
   };
 
   return (
@@ -41,7 +38,6 @@ const NavBar = () => {
 
       {/* Bouton Toggle */}
       <button
-        
         onClick={() => setIsOpen(!isOpen)} // Ouvrir/fermer le menu
         className="md:hidden focus:outline-none"
       >
@@ -136,7 +132,7 @@ const NavBar = () => {
             </button>
 
             {/* Menu déroulant */}
-            {isOpenProfil && (
+            {isOpen && (
               <div className="absolute -right-10 mt-2 w-auto bg-blue-50 rounded-lg shadow-lg top-14">
                 <div className="p-4">
                   <p><strong>Nom :</strong> {user.lastname}</p>
@@ -144,7 +140,7 @@ const NavBar = () => {
                   <p><strong>Email :</strong> {user.email}</p>
                   {/* 🔹 Bouton pour accéder au profil principal */}
                   <button
-                    onClick={() => navigate(  "/profil-utilisateur")}
+                    onClick={() => navigate("/profil-utilisateur")}
                     className="mt-4 w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600"
                   >
                     Modifier mon profil

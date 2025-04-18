@@ -23,9 +23,11 @@ const NavBar = () => {
   };
 
   // Fonction pour basculer l'état d'ouverture
-
-
   const toggleMenu = () => {
+    setIsOpen(prev => !prev);
+  };
+
+  const toggleMenu2 = () => {
     setIsOpenProfil(prev => !prev);
   };
 
@@ -118,7 +120,7 @@ const NavBar = () => {
           </>
         ) : (
           <li className="relative">
-            <button onClick={toggleMenu} className="focus:outline-none">
+            <button onClick={toggleMenu2} className="focus:outline-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
