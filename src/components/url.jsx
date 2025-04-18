@@ -158,7 +158,7 @@ function Url() {
   }, [qrValue]);
 
   return (
-    <section>
+    <section className="mb-5">
       <div className="flex flex-wrap justify-center gap-y-5 gap-x-20 doto pt-2 lg:pt-5">
         <form className="flex flex-col items-center md:items-start" action="">
           <h1 className="text-3xl font-bold text-[#0000FF] mb-5 md:mb-8">Lien/URL</h1>
@@ -277,9 +277,7 @@ function Url() {
             />
           </div>
 
-          {qrValue && !isGenerating && (
-            <DownloadQR qrRef={qrRef} qrSvgRef={qrSvgRef} leNom={leNom} />
-          )}
+         
         </div>
       </div>
     </section>

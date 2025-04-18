@@ -116,8 +116,8 @@ function ModifierUrl({ qrCodeData, onClose, onUpdate }) {
   };
 
   return (
-    <div>
-      <div className=" flex flex-col md:flex-row">
+    <div className="space-y-4">
+      <div className=" flex flex-col md:flex-row ">
         <div className="space-y-4">
           <h2 className="text-xl md:text-2xl pb-4 font-bold text-[#0000FF]">Modifier QR Code URL</h2>
           <input
@@ -145,14 +145,14 @@ function ModifierUrl({ qrCodeData, onClose, onUpdate }) {
           onLogoChange={handleLogoChange}
           />
         </div>
-        <div className="flex justify-center items-center w-[250px] h-[250px] border rounded-md">
+        <div className=" mt-5">
           {isImageUpdating ? (
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-[#0000FF] border-solid"></div>
           ) : (
             <img
               src={`${import.meta.env.VITE_API_URL.replace("/api", "")}/storage/${png_file_path}?t=${imageTimestamp}`}
               alt="QR Code"
-              className="w-full h-full object-contain"
+              className=""
             />
           )}
         </div>
@@ -177,7 +177,7 @@ function ModifierUrl({ qrCodeData, onClose, onUpdate }) {
         </div>
       </div>
 
-      <div>
+      <div className="space-y-2">
         <button
           onClick={handleUpdate}
           disabled={!hasChanged || isUpdating}
