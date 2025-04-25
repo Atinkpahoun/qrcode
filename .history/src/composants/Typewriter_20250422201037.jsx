@@ -18,13 +18,16 @@ const Typewriter = ({ text, speed = 100 }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 768);
+            setIsMobile(window.innerWidth < 768); // Ajustez la valeur selon vos besoins
         };
 
+        // Écouter les changements de taille de la fenêtre
         window.addEventListener('resize', handleResize);
         
+        // Appeler la fonction une fois pour définir l'état initial
         handleResize();
-        
+
+        // Nettoyer l'écouteur d'événements lors du démontage du composant
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 

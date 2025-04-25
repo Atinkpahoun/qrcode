@@ -23,8 +23,10 @@ const Typewriter = ({ text, speed = 100 }) => {
 
         window.addEventListener('resize', handleResize);
         
+        // Appeler la fonction une fois pour définir l'état initial
         handleResize();
-        
+
+        // Nettoyer l'écouteur d'événements lors du démontage du composant
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 

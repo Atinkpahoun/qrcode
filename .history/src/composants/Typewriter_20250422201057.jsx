@@ -24,7 +24,8 @@ const Typewriter = ({ text, speed = 100 }) => {
         window.addEventListener('resize', handleResize);
         
         handleResize();
-        
+
+        // Nettoyer l'écouteur d'événements lors du démontage du composant
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
